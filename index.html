@@ -83,10 +83,12 @@ const container = document.getElementById("research-network");
 const descriptionBox = document.getElementById("node-description");
 
 const nodes = new vis.DataSet([
-{ id:1, label:"Urban–Environment Spatial Dynamics", size:55, fixed:true, x:0, y:0, group:"core",
-desc:"Integrated modeling of urban growth, land-cover change, environmental risk, and spatial sustainability."},
 
-// Morphology
+// CORE
+{ id:1, label:"Urban–Environment Spatial Dynamics", size:55, group:"core",
+desc:"Integrated modeling of urban growth, entropy, climate risk, and ecological systems."},
+
+// MORPHOLOGY
 { id:2, label:"Urban Spatial Dispersion", group:"morph" },
 { id:3, label:"Urban Fragmentation", group:"morph" },
 { id:4, label:"Urban Compactness (C1–C2)", group:"morph" },
@@ -94,13 +96,13 @@ desc:"Integrated modeling of urban growth, land-cover change, environmental risk
 { id:6, label:"Outlying Expansion", group:"morph" },
 { id:7, label:"Urban Growth Corridors", group:"morph" },
 
-// Entropy
+// ENTROPY
 { id:20, label:"Shannon Entropy (H, H')", group:"entropy" },
 { id:21, label:"LULC Diversity", group:"entropy" },
 { id:22, label:"Land-Cover Evenness", group:"entropy" },
-{ id:23, label:"Patch-Based Metrics", group:"entropy" },
+{ id:23, label:"Spatial Complexity Metrics", group:"entropy" },
 
-// Climate
+// CLIMATE
 { id:30, label:"Land Surface Temperature (LST)", group:"climate" },
 { id:31, label:"Urban Heat Island (UHI)", group:"climate" },
 { id:32, label:"Carbon Emission Modeling", group:"climate" },
@@ -108,11 +110,11 @@ desc:"Integrated modeling of urban growth, land-cover change, environmental risk
 { id:34, label:"Vegetation Degradation", group:"climate" },
 { id:35, label:"Ecological Corridors", group:"climate" },
 
-// Geomorphology
+// GEOMORPHOLOGY
 { id:40, label:"Topographic Position Index (TPI)", group:"geo" },
 { id:41, label:"Geomorphological Complexity", group:"geo" },
 
-// Spatial Data
+// DATA & COMPUTATION
 { id:50, label:"Google Earth Engine", group:"data" },
 { id:51, label:"Landsat & Sentinel", group:"data" },
 { id:52, label:"VIIRS Nighttime Light", group:"data" },
@@ -120,9 +122,12 @@ desc:"Integrated modeling of urban growth, land-cover change, environmental risk
 ]);
 
 const edges = new vis.DataSet([
+
+// CORE connections
 { from:1, to:2 },{ from:1, to:20 },{ from:1, to:30 },
 { from:1, to:40 },{ from:1, to:50 },
 
+// Intra-cluster
 { from:2, to:3 },{ from:2, to:4 },{ from:2, to:5 },
 { from:2, to:6 },{ from:2, to:7 },
 
@@ -133,15 +138,32 @@ const edges = new vis.DataSet([
 
 { from:40, to:41 },
 
-{ from:50, to:51 },{ from:50, to:52 },{ from:50, to:53 }
+{ from:50, to:51 },{ from:50, to:52 },{ from:50, to:53 },
+
+// 🔥 CROSS-CLUSTER (integrative research links)
+{ from:2, to:20 },  // dispersion ↔ entropy
+{ from:3, to:34 },  // fragmentation ↔ vegetation
+{ from:5, to:41 },  // LEI ↔ geomorphology
+{ from:21, to:33 }, // diversity ↔ RSEI
+{ from:30, to:32 }, // LST ↔ carbon
+{ from:31, to:35 }, // UHI ↔ corridors
+{ from:52, to:20 }, // NTL ↔ entropy
+{ from:50, to:30 }  // GEE ↔ LST
 ]);
 
 const options = {
-nodes:{ shape:"dot", scaling:{min:8,max:45}, font:{size:13}},
-edges:{ width:1.5, color:"#999999", smooth:{type:"dynamic"} },
+nodes:{
+  shape:"dot",
+  scaling:{min:8,max:45},
+  font:{ size:13 }
+},
+edges:{
+  width:1.8,
+  smooth:{type:"dynamic"}
+},
 physics:{
   barnesHut:{
-    gravitationalConstant:-12000,
+    gravitationalConstant:-14000,
     springLength:220,
     springConstant:0.02
   },
@@ -149,30 +171,50 @@ physics:{
 },
 interaction:{ hover:true, zoomView:true, dragView:true },
 groups:{
-  core:{color:"#000000"},
+  core:{color:"#111111"},
   morph:{color:"#1b5e20"},
   entropy:{color:"#1565c0"},
   climate:{color:"#c62828"},
   geo:{color:"#6a1b9a"},
-  data:{color:"#ff8f00"}
+  data:{color:"#ef6c00"}
 }
 };
 
 const network = new vis.Network(container,{nodes,edges},options);
 
-// Export PNG
-function exportPNG(){
-html2canvas(container).then(canvas=>{
-let link=document.createElement('a');
-link.download='research-network.png';
-link.href=canvas.toDataURL();
-link.click();
-});
-}
-</script>
 
-<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-<button onclick="exportPNG()">Export PNG</button>
+
+// 🌗 AUTO DARK/LIGHT ADAPTIVE
+function updateGraphTheme() {
+    const isDark = document.body.classList.contains("dark-mode");
+
+    network.setOptions({
+        edges:{
+            color: isDark ? "#555555" : "#999999"
+        },
+        nodes:{
+            font:{
+                color: isDark ? "#ffffff" : "#000000"
+            }
+        }
+    });
+}
+
+updateGraphTheme();
+
+const observer = new MutationObserver(updateGraphTheme);
+observer.observe(document.body, { attributes: true });
+
+
+// 🔍 CLICK → description
+network.on("click", function(params){
+  if(params.nodes.length>0){
+    const node = nodes.get(params.nodes[0]);
+    descriptionBox.innerHTML =
+    "<strong>"+node.label+"</strong><br>"+
+    (node.desc ? node.desc : "Part of the integrated urban-environment modeling framework.");
+  }
+});
 </script>
 </body>
 </html>
