@@ -92,39 +92,88 @@ const container = document.getElementById("research-network");
 const descriptionBox = document.getElementById("node-description");
 
 const nodes = new vis.DataSet([
-{ id:1, label:"Urban–Environment Spatial Dynamics", size:60, group:"core"},
 
+// CORE
+{ id:1, label:"Urban–Environment Spatial Dynamics", size:65, group:"core" },
+
+// MORPHOLOGY
 { id:2, label:"Urban Spatial Dispersion", group:"morph" },
 { id:3, label:"Urban Fragmentation", group:"morph" },
 { id:4, label:"Urban Compactness", group:"morph" },
-{ id:5, label:"Landscape Expansion Index", group:"morph" },
+{ id:5, label:"Landscape Expansion Index (LEI)", group:"morph" },
 { id:6, label:"Outlying Expansion", group:"morph" },
 { id:7, label:"Urban Growth Corridors", group:"morph" },
+{ id:8, label:"Metropolitan Conurbation", group:"morph" },
+{ id:9, label:"Built-up Patch Dynamics", group:"morph" },
 
-{ id:20, label:"Shannon Entropy", group:"entropy" },
+// ENTROPY & LULC
+{ id:20, label:"Shannon Entropy (H)", group:"entropy" },
 { id:21, label:"LULC Diversity", group:"entropy" },
+{ id:22, label:"Land-Cover Evenness", group:"entropy" },
+{ id:23, label:"Spatial Complexity", group:"entropy" },
+{ id:24, label:"Patch-based Metrics", group:"entropy" },
 
+// CLIMATE
 { id:30, label:"Land Surface Temperature", group:"climate" },
 { id:31, label:"Urban Heat Island", group:"climate" },
 { id:32, label:"Carbon Emission Modeling", group:"climate" },
+{ id:33, label:"RSEI Ecological Index", group:"climate" },
+{ id:34, label:"Vegetation Degradation", group:"climate" },
+{ id:35, label:"Ecological Corridors", group:"climate" },
+{ id:36, label:"Heat–Heat Corridors", group:"climate" },
 
+// GEOMORPHOLOGY
 { id:40, label:"Geomorphological Complexity", group:"geo" },
+{ id:41, label:"Topographic Position Index", group:"geo" },
 
-{ id:50, label:"Google Earth Engine", group:"data" }
+// DATA & METHODS
+{ id:50, label:"Google Earth Engine", group:"data" },
+{ id:51, label:"Landsat & Sentinel", group:"data" },
+{ id:52, label:"VIIRS Nighttime Light", group:"data" },
+{ id:53, label:"Support Vector Machine", group:"data" },
+{ id:54, label:"Remote Sensing", group:"data" }
+
 ]);
 
 const edges = new vis.DataSet([
-{ from:1, to:2 },{ from:1, to:20 },{ from:1, to:30 },{ from:1, to:50 },
-{ from:2, to:3 },{ from:2, to:4 },{ from:2, to:5 },{ from:2, to:6 },
-{ from:20, to:21 },
-{ from:30, to:31 },{ from:30, to:32 },
 
-// lintas cluster
+// CORE ke semua cluster
+{ from:1, to:2 },{ from:1, to:20 },{ from:1, to:30 },
+{ from:1, to:40 },{ from:1, to:50 },
+
+// Morph internal
+{ from:2, to:3 },{ from:2, to:4 },{ from:2, to:5 },
+{ from:5, to:6 },{ from:6, to:7 },{ from:7, to:8 },
+{ from:8, to:9 },
+
+// Entropy internal
+{ from:20, to:21 },{ from:21, to:22 },
+{ from:22, to:23 },{ from:23, to:24 },
+
+// Climate internal
+{ from:30, to:31 },{ from:31, to:32 },
+{ from:32, to:33 },{ from:33, to:34 },
+{ from:34, to:35 },{ from:35, to:36 },
+
+// Geo
+{ from:40, to:41 },
+
+// Data internal
+{ from:50, to:51 },{ from:51, to:52 },
+{ from:52, to:53 },{ from:53, to:54 },
+
+// 🔥 Cross-cluster research links
 { from:2, to:20 },
 { from:3, to:30 },
-{ from:21, to:32 }
-]);
+{ from:5, to:40 },
+{ from:21, to:33 },
+{ from:31, to:35 },
+{ from:52, to:20 },
+{ from:50, to:30 },
+{ from:54, to:32 }
 
+]);
+    
 const options = {
 nodes:{
   shape:"dot",
@@ -164,15 +213,30 @@ function resetView(){ network.fit({animation:true}); }
 function zoomToCore(){ network.focus(1,{scale:1.3,animation:true}); }
 
 function clusterByGroup(){
-  ["morph","entropy","climate","geo","data"].forEach(g=>{
+
+  const clusterColors = {
+    morph:"#2e7d32",
+    entropy:"#1565c0",
+    climate:"#c62828",
+    geo:"#6a1b9a",
+    data:"#ef6c00"
+  };
+
+  Object.keys(clusterColors).forEach(groupName => {
+
     network.cluster({
-      joinCondition:(n)=> n.group===g,
+      joinCondition: function(nodeOptions){
+        return nodeOptions.group === groupName;
+      },
       clusterNodeProperties:{
-        id:"cluster_"+g,
-        label:g.toUpperCase(),
-        shape:"database"
+        id:"cluster_"+groupName,
+        label: groupName.toUpperCase(),
+        shape:"database",
+        color: clusterColors[groupName],
+        borderWidth:3
       }
     });
+
   });
 }
 
