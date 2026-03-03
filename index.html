@@ -1,102 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dr. Dimas Danar Dewa</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-
-<header>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="research.html">Research Output</a>
-        <a href="field-notes.html">Field Notes</a>
-        <a href="profiles.html">Academic Profiles</a>
-        <button onclick="toggleMode()">☾</button>
-    </nav>
-</header>
-
-<div class="container">
-
-    <div class="name">Dr. Dimas Danar Dewa</div>
-
-    <div class="subtitle">
-        Urban Systems & Spatial Modeling
-    </div>
-
-    <div class="headline">
-        Modeling Urban–Environment Dynamics for Climate-Resilient and Sustainable Development
-    </div>
-
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search...">
-    </div>
-
-    <div class="content" id="contentArea">
-
-        <p>Welcome to my homepage.</p>
-
-        <p>
-            I am a Research Fellow at the National Research and Innovation Agency (BRIN), Indonesia.
-            My research integrates spatial modeling, GIScience, and remote sensing to examine urban–environment systems,
-            ecological dynamics, and environmental change in rapidly transforming metropolitan regions.
-        </p>
-
-        <p>
-            I focus on developing data-driven approaches for disaster risk reduction, environmental risk assessment,
-            and adaptive planning, contributing to sustainable and low-carbon urban transitions in emerging economies.
-        </p>
-
-    </div>
-    
-    
-    <div class="graph-controls">
-    <button onclick="resetView()">Reset</button>
-    <button onclick="zoomToCore()">Core</button>
-    <button onclick="clusterByGroup()">Cluster</button>
-    <button onclick="openClusters()">Uncluster</button>
-    <button onclick="toggleFullscreen()">Fullscreen</button>
-    </div>
-
-    <div id="research-network" style="height:550px; margin-top:15px;">
-        
-    </div>
-       
-    <div id="node-description" style="margin-top:25px; font-size:14px; line-height:1.6;">
-        
-    </div>
-</div>
-
-<script>
-function toggleMode() {
-    document.body.classList.toggle("dark-mode");
-}
-
-document.getElementById("searchInput").addEventListener("keyup", function() {
-    let filter = this.value.toLowerCase();
-    let content = document.getElementById("contentArea");
-    let paragraphs = content.getElementsByTagName("p");
-
-    for (let i = 0; i < paragraphs.length; i++) {
-        let text = paragraphs[i].textContent.toLowerCase();
-        paragraphs[i].style.display = text.includes(filter) ? "" : "none";
-    }
-});
-</script>
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
 <script>
 const container = document.getElementById("research-network");
 const descriptionBox = document.getElementById("node-description");
 
+// ================= NODES =================
 const nodes = new vis.DataSet([
 
-// CORE
-{ id:1, label:"Urban–Environment Spatial Dynamics", size:65, group:"core" },
+{ id:1, label:"Urban–Environment Spatial Dynamics", size:70, group:"core" },
 
-// MORPHOLOGY
+// Morphology
 { id:2, label:"Urban Spatial Dispersion", group:"morph" },
 { id:3, label:"Urban Fragmentation", group:"morph" },
 { id:4, label:"Urban Compactness", group:"morph" },
@@ -106,14 +19,14 @@ const nodes = new vis.DataSet([
 { id:8, label:"Metropolitan Conurbation", group:"morph" },
 { id:9, label:"Built-up Patch Dynamics", group:"morph" },
 
-// ENTROPY & LULC
-{ id:20, label:"Shannon Entropy (H)", group:"entropy" },
+// Entropy
+{ id:20, label:"Shannon Entropy", group:"entropy" },
 { id:21, label:"LULC Diversity", group:"entropy" },
 { id:22, label:"Land-Cover Evenness", group:"entropy" },
 { id:23, label:"Spatial Complexity", group:"entropy" },
 { id:24, label:"Patch-based Metrics", group:"entropy" },
 
-// CLIMATE
+// Climate
 { id:30, label:"Land Surface Temperature", group:"climate" },
 { id:31, label:"Urban Heat Island", group:"climate" },
 { id:32, label:"Carbon Emission Modeling", group:"climate" },
@@ -122,11 +35,11 @@ const nodes = new vis.DataSet([
 { id:35, label:"Ecological Corridors", group:"climate" },
 { id:36, label:"Heat–Heat Corridors", group:"climate" },
 
-// GEOMORPHOLOGY
+// Geo
 { id:40, label:"Geomorphological Complexity", group:"geo" },
 { id:41, label:"Topographic Position Index", group:"geo" },
 
-// DATA & METHODS
+// Data
 { id:50, label:"Google Earth Engine", group:"data" },
 { id:51, label:"Landsat & Sentinel", group:"data" },
 { id:52, label:"VIIRS Nighttime Light", group:"data" },
@@ -135,34 +48,35 @@ const nodes = new vis.DataSet([
 
 ]);
 
+// ================= EDGES =================
 const edges = new vis.DataSet([
 
-// CORE ke semua cluster
-{ from:1, to:2 },{ from:1, to:20 },{ from:1, to:30 },
-{ from:1, to:40 },{ from:1, to:50 },
+// Core connections
+{ from:1, to:2 }, { from:1, to:20 }, { from:1, to:30 },
+{ from:1, to:40 }, { from:1, to:50 },
 
 // Morph internal
-{ from:2, to:3 },{ from:2, to:4 },{ from:2, to:5 },
-{ from:5, to:6 },{ from:6, to:7 },{ from:7, to:8 },
+{ from:2, to:3 }, { from:3, to:4 }, { from:4, to:5 },
+{ from:5, to:6 }, { from:6, to:7 }, { from:7, to:8 },
 { from:8, to:9 },
 
 // Entropy internal
-{ from:20, to:21 },{ from:21, to:22 },
-{ from:22, to:23 },{ from:23, to:24 },
+{ from:20, to:21 }, { from:21, to:22 },
+{ from:22, to:23 }, { from:23, to:24 },
 
 // Climate internal
-{ from:30, to:31 },{ from:31, to:32 },
-{ from:32, to:33 },{ from:33, to:34 },
-{ from:34, to:35 },{ from:35, to:36 },
+{ from:30, to:31 }, { from:31, to:32 },
+{ from:32, to:33 }, { from:33, to:34 },
+{ from:34, to:35 }, { from:35, to:36 },
 
 // Geo
 { from:40, to:41 },
 
 // Data internal
-{ from:50, to:51 },{ from:51, to:52 },
-{ from:52, to:53 },{ from:53, to:54 },
+{ from:50, to:51 }, { from:51, to:52 },
+{ from:52, to:53 }, { from:53, to:54 },
 
-// 🔥 Cross-cluster research links
+// Cross-cluster links
 { from:2, to:20 },
 { from:3, to:30 },
 { from:5, to:40 },
@@ -170,52 +84,68 @@ const edges = new vis.DataSet([
 { from:31, to:35 },
 { from:52, to:20 },
 { from:50, to:30 },
-{ from:54, to:32 }
-// Tambahan koneksi ilmiah
-{ from:9, to:24 },   // Built-up Patch Dynamics ↔ Patch-based Metrics
-{ from:9, to:5 },    // Patch Dynamics ↔ LEI
-{ from:24, to:4 },   // Patch metrics ↔ Compactness
-{ from:36, to:35 },  // Heat corridors ↔ Ecological corridors
-{ from:41, to:5 },   // TPI ↔ LEI
-    
+{ from:54, to:32 },
+{ from:9, to:24 },
+{ from:9, to:5 },
+{ from:24, to:4 },
+{ from:36, to:35 },
+{ from:41, to:5 }
+
 ]);
-    
+
+// ================= OPTIONS =================
 const options = {
-  nodes:{
-    shape:"dot"
+nodes:{
+  shape:"dot",
+  size:20,
+  scaling:{
+    min:20,
+    max:80,
+    label:{ enabled:true, min:18, max:28 }
   },
-  edges:{
-    width:2
-  },
-  physics:{
-    barnesHut:{
-      gravitationalConstant:-11000,
-      springLength:200
-    },
-    stabilization:{
-      iterations:200
-    }
-  },
-
-  interaction:{
-    hover:true,
-    navigationButtons:true,
-    keyboard:true,
-    dragNodes:true,
-    dragView:false
-  },
-
-  groups:{
-    core:{color:"#455a64"}
+  font:{
+    size:20,
+    strokeWidth:3,
+    strokeColor:"#ffffff"
   }
+},
+edges:{
+  width:2,
+  smooth:{ type:"dynamic" }
+},
+physics:{
+  barnesHut:{
+    gravitationalConstant:-12000,
+    springLength:220
+  },
+  stabilization:{ iterations:250 }
+},
+interaction:{
+  hover:true,
+  navigationButtons:true,
+  keyboard:true,
+  dragNodes:true,
+  dragView:false
+},
+groups:{
+  core:{color:"#455a64"},
+  morph:{color:"#2e7d32"},
+  entropy:{color:"#1565c0"},
+  climate:{color:"#c62828"},
+  geo:{color:"#6a1b9a"},
+  data:{color:"#ef6c00"}
+}
 };
-    
+
+// ================= INIT =================
 const network = new vis.Network(container,{nodes,edges},options);
 
+// Auto zoom extent
 network.once("stabilizationIterationsDone", function () {
     network.fit({ animation:true });
 });
 
+// ================= CONTROLS =================
 function resetView(){ network.fit({animation:true}); }
 function zoomToCore(){ network.focus(1,{scale:1.3,animation:true}); }
 
@@ -229,37 +159,23 @@ function clusterByGroup(){
     data:"Spatial Data & Methods"
   };
 
-  const clusterColors = {
-    morph:"#2e7d32",
-    entropy:"#1565c0",
-    climate:"#c62828",
-    geo:"#6a1b9a",
-    data:"#ef6c00"
-  };
-
   Object.keys(clusterMap).forEach(groupName => {
-
     network.cluster({
-      joinCondition: function(nodeOptions){
-        return nodeOptions.group === groupName;
-      },
+      joinCondition:(node)=> node.group===groupName,
       clusterNodeProperties:{
         id:"cluster_"+groupName,
         label: clusterMap[groupName],
         shape:"database",
-        color: clusterColors[groupName],
-        borderWidth:3,
-        font:{ size:18 }
+        color: options.groups[groupName].color,
+        font:{size:20}
       }
     });
-
   });
 }
 
 function openClusters(){
-  ["cluster_morph","cluster_entropy","cluster_climate","cluster_geo","cluster_data"]
-  .forEach(id=>{
-    try{ network.openCluster(id); }catch(e){}
+  ["morph","entropy","climate","geo","data"].forEach(g=>{
+    try{ network.openCluster("cluster_"+g); }catch(e){}
   });
 }
 
@@ -271,6 +187,7 @@ function toggleFullscreen(){
   }
 }
 
+// Dark mode adapt
 function updateGraphTheme(){
   const isDark = document.body.classList.contains("dark-mode");
   network.setOptions({
@@ -282,5 +199,3 @@ updateGraphTheme();
 new MutationObserver(updateGraphTheme)
 .observe(document.body,{attributes:true});
 </script>
-</body>
-</html>
