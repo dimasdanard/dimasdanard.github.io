@@ -47,7 +47,6 @@
         <button onclick="zoomToCore()">Core</button>
         <button onclick="clusterByGroup()">Cluster</button>
         <button onclick="openClusters()">Uncluster</button>
-        <button onclick="toggleFullscreen()">Fullscreen</button>
     </div>
 
     <div id="research-network" style="height:650px; margin-top:20px;"></div>
@@ -69,14 +68,7 @@ function toggleMode() {
 // ================= NODES =================
 
 const nodes = new vis.DataSet([
-{ 
-  id:1, 
-  label:"Urban–Environment Spatial Dynamics", 
-  group:"core", 
-  size:45, 
-  shape:"star",
-  font:{ size:22 }   // 🔥 lebih besar dari node lain
-},
+{ id:1, label:"Urban–Environment Spatial Dynamics", group:"core", shape:"star", size:45, font:{size:22} },
 
 { id:2, label:"Urban Spatial Dispersion", group:"morph" },
 { id:3, label:"Urban Fragmentation", group:"morph" },
@@ -163,14 +155,13 @@ groups:{
 };
 
 const container = document.getElementById("research-network");
-
 const network = new vis.Network(container,{nodes,edges},options);
 
 network.once("stabilizationIterationsDone", function () {
     network.fit();
 });
 
-// ================= BUTTON FUNCTIONS =================
+// ================= BUTTONS =================
 
 function resetView(){
     network.fit({animation:true});
@@ -180,12 +171,67 @@ function zoomToCore(){
     network.focus(1,{scale:1.4, animation:true});
 }
 
-function toggleFullscreen(){
-    if (!document.fullscreenElement) {
-        container.requestFullscreen();
-    } else {
-        document.exitFullscreen();
-    }
+// 🔥 CLUSTER WORKING VERSION
+
+let clustered = false;
+
+function clusterByGroup(){
+
+    if(clustered) return;
+
+    const clusterMap = {
+        morph:"Urban Morphological Structure & Spatial Expansion",
+        entropy:"Land-Use Diversity & Entropy Modeling",
+        climate:"Urban Climate Risk & Ecological Resilience",
+        data:"Geospatial Analytics & Remote Sensing Framework"
+    };
+
+    Object.keys(clusterMap).forEach(group=>{
+        network.cluster({
+            joinCondition: node=>node.group===group,
+            clusterNodeProperties:{
+                id:"cluster_"+group,
+                label: clusterMap[group],
+                shape:"dot",
+                size:30,
+                font:{ size:22 }
+            }
+        });
+    });
+
+    network.setOptions({
+        physics:{
+            barnesHut:{
+                gravitationalConstant:-900,
+                springLength:320,
+                springConstant:0.02
+            }
+        }
+    });
+
+    clustered = true;
+    updateClusterLabelColors();
+}
+
+function openClusters(){
+
+    if(!clustered) return;
+
+    ["morph","entropy","climate","data"].forEach(group=>{
+        try{ network.openCluster("cluster_"+group); }catch(e){}
+    });
+
+    network.setOptions({
+        physics:{
+            barnesHut:{
+                gravitationalConstant:-3500,
+                springLength:180,
+                springConstant:0.04
+            }
+        }
+    });
+
+    clustered = false;
 }
 
 // ================= DARK MODE =================
@@ -200,12 +246,10 @@ function updateGraphTheme(){
 
 function updateClusterLabelColors(){
   const dark=document.body.classList.contains("dark-mode");
-  const allNodes = network.body.data.nodes.get();
-
-  allNodes.forEach(n=>{
-      if(n.id.toString().startsWith("cluster_")){
+  network.body.data.nodes.forEach(node=>{
+      if(node.id.toString().startsWith("cluster_")){
           network.body.data.nodes.update({
-              id:n.id,
+              id:node.id,
               font:{ color: dark ? "#ffffff" : "#000000" }
           });
       }
