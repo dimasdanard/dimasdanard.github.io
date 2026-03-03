@@ -14,9 +14,9 @@ body {
 }
 
 header {
-    padding: 30px 12%;
+    padding: 25px 12%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     border-bottom: 1px solid #eaeaea;
 }
@@ -26,19 +26,33 @@ header {
 }
 
 nav a {
-    margin-left: 25px;
+    margin-left: 30px;
     text-decoration: none;
     color: inherit;
     font-weight: 400;
+    font-size: 15px;
 }
 
 nav a:hover {
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
-.hero {
-    padding: 80px 12% 40px 12%;
-    max-width: 1000px;
+button {
+    background: none;
+    border: 1px solid #999;
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-left: 20px;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+.container {
+    padding: 80px 12%;
+    max-width: 900px;
 }
 
 .name {
@@ -65,9 +79,26 @@ nav a:hover {
     color: #bbb;
 }
 
+.search-box {
+    margin-top: 35px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.dark-mode .search-box input {
+    background: #222;
+    border: 1px solid #444;
+    color: #fff;
+}
+
 .content {
-    padding: 40px 12% 80px 12%;
-    max-width: 900px;
+    margin-top: 50px;
 }
 
 p {
@@ -75,14 +106,14 @@ p {
     margin-top: 20px;
 }
 
-button {
-    background: none;
-    border: 1px solid #999;
-    padding: 6px 10px;
-    cursor: pointer;
-    border-radius: 4px;
+.back-btn {
+    margin-top: 40px;
+    display: inline-block;
+    font-size: 14px;
+    text-decoration: none;
+    color: #666;
 }
 
-button:hover {
-    opacity: 0.8;
+.back-btn:hover {
+    text-decoration: underline;
 }
