@@ -1,36 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
 
 body {
     margin: 0;
-    font-family: 'Inter', sans-serif;
     background: #ffffff;
-    color: #1a1a1a;
+    color: #111;
     transition: background 0.3s ease, color 0.3s ease;
 }
 
 .dark-mode {
-    background: #111;
-    color: #e5e5e5;
+    background: #0f0f0f;
+    color: #eaeaea;
 }
 
+/* Top Navigation */
 header {
-    padding: 25px 12%;
+    padding: 20px 12%;
     display: flex;
     justify-content: flex-end;
-    align-items: center;
-    border-bottom: 1px solid #eaeaea;
-}
-
-.dark-mode header {
-    border-bottom: 1px solid #333;
 }
 
 nav a {
-    margin-left: 30px;
+    margin-left: 25px;
     text-decoration: none;
     color: inherit;
+    font-size: 14px;
     font-weight: 400;
-    font-size: 15px;
 }
 
 nav a:hover {
@@ -39,22 +37,19 @@ nav a:hover {
 
 button {
     background: none;
-    border: 1px solid #999;
-    padding: 6px 10px;
+    border: none;
     cursor: pointer;
-    border-radius: 4px;
+    font-size: 14px;
     margin-left: 20px;
 }
 
-button:hover {
-    opacity: 0.8;
-}
-
+/* Main Content */
 .container {
     padding: 80px 12%;
-    max-width: 900px;
+    max-width: 850px;
 }
 
+/* Typography hierarchy */
 .name {
     font-size: 42px;
     font-weight: 700;
@@ -62,23 +57,24 @@ button:hover {
 }
 
 .subtitle {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 400;
-    margin-top: 12px;
+    margin-top: 14px;
 }
 
 .headline {
     font-size: 18px;
     font-weight: 400;
-    margin-top: 20px;
+    margin-top: 22px;
     color: #555;
     line-height: 1.6;
 }
 
 .dark-mode .headline {
-    color: #bbb;
+    color: #aaa;
 }
 
+/* Search */
 .search-box {
     margin-top: 35px;
 }
@@ -92,28 +88,16 @@ button:hover {
 }
 
 .dark-mode .search-box input {
-    background: #222;
-    border: 1px solid #444;
+    background: #1a1a1a;
+    border: 1px solid #333;
     color: #fff;
 }
 
 .content {
-    margin-top: 50px;
+    margin-top: 45px;
 }
 
 p {
-    line-height: 1.7;
+    line-height: 1.8;
     margin-top: 20px;
-}
-
-.back-btn {
-    margin-top: 40px;
-    display: inline-block;
-    font-size: 14px;
-    text-decoration: none;
-    color: #666;
-}
-
-.back-btn:hover {
-    text-decoration: underline;
 }
