@@ -49,7 +49,7 @@ I focus on strengthening urban resilience through data-driven approaches to disa
 <button onclick="openClusters()">Uncluster</button>
 </div>
 
-<div id="research-network" style="height:700px;margin-top:20px;"></div>
+<div id="research-network" style="height:720px;margin-top:20px;"></div>
 
 </div>
 
@@ -75,41 +75,43 @@ id:1,
 label:"Urban–Environment Spatial Dynamics",
 group:"core",
 shape:"star",
-size:48,
-font:{size:24}
+size:52,
+font:{size:26}
 },
 
-// URBAN MORPHOLOGY
+// URBAN GROWTH
 { id:2,label:"Urban Spatial Dispersion",group:"morph"},
 { id:3,label:"Urban Fragmentation & Compactness",group:"morph"},
 { id:4,label:"Landscape Expansion Index (LEI)",group:"morph"},
-{ id:5,label:"Urban Growth Typology (Leapfrog / Edge / Infilling)",group:"morph"},
+{ id:5,label:"Urban Growth Typology",group:"morph"},
 { id:6,label:"Topographic & Geomorphological Constraints",group:"morph"},
 
-// ENTROPY & LAND USE
-{ id:20,label:"Entropy-Based Urban Diversity Metrics",group:"entropy"},
+// LAND USE & ENTROPY
+{ id:20,label:"Entropy-Based Urban Diversity",group:"entropy"},
 { id:21,label:"Landscape Metrics (FRAGSTATS)",group:"entropy"},
 { id:22,label:"Spatiotemporal LULC Dynamics",group:"entropy"},
 { id:23,label:"Spatial Autocorrelation (Moran’s I & LISA)",group:"entropy"},
-{ id:24,label:"Hotspot Analysis (Getis-Ord Gi*)",group:"entropy"},
+{ id:24,label:"Hotspot & Spatial Cluster Analysis",group:"entropy"},
 
-// CLIMATE & ECOLOGY
+// CLIMATE & RISK
 { id:30,label:"Land Surface Temperature & UHI",group:"climate"},
-{ id:31,label:"RSEI Ecological Quality Index",group:"climate"},
-{ id:32,label:"Spectral Indices (NDVI / NDBI / MNDWI)",group:"climate"},
-{ id:33,label:"Carbon Emission Estimation (NTL-based)",group:"climate"},
-{ id:34,label:"Ecological & Environmental Risk Index",group:"climate"},
+{ id:31,label:"RSEI Ecological Quality",group:"climate"},
+{ id:32,label:"Carbon Emission Estimation (NTL)",group:"climate"},
+{ id:33,label:"Ecological & Environmental Risk Index",group:"climate"},
+{ id:34,label:"Urban Resilience Modeling",group:"climate"},
+{ id:35,label:"Climate-Resilient Urban Planning",group:"climate"},
 
-// SPATIAL STATISTICS & MODELING
+// SPATIAL ANALYTICS
 { id:40,label:"Geographically Weighted Regression (GWR)",group:"stats"},
 { id:41,label:"Principal Component Analysis (PCA)",group:"stats"},
 { id:42,label:"Spatial Statistics & Modeling",group:"stats"},
 
-// DATA & COMPUTING
-{ id:50,label:"Machine Learning Classification (SVM & RF)",group:"data"},
-{ id:51,label:"Google Earth Engine & Cloud Computing",group:"data"},
-{ id:52,label:"Landsat & Sentinel Data",group:"data"},
-{ id:53,label:"VIIRS Nighttime Light Data",group:"data"}
+// DATA INFRASTRUCTURE
+{ id:50,label:"Machine Learning (SVM & RF)",group:"data"},
+{ id:51,label:"Google Earth Engine",group:"data"},
+{ id:52,label:"Cloud-Based Geospatial Processing",group:"data"},
+{ id:53,label:"Landsat & Sentinel",group:"data"},
+{ id:54,label:"VIIRS Nighttime Light",group:"data"}
 
 ]);
 
@@ -118,36 +120,34 @@ font:{size:24}
 const edges = new vis.DataSet([
 
 // CORE LINKS
-{from:1,to:2},{from:1,to:20},{from:1,to:30},{from:1,to:40},{from:1,to:50},
+{from:1,to:2},{from:1,to:20},{from:1,to:30},{from:1,to:40},{from:1,to:50},{from:1,to:34},
 
-// MORPH INTERNAL
+// URBAN GROWTH
 {from:2,to:3},{from:3,to:4},{from:4,to:5},{from:5,to:6},
 
-// ENTROPY INTERNAL
+// ENTROPY
 {from:20,to:21},{from:21,to:22},
 {from:22,to:23},{from:23,to:24},
 
-// CLIMATE INTERNAL
+// CLIMATE
 {from:30,to:31},{from:31,to:32},
-{from:32,to:33},{from:33,to:34},
+{from:32,to:33},{from:33,to:34},{from:34,to:35},
 
-// STATS INTERNAL
-{from:40,to:41},{from:41,to:42},
+// SPATIAL ANALYTICS
+{from:40,to:42},{from:41,to:42},
+{from:42,to:23},{from:40,to:30},
 
-// DATA INTERNAL
-{from:50,to:51},{from:51,to:52},{from:52,to:53},
+// DATA
+{from:50,to:51},{from:51,to:52},
+{from:52,to:53},{from:53,to:54},
 
-// CROSS-LINKS
+// CROSS
 {from:2,to:20},
 {from:3,to:30},
 {from:22,to:30},
-{from:23,to:40},
-{from:24,to:34},
 {from:32,to:20},
-{from:53,to:33},
-{from:50,to:22},
-{from:40,to:30},
-{from:41,to:31}
+{from:54,to:32},
+{from:50,to:22}
 ]);
 
 // ================= OPTIONS =================
@@ -179,7 +179,7 @@ dragNodes:true,
 dragView:false
 },
 groups:{
-core:{color:"#455a64"},
+core:{color:"#37474f"},
 morph:{color:"#2e7d32"},
 entropy:{color:"#1565c0"},
 climate:{color:"#c62828"},
@@ -203,10 +203,10 @@ network.fit({animation:{duration:600}});
 }
 
 function zoomToCore(){
-network.focus(1,{scale:1.5,animation:{duration:600}});
+network.focus(1,{scale:1.6,animation:{duration:600}});
 }
 
-// ================= CLUSTER =================
+// ================= CLUSTER (GRANT-ORIENTED) =================
 
 let clustered=false;
 
@@ -215,11 +215,11 @@ function clusterByGroup(){
 if(clustered) return;
 
 const clusterNames={
-morph:"Urban Morphological Structure & Expansion",
-entropy:"Land-Use Diversity & Entropy Modeling",
-climate:"Urban Climate & Ecological Risk",
-stats:"Spatial Statistics & Modeling",
-data:"Geospatial Computing & Machine Learning"
+morph:"Urban Growth & Spatial Transformation",
+entropy:"Land-Use Dynamics & Spatial Complexity",
+climate:"Climate Risk & Urban Resilience",
+stats:"Spatial Analytics & Modeling Frameworks",
+data:"Geospatial Intelligence & Data Infrastructure"
 };
 
 Object.keys(clusterNames).forEach(group=>{
@@ -229,8 +229,8 @@ clusterNodeProperties:{
 id:"cluster_"+group,
 label:clusterNames[group],
 shape:"dot",
-size:32,
-font:{size:22}
+size:36,
+font:{size:24}
 }
 });
 });
@@ -238,14 +238,14 @@ font:{size:22}
 network.setOptions({
 physics:{
 barnesHut:{
-gravitationalConstant:-900,
-springLength:340,
+gravitationalConstant:-800,
+springLength:360,
 springConstant:0.02
 }
 }
 });
 
-setTimeout(()=>network.fit({animation:{duration:800}}),300);
+setTimeout(()=>network.fit({animation:{duration:900}}),300);
 
 clustered=true;
 updateClusterLabelColors();
