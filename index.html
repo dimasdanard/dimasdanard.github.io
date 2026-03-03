@@ -82,138 +82,97 @@ document.getElementById("searchInput").addEventListener("keyup", function() {
 const container = document.getElementById("research-network");
 const descriptionBox = document.getElementById("node-description");
 
-const clusterColors = {
-    spatial: "#2e7d32",
-    ecology: "#1565c0",
-    climate: "#c62828",
-    sustain: "#6a1b9a",
-    core: "#222222"
-};
-
 const nodes = new vis.DataSet([
-    { id: 1, label: "Urban–Environment Systems", group: "core", size: 50, desc: "Integrated modeling of urban and environmental systems." },
+{ id:1, label:"Urban–Environment Spatial Dynamics", size:55, fixed:true, x:0, y:0, group:"core",
+desc:"Integrated modeling of urban growth, land-cover change, environmental risk, and spatial sustainability."},
 
-    { id: 2, label: "Spatial Modeling", group: "spatial", desc: "Advanced spatial modeling and simulation approaches." },
-    { id: 3, label: "GIScience", group: "spatial", desc: "Geographic Information Science and spatial analytics." },
-    { id: 4, label: "Remote Sensing", group: "spatial", desc: "Satellite-based environmental monitoring." },
-    { id: 5, label: "Entropy Modeling", group: "spatial", desc: "Entropy-based urban spatial dynamics modeling." },
-    { id: 6, label: "Land-Use Dynamics", group: "spatial", desc: "Urban land transformation analysis." },
+// Morphology
+{ id:2, label:"Urban Spatial Dispersion", group:"morph" },
+{ id:3, label:"Urban Fragmentation", group:"morph" },
+{ id:4, label:"Urban Compactness (C1–C2)", group:"morph" },
+{ id:5, label:"Landscape Expansion Index (LEI)", group:"morph" },
+{ id:6, label:"Outlying Expansion", group:"morph" },
+{ id:7, label:"Urban Growth Corridors", group:"morph" },
 
-    { id: 7, label: "Ecological Dynamics", group: "ecology", desc: "Modeling ecological processes in urban regions." },
-    { id: 8, label: "Environmental Change", group: "ecology", desc: "Assessing environmental transitions and degradation." },
-    { id: 9, label: "Landscape Structure", group: "ecology", desc: "Spatial configuration and ecological connectivity." },
+// Entropy
+{ id:20, label:"Shannon Entropy (H, H')", group:"entropy" },
+{ id:21, label:"LULC Diversity", group:"entropy" },
+{ id:22, label:"Land-Cover Evenness", group:"entropy" },
+{ id:23, label:"Patch-Based Metrics", group:"entropy" },
 
-    { id: 10, label: "Climate Resilience", group: "climate", desc: "Urban adaptation to climate stressors." },
-    { id: 11, label: "Urban Heat Risk", group: "climate", desc: "Heat vulnerability and mitigation modeling." },
-    { id: 12, label: "Flood Risk", group: "climate", desc: "Hydrological hazard and flood modeling." },
-    { id: 13, label: "Disaster Risk Reduction", group: "climate", desc: "Spatial risk assessment frameworks." },
+// Climate
+{ id:30, label:"Land Surface Temperature (LST)", group:"climate" },
+{ id:31, label:"Urban Heat Island (UHI)", group:"climate" },
+{ id:32, label:"Carbon Emission Modeling", group:"climate" },
+{ id:33, label:"RSEI Ecological Index", group:"climate" },
+{ id:34, label:"Vegetation Degradation", group:"climate" },
+{ id:35, label:"Ecological Corridors", group:"climate" },
 
-    { id: 14, label: "Low-Carbon Development", group: "sustain", desc: "Urban decarbonization strategies." },
-    { id: 15, label: "Sustainable Urban Systems", group: "sustain", desc: "Integrated sustainability modeling." },
-    { id: 16, label: "Adaptive Planning", group: "sustain", desc: "Data-driven adaptive environmental planning." }
+// Geomorphology
+{ id:40, label:"Topographic Position Index (TPI)", group:"geo" },
+{ id:41, label:"Geomorphological Complexity", group:"geo" },
+
+// Spatial Data
+{ id:50, label:"Google Earth Engine", group:"data" },
+{ id:51, label:"Landsat & Sentinel", group:"data" },
+{ id:52, label:"VIIRS Nighttime Light", group:"data" },
+{ id:53, label:"OpenStreetMap (OSM)", group:"data" }
 ]);
-
-// Randomize initial position
-nodes.forEach(n => {
-    nodes.update({ id: n.id, x: Math.random()*1000 - 500, y: Math.random()*1000 - 500 });
-});
 
 const edges = new vis.DataSet([
-    { from: 1, to: 2 }, { from: 1, to: 7 }, { from: 1, to: 10 }, { from: 1, to: 14 },
-    { from: 2, to: 3 }, { from: 2, to: 4 }, { from: 2, to: 5 }, { from: 2, to: 6 },
-    { from: 7, to: 8 }, { from: 7, to: 9 },
-    { from: 10, to: 11 }, { from: 10, to: 12 }, { from: 10, to: 13 },
-    { from: 14, to: 15 }, { from: 14, to: 16 }
+{ from:1, to:2 },{ from:1, to:20 },{ from:1, to:30 },
+{ from:1, to:40 },{ from:1, to:50 },
+
+{ from:2, to:3 },{ from:2, to:4 },{ from:2, to:5 },
+{ from:2, to:6 },{ from:2, to:7 },
+
+{ from:20, to:21 },{ from:20, to:22 },{ from:20, to:23 },
+
+{ from:30, to:31 },{ from:30, to:32 },
+{ from:30, to:33 },{ from:30, to:34 },{ from:30, to:35 },
+
+{ from:40, to:41 },
+
+{ from:50, to:51 },{ from:50, to:52 },{ from:50, to:53 }
 ]);
 
-const data = { nodes: nodes, edges: edges };
-
 const options = {
-    nodes: {
-        shape: "dot",
-        scaling: { min: 10, max: 45 },
-        font: { size: 14 },
-        color: {
-            border: "#ffffff",
-            highlight: { border: "#000000" }
-        }
-    },
-    edges: {
-        width: 0.6,  // thinner edges
-        color: "#bbbbbb",
-        smooth: { type: "dynamic" }
-    },
-    physics: {
-        barnesHut: {
-            gravitationalConstant: -9000,
-            springLength: 200,
-            springConstant: 0.03
-        },
-        stabilization: false
-    },
-    interaction: {
-        hover: true,
-        zoomView: true,
-        dragView: true
-    },
-    groups: {
-        spatial: { color: clusterColors.spatial },
-        ecology: { color: clusterColors.ecology },
-        climate: { color: clusterColors.climate },
-        sustain: { color: clusterColors.sustain },
-        core: { color: clusterColors.core }
-    }
+nodes:{ shape:"dot", scaling:{min:8,max:45}, font:{size:13}},
+edges:{ width:1.5, color:"#999999", smooth:{type:"dynamic"} },
+physics:{
+  barnesHut:{
+    gravitationalConstant:-12000,
+    springLength:220,
+    springConstant:0.02
+  },
+  stabilization:false
+},
+interaction:{ hover:true, zoomView:true, dragView:true },
+groups:{
+  core:{color:"#000000"},
+  morph:{color:"#1b5e20"},
+  entropy:{color:"#1565c0"},
+  climate:{color:"#c62828"},
+  geo:{color:"#6a1b9a"},
+  data:{color:"#ff8f00"}
+}
 };
 
-const network = new vis.Network(container, data, options);
+const network = new vis.Network(container,{nodes,edges},options);
 
-// Hover highlight cluster
-network.on("hoverNode", function(params) {
-    const node = nodes.get(params.node);
-    const group = node.group;
-
-    nodes.forEach(n => {
-        if (n.group !== group) {
-            nodes.update({ id: n.id, opacity: 0.2 });
-        }
-    });
+// Export PNG
+function exportPNG(){
+html2canvas(container).then(canvas=>{
+let link=document.createElement('a');
+link.download='research-network.png';
+link.href=canvas.toDataURL();
+link.click();
 });
-
-network.on("blurNode", function() {
-    nodes.forEach(n => {
-        nodes.update({ id: n.id, opacity: 1 });
-    });
-});
-
-// Click node → description
-network.on("click", function(params) {
-    if (params.nodes.length > 0) {
-        const node = nodes.get(params.nodes[0]);
-        descriptionBox.innerHTML = "<strong>" + node.label + "</strong><br>" + node.desc;
-    }
-});
-
-// Auto-fit screen
-network.once("afterDrawing", function() {
-    network.fit();
-});
-
-// Dark mode adaptive
-function updateGraphTheme() {
-    const isDark = document.body.classList.contains("dark-mode");
-    network.setOptions({
-        edges: { color: isDark ? "#555555" : "#bbbbbb" },
-        nodes: {
-            font: { color: isDark ? "#ffffff" : "#000000" }
-        }
-    });
 }
+</script>
 
-document.addEventListener("click", function(e){
-    if(e.target.innerText === "☾"){
-        setTimeout(updateGraphTheme, 100);
-    }
-});
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<button onclick="exportPNG()">Export PNG</button>
 </script>
 </body>
 </html>
