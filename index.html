@@ -171,38 +171,45 @@ const edges = new vis.DataSet([
 { from:52, to:20 },
 { from:50, to:30 },
 { from:54, to:32 }
-
+// Tambahan koneksi ilmiah
+{ from:9, to:24 },   // Built-up Patch Dynamics ↔ Patch-based Metrics
+{ from:9, to:5 },    // Patch Dynamics ↔ LEI
+{ from:24, to:4 },   // Patch metrics ↔ Compactness
+{ from:36, to:35 },  // Heat corridors ↔ Ecological corridors
+{ from:41, to:5 },   // TPI ↔ LEI
+    
 ]);
     
 const options = {
-nodes:{
-  shape:"dot",
-  scaling:{min:18,max:60},
-  font:{ size:16 }
-},
-edges:{ width:2, smooth:{type:"dynamic"} },
-physics:{
-  barnesHut:{
-    gravitationalConstant:-11000,
-    springLength:200
+  nodes:{
+    shape:"dot"
   },
-  stabilization:true
-},
-interaction:{
-  hover:true,
-  navigationButtons:true,
-  keyboard:true
-},
-groups:{
-  core:{color:"#455a64"},
-  morph:{color:"#2e7d32"},
-  entropy:{color:"#1565c0"},
-  climate:{color:"#c62828"},
-  geo:{color:"#6a1b9a"},
-  data:{color:"#ef6c00"}
-}
-};
+  edges:{
+    width:2
+  },
+  physics:{
+    barnesHut:{
+      gravitationalConstant:-11000,
+      springLength:200
+    },
+    stabilization:{
+      iterations:200
+    }
+  },
 
+  interaction:{
+    hover:true,
+    navigationButtons:true,
+    keyboard:true,
+    dragNodes:true,
+    dragView:false
+  },
+
+  groups:{
+    core:{color:"#455a64"}
+  }
+};
+    
 const network = new vis.Network(container,{nodes,edges},options);
 
 network.once("stabilizationIterationsDone", function () {
@@ -214,6 +221,14 @@ function zoomToCore(){ network.focus(1,{scale:1.3,animation:true}); }
 
 function clusterByGroup(){
 
+  const clusterMap = {
+    morph:"Urban Morphology",
+    entropy:"Land Use & Entropy Modeling",
+    climate:"Climate & Environmental Risk",
+    geo:"Geomorphology",
+    data:"Spatial Data & Methods"
+  };
+
   const clusterColors = {
     morph:"#2e7d32",
     entropy:"#1565c0",
@@ -222,7 +237,7 @@ function clusterByGroup(){
     data:"#ef6c00"
   };
 
-  Object.keys(clusterColors).forEach(groupName => {
+  Object.keys(clusterMap).forEach(groupName => {
 
     network.cluster({
       joinCondition: function(nodeOptions){
@@ -230,10 +245,11 @@ function clusterByGroup(){
       },
       clusterNodeProperties:{
         id:"cluster_"+groupName,
-        label: groupName.toUpperCase(),
+        label: clusterMap[groupName],
         shape:"database",
         color: clusterColors[groupName],
-        borderWidth:3
+        borderWidth:3,
+        font:{ size:18 }
       }
     });
 
