@@ -141,3 +141,120 @@ p {
     background:#1a1a1a !important;
     border:1px solid #444 !important;
 }
+/* ================= GLOBAL ================= */
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Verdana, sans-serif;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ================= LIGHT MODE ================= */
+
+body {
+  background: #f5f5f5;
+  color: #222;
+}
+
+nav a {
+  color: #222;
+}
+
+.graph-controls button,
+nav button {
+  background: #e0e0e0;
+  color: #222;
+  border: 1px solid #ccc;
+}
+
+/* ================= DARK MODE ================= */
+
+body.dark-mode {
+  background: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode nav a {
+  color: #e0e0e0;
+}
+
+body.dark-mode .graph-controls button,
+body.dark-mode nav button {
+  background: #1e1e1e;
+  color: #e0e0e0;
+  border: 1px solid #444;
+}
+
+/* ================= BUTTON STYLE ================= */
+
+.graph-controls {
+  margin-top: 25px;
+}
+
+.graph-controls button,
+nav button {
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-right: 8px;
+}
+
+.graph-controls button:hover,
+nav button:hover {
+  transform: translateY(-1px);
+}
+
+/* ================= SEARCH ================= */
+
+.search-box {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.search-box input {
+  width: 340px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transition: all 0.3s ease;
+  background: #ffffff;
+  color: #222;
+}
+
+body.dark-mode .search-box input {
+  background: #1e1e1e;
+  border: 1px solid #444;
+  color: #e0e0e0;
+}
+
+/* ================= TYPOGRAPHY ================= */
+
+.name {
+  font-size: 34px;
+  font-weight: 700;
+  margin-top: 40px;
+}
+
+.subtitle {
+  font-size: 22px;
+  margin-top: 5px;
+}
+
+.headline {
+  font-size: 18px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  opacity: 0.85;
+}
+
+.content {
+  margin-top: 20px;
+  line-height: 1.7;
+}
