@@ -54,6 +54,10 @@
     <div id="research-network" style="height:500px; margin-top:60px;">
         
     </div>
+    
+    <div id="node-description" style="margin-top:25px; font-size:14px; line-height:1.6;">
+        
+    </div>
 </div>
 
 <script>
@@ -75,90 +79,75 @@ document.getElementById("searchInput").addEventListener("keyup", function() {
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
 <script>
-var nodes = new vis.DataSet([
-    // Core
-    { id: 1, label: "Urban–Environment Systems", size: 45, color: "#222222" },
+const container = document.getElementById("research-network");
+const descriptionBox = document.getElementById("node-description");
 
-    // Spatial Cluster (Green)
-    { id: 2, label: "Spatial Modeling", color: "#2e7d32" },
-    { id: 3, label: "GIScience", color: "#2e7d32" },
-    { id: 4, label: "Remote Sensing", color: "#2e7d32" },
-    { id: 5, label: "Geospatial Big Data", color: "#2e7d32" },
-    { id: 6, label: "Entropy Modeling", color: "#2e7d32" },
-    { id: 7, label: "Land-Use Dynamics", color: "#2e7d32" },
+const clusterColors = {
+    spatial: "#2e7d32",
+    ecology: "#1565c0",
+    climate: "#c62828",
+    sustain: "#6a1b9a",
+    core: "#222222"
+};
 
-    // Ecology Cluster (Blue)
-    { id: 8, label: "Ecological Dynamics", color: "#1565c0" },
-    { id: 9, label: "Environmental Change", color: "#1565c0" },
-    { id: 10, label: "Landscape Structure", color: "#1565c0" },
-    { id: 11, label: "Ecosystem Services", color: "#1565c0" },
+const nodes = new vis.DataSet([
+    { id: 1, label: "Urban–Environment Systems", group: "core", size: 50, desc: "Integrated modeling of urban and environmental systems." },
 
-    // Climate & Risk (Red)
-    { id: 12, label: "Climate Resilience", color: "#c62828" },
-    { id: 13, label: "Urban Heat Risk", color: "#c62828" },
-    { id: 14, label: "Flood Risk", color: "#c62828" },
-    { id: 15, label: "Disaster Risk Reduction", color: "#c62828" },
-    { id: 16, label: "Environmental Vulnerability", color: "#c62828" },
+    { id: 2, label: "Spatial Modeling", group: "spatial", desc: "Advanced spatial modeling and simulation approaches." },
+    { id: 3, label: "GIScience", group: "spatial", desc: "Geographic Information Science and spatial analytics." },
+    { id: 4, label: "Remote Sensing", group: "spatial", desc: "Satellite-based environmental monitoring." },
+    { id: 5, label: "Entropy Modeling", group: "spatial", desc: "Entropy-based urban spatial dynamics modeling." },
+    { id: 6, label: "Land-Use Dynamics", group: "spatial", desc: "Urban land transformation analysis." },
 
-    // Sustainability (Purple)
-    { id: 17, label: "Low-Carbon Development", color: "#6a1b9a" },
-    { id: 18, label: "Sustainable Urban Systems", color: "#6a1b9a" },
-    { id: 19, label: "Spatial Inequality", color: "#6a1b9a" },
-    { id: 20, label: "Adaptive Planning", color: "#6a1b9a" },
-    { id: 21, label: "Urban Transformation", color: "#6a1b9a" }
+    { id: 7, label: "Ecological Dynamics", group: "ecology", desc: "Modeling ecological processes in urban regions." },
+    { id: 8, label: "Environmental Change", group: "ecology", desc: "Assessing environmental transitions and degradation." },
+    { id: 9, label: "Landscape Structure", group: "ecology", desc: "Spatial configuration and ecological connectivity." },
+
+    { id: 10, label: "Climate Resilience", group: "climate", desc: "Urban adaptation to climate stressors." },
+    { id: 11, label: "Urban Heat Risk", group: "climate", desc: "Heat vulnerability and mitigation modeling." },
+    { id: 12, label: "Flood Risk", group: "climate", desc: "Hydrological hazard and flood modeling." },
+    { id: 13, label: "Disaster Risk Reduction", group: "climate", desc: "Spatial risk assessment frameworks." },
+
+    { id: 14, label: "Low-Carbon Development", group: "sustain", desc: "Urban decarbonization strategies." },
+    { id: 15, label: "Sustainable Urban Systems", group: "sustain", desc: "Integrated sustainability modeling." },
+    { id: 16, label: "Adaptive Planning", group: "sustain", desc: "Data-driven adaptive environmental planning." }
 ]);
 
-var edges = new vis.DataSet([
-    // Connect core to clusters
-    { from: 1, to: 2 },
-    { from: 1, to: 8 },
-    { from: 1, to: 12 },
-    { from: 1, to: 17 },
+// Randomize initial position
+nodes.forEach(n => {
+    nodes.update({ id: n.id, x: Math.random()*1000 - 500, y: Math.random()*1000 - 500 });
+});
 
-    // Spatial connections
-    { from: 2, to: 3 },
-    { from: 2, to: 4 },
-    { from: 2, to: 5 },
-    { from: 2, to: 6 },
-    { from: 2, to: 7 },
-
-    // Ecology connections
-    { from: 8, to: 9 },
-    { from: 8, to: 10 },
-    { from: 8, to: 11 },
-
-    // Climate connections
-    { from: 12, to: 13 },
-    { from: 12, to: 14 },
-    { from: 12, to: 15 },
-    { from: 12, to: 16 },
-
-    // Sustainability connections
-    { from: 17, to: 18 },
-    { from: 17, to: 19 },
-    { from: 17, to: 20 },
-    { from: 17, to: 21 }
+const edges = new vis.DataSet([
+    { from: 1, to: 2 }, { from: 1, to: 7 }, { from: 1, to: 10 }, { from: 1, to: 14 },
+    { from: 2, to: 3 }, { from: 2, to: 4 }, { from: 2, to: 5 }, { from: 2, to: 6 },
+    { from: 7, to: 8 }, { from: 7, to: 9 },
+    { from: 10, to: 11 }, { from: 10, to: 12 }, { from: 10, to: 13 },
+    { from: 14, to: 15 }, { from: 14, to: 16 }
 ]);
 
-var container = document.getElementById("research-network");
+const data = { nodes: nodes, edges: edges };
 
-var data = { nodes: nodes, edges: edges };
-
-var options = {
+const options = {
     nodes: {
         shape: "dot",
+        scaling: { min: 10, max: 45 },
         font: { size: 14 },
-        scaling: { min: 10, max: 40 }
+        color: {
+            border: "#ffffff",
+            highlight: { border: "#000000" }
+        }
     },
     edges: {
-        color: { inherit: false, color: "#cccccc" },
-        smooth: true
+        width: 0.6,  // thinner edges
+        color: "#bbbbbb",
+        smooth: { type: "dynamic" }
     },
     physics: {
         barnesHut: {
-            gravitationalConstant: -6000,
-            centralGravity: 0.3,
-            springLength: 180
+            gravitationalConstant: -9000,
+            springLength: 200,
+            springConstant: 0.03
         },
         stabilization: false
     },
@@ -166,10 +155,65 @@ var options = {
         hover: true,
         zoomView: true,
         dragView: true
+    },
+    groups: {
+        spatial: { color: clusterColors.spatial },
+        ecology: { color: clusterColors.ecology },
+        climate: { color: clusterColors.climate },
+        sustain: { color: clusterColors.sustain },
+        core: { color: clusterColors.core }
     }
 };
 
-var network = new vis.Network(container, data, options);
+const network = new vis.Network(container, data, options);
+
+// Hover highlight cluster
+network.on("hoverNode", function(params) {
+    const node = nodes.get(params.node);
+    const group = node.group;
+
+    nodes.forEach(n => {
+        if (n.group !== group) {
+            nodes.update({ id: n.id, opacity: 0.2 });
+        }
+    });
+});
+
+network.on("blurNode", function() {
+    nodes.forEach(n => {
+        nodes.update({ id: n.id, opacity: 1 });
+    });
+});
+
+// Click node → description
+network.on("click", function(params) {
+    if (params.nodes.length > 0) {
+        const node = nodes.get(params.nodes[0]);
+        descriptionBox.innerHTML = "<strong>" + node.label + "</strong><br>" + node.desc;
+    }
+});
+
+// Auto-fit screen
+network.once("afterDrawing", function() {
+    network.fit();
+});
+
+// Dark mode adaptive
+function updateGraphTheme() {
+    const isDark = document.body.classList.contains("dark-mode");
+    network.setOptions({
+        edges: { color: isDark ? "#555555" : "#bbbbbb" },
+        nodes: {
+            font: { color: isDark ? "#ffffff" : "#000000" }
+        }
+    });
+}
+
+document.addEventListener("click", function(e){
+    if(e.target.innerText === "☾"){
+        setTimeout(updateGraphTheme, 100);
+    }
+});
 </script>
 </body>
 </html>
