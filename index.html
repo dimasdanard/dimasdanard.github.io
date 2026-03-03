@@ -9,8 +9,6 @@
 <body>
 
 <header>
-    <div></div>
-
     <nav>
         <a href="index.html">Home</a>
         <a href="research.html">Research Output</a>
@@ -20,33 +18,52 @@
     </nav>
 </header>
 
-<div class="hero">
+<div class="container">
+
     <div class="name">Dr. Dimas Danar Dewa</div>
     <div class="subtitle">Urban Systems & Spatial Modeling</div>
     <div class="headline">
         Modeling Urban–Environment Dynamics for Climate-Resilient and Sustainable Development
     </div>
-</div>
 
-<div class="content">
-    <p>Welcome to my homepage.</p>
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search...">
+    </div>
 
-    <p>
-        I am a Research Fellow at the National Research and Innovation Agency (BRIN), Indonesia.
-        My research integrates spatial modeling, GIScience, and remote sensing to examine urban–environment systems,
-        ecological dynamics, and environmental change in rapidly transforming metropolitan regions.
-    </p>
+    <div class="content" id="contentArea">
 
-    <p>
-        I focus on developing data-driven approaches for disaster risk reduction, environmental risk assessment,
-        and adaptive planning, contributing to sustainable and low-carbon urban transitions in emerging economies.
-    </p>
+        <p>Welcome to my homepage.</p>
+
+        <p>
+            I am a Research Fellow at the National Research and Innovation Agency (BRIN), Indonesia.
+            My research integrates spatial modeling, GIScience, and remote sensing to examine urban–environment systems,
+            ecological dynamics, and environmental change in rapidly transforming metropolitan regions.
+        </p>
+
+        <p>
+            I focus on developing data-driven approaches for disaster risk reduction, environmental risk assessment,
+            and adaptive planning, contributing to sustainable and low-carbon urban transitions in emerging economies.
+        </p>
+
+    </div>
+
 </div>
 
 <script>
 function toggleMode() {
     document.body.classList.toggle("dark-mode");
 }
+
+document.getElementById("searchInput").addEventListener("keyup", function() {
+    let filter = this.value.toLowerCase();
+    let content = document.getElementById("contentArea");
+    let paragraphs = content.getElementsByTagName("p");
+
+    for (let i = 0; i < paragraphs.length; i++) {
+        let text = paragraphs[i].textContent.toLowerCase();
+        paragraphs[i].style.display = text.includes(filter) ? "" : "none";
+    }
+});
 </script>
 
 </body>
