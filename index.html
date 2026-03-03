@@ -50,7 +50,10 @@
         </p>
 
     </div>
-
+    
+    <div id="research-network" style="height:500px; margin-top:60px;">
+        
+    </div>
 </div>
 
 <script>
@@ -69,6 +72,104 @@ document.getElementById("searchInput").addEventListener("keyup", function() {
     }
 });
 </script>
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
+<script>
+var nodes = new vis.DataSet([
+    // Core
+    { id: 1, label: "Urban–Environment Systems", size: 45, color: "#222222" },
+
+    // Spatial Cluster (Green)
+    { id: 2, label: "Spatial Modeling", color: "#2e7d32" },
+    { id: 3, label: "GIScience", color: "#2e7d32" },
+    { id: 4, label: "Remote Sensing", color: "#2e7d32" },
+    { id: 5, label: "Geospatial Big Data", color: "#2e7d32" },
+    { id: 6, label: "Entropy Modeling", color: "#2e7d32" },
+    { id: 7, label: "Land-Use Dynamics", color: "#2e7d32" },
+
+    // Ecology Cluster (Blue)
+    { id: 8, label: "Ecological Dynamics", color: "#1565c0" },
+    { id: 9, label: "Environmental Change", color: "#1565c0" },
+    { id: 10, label: "Landscape Structure", color: "#1565c0" },
+    { id: 11, label: "Ecosystem Services", color: "#1565c0" },
+
+    // Climate & Risk (Red)
+    { id: 12, label: "Climate Resilience", color: "#c62828" },
+    { id: 13, label: "Urban Heat Risk", color: "#c62828" },
+    { id: 14, label: "Flood Risk", color: "#c62828" },
+    { id: 15, label: "Disaster Risk Reduction", color: "#c62828" },
+    { id: 16, label: "Environmental Vulnerability", color: "#c62828" },
+
+    // Sustainability (Purple)
+    { id: 17, label: "Low-Carbon Development", color: "#6a1b9a" },
+    { id: 18, label: "Sustainable Urban Systems", color: "#6a1b9a" },
+    { id: 19, label: "Spatial Inequality", color: "#6a1b9a" },
+    { id: 20, label: "Adaptive Planning", color: "#6a1b9a" },
+    { id: 21, label: "Urban Transformation", color: "#6a1b9a" }
+]);
+
+var edges = new vis.DataSet([
+    // Connect core to clusters
+    { from: 1, to: 2 },
+    { from: 1, to: 8 },
+    { from: 1, to: 12 },
+    { from: 1, to: 17 },
+
+    // Spatial connections
+    { from: 2, to: 3 },
+    { from: 2, to: 4 },
+    { from: 2, to: 5 },
+    { from: 2, to: 6 },
+    { from: 2, to: 7 },
+
+    // Ecology connections
+    { from: 8, to: 9 },
+    { from: 8, to: 10 },
+    { from: 8, to: 11 },
+
+    // Climate connections
+    { from: 12, to: 13 },
+    { from: 12, to: 14 },
+    { from: 12, to: 15 },
+    { from: 12, to: 16 },
+
+    // Sustainability connections
+    { from: 17, to: 18 },
+    { from: 17, to: 19 },
+    { from: 17, to: 20 },
+    { from: 17, to: 21 }
+]);
+
+var container = document.getElementById("research-network");
+
+var data = { nodes: nodes, edges: edges };
+
+var options = {
+    nodes: {
+        shape: "dot",
+        font: { size: 14 },
+        scaling: { min: 10, max: 40 }
+    },
+    edges: {
+        color: { inherit: false, color: "#cccccc" },
+        smooth: true
+    },
+    physics: {
+        barnesHut: {
+            gravitationalConstant: -6000,
+            centralGravity: 0.3,
+            springLength: 180
+        },
+        stabilization: false
+    },
+    interaction: {
+        hover: true,
+        zoomView: true,
+        dragView: true
+    }
+};
+
+var network = new vis.Network(container, data, options);
+</script>
 </body>
 </html>
