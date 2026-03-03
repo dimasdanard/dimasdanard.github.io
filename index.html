@@ -51,10 +51,18 @@
 
     </div>
     
-    <div id="research-network" style="height:500px; margin-top:60px;">
+    
+    <div style="margin-top:60px; display:flex; gap:10px; flex-wrap:wrap;">
+    <button onclick="resetView()">Reset View</button>
+    <button onclick="zoomToCore()">Zoom to Core</button>
+    <button onclick="clusterByGroup()">Cluster View</button>
+    <button onclick="toggleFullscreen()">Fullscreen</button>
+    </div>
+
+    <div id="research-network" style="height:550px; margin-top:15px; border:1px solid #eee;">
         
     </div>
-    
+       
     <div id="node-description" style="margin-top:25px; font-size:14px; line-height:1.6;">
         
     </div>
@@ -82,75 +90,58 @@ document.getElementById("searchInput").addEventListener("keyup", function() {
 const container = document.getElementById("research-network");
 const descriptionBox = document.getElementById("node-description");
 
+// ================= NODES =================
 const nodes = new vis.DataSet([
-
-// CORE
 { id:1, label:"Urban–Environment Spatial Dynamics", size:55, group:"core",
 desc:"Integrated modeling of urban growth, entropy, climate risk, and ecological systems."},
 
-// MORPHOLOGY
 { id:2, label:"Urban Spatial Dispersion", group:"morph" },
 { id:3, label:"Urban Fragmentation", group:"morph" },
-{ id:4, label:"Urban Compactness (C1–C2)", group:"morph" },
-{ id:5, label:"Landscape Expansion Index (LEI)", group:"morph" },
+{ id:4, label:"Urban Compactness", group:"morph" },
+{ id:5, label:"Landscape Expansion Index", group:"morph" },
 { id:6, label:"Outlying Expansion", group:"morph" },
 { id:7, label:"Urban Growth Corridors", group:"morph" },
 
-// ENTROPY
-{ id:20, label:"Shannon Entropy (H, H')", group:"entropy" },
+{ id:20, label:"Shannon Entropy", group:"entropy" },
 { id:21, label:"LULC Diversity", group:"entropy" },
 { id:22, label:"Land-Cover Evenness", group:"entropy" },
-{ id:23, label:"Spatial Complexity Metrics", group:"entropy" },
 
-// CLIMATE
-{ id:30, label:"Land Surface Temperature (LST)", group:"climate" },
-{ id:31, label:"Urban Heat Island (UHI)", group:"climate" },
+{ id:30, label:"Land Surface Temperature", group:"climate" },
+{ id:31, label:"Urban Heat Island", group:"climate" },
 { id:32, label:"Carbon Emission Modeling", group:"climate" },
 { id:33, label:"RSEI Ecological Index", group:"climate" },
 { id:34, label:"Vegetation Degradation", group:"climate" },
-{ id:35, label:"Ecological Corridors", group:"climate" },
 
-// GEOMORPHOLOGY
-{ id:40, label:"Topographic Position Index (TPI)", group:"geo" },
-{ id:41, label:"Geomorphological Complexity", group:"geo" },
+{ id:40, label:"Geomorphological Complexity", group:"geo" },
 
-// DATA & COMPUTATION
 { id:50, label:"Google Earth Engine", group:"data" },
 { id:51, label:"Landsat & Sentinel", group:"data" },
-{ id:52, label:"VIIRS Nighttime Light", group:"data" },
-{ id:53, label:"OpenStreetMap (OSM)", group:"data" }
+{ id:52, label:"VIIRS Nighttime Light", group:"data" }
 ]);
 
+// ================= EDGES =================
 const edges = new vis.DataSet([
-
-// CORE connections
 { from:1, to:2 },{ from:1, to:20 },{ from:1, to:30 },
 { from:1, to:40 },{ from:1, to:50 },
 
-// Intra-cluster
 { from:2, to:3 },{ from:2, to:4 },{ from:2, to:5 },
 { from:2, to:6 },{ from:2, to:7 },
 
-{ from:20, to:21 },{ from:20, to:22 },{ from:20, to:23 },
+{ from:20, to:21 },{ from:20, to:22 },
 
 { from:30, to:31 },{ from:30, to:32 },
-{ from:30, to:33 },{ from:30, to:34 },{ from:30, to:35 },
+{ from:30, to:33 },{ from:30, to:34 },
 
-{ from:40, to:41 },
-
-{ from:50, to:51 },{ from:50, to:52 },{ from:50, to:53 },
-
-// 🔥 CROSS-CLUSTER (integrative research links)
-{ from:2, to:20 },  // dispersion ↔ entropy
-{ from:3, to:34 },  // fragmentation ↔ vegetation
-{ from:5, to:41 },  // LEI ↔ geomorphology
-{ from:21, to:33 }, // diversity ↔ RSEI
-{ from:30, to:32 }, // LST ↔ carbon
-{ from:31, to:35 }, // UHI ↔ corridors
-{ from:52, to:20 }, // NTL ↔ entropy
-{ from:50, to:30 }  // GEE ↔ LST
+// Cross connections
+{ from:2, to:20 },
+{ from:3, to:34 },
+{ from:21, to:33 },
+{ from:30, to:32 },
+{ from:52, to:20 },
+{ from:50, to:30 }
 ]);
 
+// ================= OPTIONS =================
 const options = {
 nodes:{
   shape:"dot",
@@ -158,8 +149,9 @@ nodes:{
   font:{ size:13 }
 },
 edges:{
-  width:1.8,
-  smooth:{type:"dynamic"}
+  width:2,
+  smooth:{type:"dynamic"},
+  color:"#999"
 },
 physics:{
   barnesHut:{
@@ -167,11 +159,17 @@ physics:{
     springLength:220,
     springConstant:0.02
   },
-  stabilization:false
+  stabilization:true
 },
-interaction:{ hover:true, zoomView:true, dragView:true },
+interaction:{
+  hover:true,
+  zoomView:true,
+  dragView:true,
+  navigationButtons:true,   // 🔥 mini-map navigation buttons
+  keyboard:true
+},
 groups:{
-  core:{color:"#111111"},
+  core:{color:"#111"},
   morph:{color:"#1b5e20"},
   entropy:{color:"#1565c0"},
   climate:{color:"#c62828"},
@@ -180,52 +178,76 @@ groups:{
 }
 };
 
+// ================= INIT =================
 const network = new vis.Network(container,{nodes,edges},options);
 
-<script>
-// Tunggu sampai layout selesai stabil
+// ================= AUTO FIT =================
 network.once("stabilizationIterationsDone", function () {
-    network.setOptions({ physics: false }); // hentikan physics agar tidak terus bergerak
-    network.fit({
-        animation: {
-            duration: 1000,
-            easingFunction: "easeInOutQuad"
-        }
-    });
+    network.fit({ animation:true });
 });
-</script>
 
-// 🌗 AUTO DARK/LIGHT ADAPTIVE
+// ================= DARK MODE ADAPT =================
 function updateGraphTheme() {
     const isDark = document.body.classList.contains("dark-mode");
 
     network.setOptions({
-        edges:{
-            color: isDark ? "#555555" : "#999999"
-        },
-        nodes:{
-            font:{
-                color: isDark ? "#ffffff" : "#000000"
-            }
-        }
+        edges:{ color: isDark ? "#555" : "#999" },
+        nodes:{ font:{ color: isDark ? "#fff" : "#000" } }
     });
 }
-
 updateGraphTheme();
+new MutationObserver(updateGraphTheme)
+.observe(document.body,{attributes:true});
 
-const observer = new MutationObserver(updateGraphTheme);
-observer.observe(document.body, { attributes: true });
-
-
-// 🔍 CLICK → description
+// ================= CLICK DESCRIPTION =================
 network.on("click", function(params){
   if(params.nodes.length>0){
     const node = nodes.get(params.nodes[0]);
     descriptionBox.innerHTML =
     "<strong>"+node.label+"</strong><br>"+
-    (node.desc ? node.desc : "Part of the integrated urban-environment modeling framework.");
+    (node.desc || "Part of the integrated research framework.");
   }
 });
+
+// ================= CONTROLS =================
+
+// Reset View
+function resetView(){
+    network.fit({animation:true});
+}
+
+// Zoom to Core
+function zoomToCore(){
+    network.focus(1,{scale:1.2,animation:true});
+}
+
+// Cluster by group
+function clusterByGroup(){
+    const groups = ["morph","entropy","climate","geo","data"];
+
+    groups.forEach(g=>{
+        network.cluster({
+            joinCondition:function(nodeOptions){
+                return nodeOptions.group === g;
+            },
+            clusterNodeProperties:{
+                id:"cluster_"+g,
+                label:g.toUpperCase(),
+                borderWidth:3,
+                shape:"database"
+            }
+        });
+    });
+}
+
+// Fullscreen
+function toggleFullscreen(){
+    if(!document.fullscreenElement){
+        container.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
+}
 </script>
 </body>
 </html>
