@@ -58,7 +58,7 @@
 function toggleMode() {
     document.body.classList.toggle("dark-mode");
     updateGraphTheme();
-    updateClusterLabelColors(); // 🔥 penting
+    updateClusterLabelColors();
 }
 </script>
 
@@ -69,8 +69,14 @@ function toggleMode() {
 // ================= NODES =================
 
 const nodes = new vis.DataSet([
-
-{ id:1, label:"Urban–Environment Spatial Dynamics", group:"core", size:40, shape:"star" },
+{ 
+  id:1, 
+  label:"Urban–Environment Spatial Dynamics", 
+  group:"core", 
+  size:45, 
+  shape:"star",
+  font:{ size:22 }   // 🔥 lebih besar dari node lain
+},
 
 { id:2, label:"Urban Spatial Dispersion", group:"morph" },
 { id:3, label:"Urban Fragmentation", group:"morph" },
@@ -98,35 +104,25 @@ const nodes = new vis.DataSet([
 { id:52, label:"VIIRS Nighttime Light", group:"data" },
 { id:53, label:"Support Vector Machine", group:"data" },
 { id:54, label:"Remote Sensing", group:"data" }
-
 ]);
 
 // ================= EDGES =================
 
 const edges = new vis.DataSet([
 { from:1, to:2 }, { from:1, to:20 }, { from:1, to:30 }, { from:1, to:50 },
-
 { from:2, to:3 }, { from:3, to:4 }, { from:4, to:5 },
 { from:5, to:6 }, { from:6, to:7 },
 { from:7, to:8 }, { from:8, to:9 },
-
 { from:20, to:21 }, { from:21, to:22 }, { from:22, to:23 },
-
 { from:30, to:31 }, { from:31, to:32 },
 { from:32, to:33 }, { from:33, to:34 },
 { from:34, to:35 },
-
 { from:50, to:51 }, { from:51, to:52 },
 { from:52, to:53 }, { from:53, to:54 },
-
-{ from:6, to:22 },
-{ from:4, to:20 },
-{ from:3, to:30 },
-{ from:5, to:8 },
-{ from:21, to:33 },
-{ from:31, to:35 },
-{ from:52, to:20 },
-{ from:54, to:32 }
+{ from:6, to:22 }, { from:4, to:20 },
+{ from:3, to:30 }, { from:5, to:8 },
+{ from:21, to:33 }, { from:31, to:35 },
+{ from:52, to:20 }, { from:54, to:32 }
 ]);
 
 // ================= OPTIONS =================
@@ -166,84 +162,36 @@ groups:{
 }
 };
 
-const network = new vis.Network(
-    document.getElementById("research-network"),
-    {nodes, edges},
-    options
-);
+const container = document.getElementById("research-network");
+
+const network = new vis.Network(container,{nodes,edges},options);
 
 network.once("stabilizationIterationsDone", function () {
     network.fit();
 });
 
-// ================= CLUSTER =================
+// ================= BUTTON FUNCTIONS =================
 
-function clusterByGroup(){
-
-    const clusterMap = {
-        morph:"Urban Morphological Structure & Spatial Expansion",
-        entropy:"Land-Use Diversity & Entropy Modeling",
-        climate:"Urban Climate Risk & Ecological Resilience",
-        data:"Geospatial Analytics & Remote Sensing Framework"
-    };
-
-    const clusterColors = {
-        morph:"#2e7d32",
-        entropy:"#1565c0",
-        climate:"#c62828",
-        data:"#ef6c00"
-    };
-
-    Object.keys(clusterMap).forEach(group=>{
-        network.cluster({
-            joinCondition: node=>node.group===group,
-            clusterNodeProperties:{
-                id:"cluster_"+group,
-                label: clusterMap[group],
-                shape:"dot",
-                size:28,
-                color: clusterColors[group],
-                font:{ size:22 }
-            }
-        });
-    });
-
-    // 🔥 Jarak cluster diperlebar lagi
-    network.setOptions({
-        physics:{
-            barnesHut:{
-                gravitationalConstant:-1000,
-                springLength:320,
-                springConstant:0.02
-            }
-        }
-    });
-
-    updateClusterLabelColors(); // 🔥 penting
+function resetView(){
+    network.fit({animation:true});
 }
 
-function openClusters(){
+function zoomToCore(){
+    network.focus(1,{scale:1.4, animation:true});
+}
 
-    ["morph","entropy","climate","data"].forEach(group=>{
-        try{ network.openCluster("cluster_"+group); }catch(e){}
-    });
-
-    network.setOptions({
-        physics:{
-            barnesHut:{
-                gravitationalConstant:-3500,
-                springLength:180,
-                springConstant:0.04
-            }
-        }
-    });
+function toggleFullscreen(){
+    if (!document.fullscreenElement) {
+        container.requestFullscreen();
+    } else {
+        document.exitFullscreen();
+    }
 }
 
 // ================= DARK MODE =================
 
 function updateGraphTheme(){
   const dark=document.body.classList.contains("dark-mode");
-
   network.setOptions({
     edges:{ color: dark ? "#555555" : "#999999" },
     nodes:{ font:{ color: dark ? "#ffffff" : "#000000" } }
@@ -252,13 +200,15 @@ function updateGraphTheme(){
 
 function updateClusterLabelColors(){
   const dark=document.body.classList.contains("dark-mode");
+  const allNodes = network.body.data.nodes.get();
 
-  const clusters = network.getNodes().filter(id => id.toString().startsWith("cluster_"));
-
-  clusters.forEach(id=>{
-      network.updateClusteredNode(id,{
-          font:{ color: dark ? "#ffffff" : "#000000" }
-      });
+  allNodes.forEach(n=>{
+      if(n.id.toString().startsWith("cluster_")){
+          network.body.data.nodes.update({
+              id:n.id,
+              font:{ color: dark ? "#ffffff" : "#000000" }
+          });
+      }
   });
 }
 
