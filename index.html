@@ -26,10 +26,6 @@
         Modeling Urban–Environment Dynamics for Climate-Resilient and Sustainable Development
     </div>
 
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search...">
-    </div>
-
     <div class="content">
         <p>Welcome to my homepage.</p>
 
@@ -62,6 +58,7 @@
 function toggleMode() {
     document.body.classList.toggle("dark-mode");
     updateGraphTheme();
+    updateClusterLabelColors(); // 🔥 penting
 }
 </script>
 
@@ -136,6 +133,7 @@ const edges = new vis.DataSet([
 
 const options = {
 nodes:{
+  shape:"dot",
   scaling:{ min:18, max:70 },
   font:{ size:18, color:"#000000" }
 },
@@ -182,8 +180,6 @@ network.once("stabilizationIterationsDone", function () {
 
 function clusterByGroup(){
 
-    const isDark = document.body.classList.contains("dark-mode");
-
     const clusterMap = {
         morph:"Urban Morphological Structure & Spatial Expansion",
         entropy:"Land-Use Diversity & Entropy Modeling",
@@ -207,28 +203,23 @@ function clusterByGroup(){
                 shape:"dot",
                 size:28,
                 color: clusterColors[group],
-                font:{
-                    size:22,
-                    color: isDark ? "#ffffff" : "#000000"
-                }
+                font:{ size:22 }
             }
         });
     });
 
-    // Perbesar label core saat cluster mode
-    nodes.update({
-        id:1,
-        font:{ size:24 }
-    });
-
+    // 🔥 Jarak cluster diperlebar lagi
     network.setOptions({
         physics:{
             barnesHut:{
-                gravitationalConstant:-2000,
-                springLength:260
+                gravitationalConstant:-1000,
+                springLength:320,
+                springConstant:0.02
             }
         }
     });
+
+    updateClusterLabelColors(); // 🔥 penting
 }
 
 function openClusters(){
@@ -237,16 +228,12 @@ function openClusters(){
         try{ network.openCluster("cluster_"+group); }catch(e){}
     });
 
-    nodes.update({
-        id:1,
-        font:{ size:18 }
-    });
-
     network.setOptions({
         physics:{
             barnesHut:{
                 gravitationalConstant:-3500,
-                springLength:180
+                springLength:180,
+                springConstant:0.04
             }
         }
     });
@@ -260,6 +247,18 @@ function updateGraphTheme(){
   network.setOptions({
     edges:{ color: dark ? "#555555" : "#999999" },
     nodes:{ font:{ color: dark ? "#ffffff" : "#000000" } }
+  });
+}
+
+function updateClusterLabelColors(){
+  const dark=document.body.classList.contains("dark-mode");
+
+  const clusters = network.getNodes().filter(id => id.toString().startsWith("cluster_"));
+
+  clusters.forEach(id=>{
+      network.updateClusteredNode(id,{
+          font:{ color: dark ? "#ffffff" : "#000000" }
+      });
   });
 }
 
