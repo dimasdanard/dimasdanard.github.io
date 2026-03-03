@@ -26,6 +26,10 @@
 Modeling Urban–Environment Dynamics for Climate-Resilient and Sustainable Development
 </div>
 
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Search research themes...">
+</div>
+
 <div class="content">
 <p>
 Welcome to my homepage. I am a Research Fellow at the National Research and Innovation Agency (BRIN), Indonesia, specializing in advanced spatial modeling, GIScience, and remote sensing. My work integrates geospatial analytics and urban-environment modeling to understand how land-use dynamics, urban form, and socio-environmental processes shape rapidly transforming metropolitan regions. I focus on strengthening urban resilience through data-driven approaches to disaster risk reduction, environmental risk assessment, and adaptive planning — contributing to sustainable and low-carbon urban transitions, particularly in emerging economies. To explore the scope and interconnections of my research themes, please navigate the interactive network map below.
@@ -47,71 +51,95 @@ Welcome to my homepage. I am a Research Fellow at the National Research and Inno
 
 <script>
 
+// ================= DARK MODE =================
+
 function toggleMode(){
 document.body.classList.toggle("dark-mode");
 updateGraphTheme();
 updateClusterLabelColors();
 }
 
+// ================= NODES =================
+
 const nodes = new vis.DataSet([
+
 { id:1,label:"Urban–Environment Spatial Dynamics",group:"core",shape:"star",size:52,font:{size:26} },
 
+// Urban Growth
 { id:2,label:"Urban Spatial Dispersion",group:"morph"},
 { id:3,label:"Urban Fragmentation & Compactness",group:"morph"},
 { id:4,label:"Landscape Expansion Index (LEI)",group:"morph"},
 { id:5,label:"Urban Growth Typology",group:"morph"},
 { id:6,label:"Topographic & Geomorphological Constraints",group:"morph"},
 
+// Land Use
 { id:20,label:"Entropy-Based Urban Diversity",group:"entropy"},
 { id:21,label:"Landscape Metrics (FRAGSTATS)",group:"entropy"},
 { id:22,label:"Spatiotemporal LULC Dynamics",group:"entropy"},
 { id:23,label:"Spatial Autocorrelation (Moran’s I & LISA)",group:"entropy"},
 { id:24,label:"Hotspot & Spatial Cluster Analysis",group:"entropy"},
 
+// Climate
 { id:30,label:"Land Surface Temperature & UHI",group:"climate"},
 { id:31,label:"RSEI Ecological Quality",group:"climate"},
-{ id:32,label:"Carbon Emission Estimation (NTL)",group:"climate"},
+{ id:32,label:"Carbon Emission Estimation (NTL-based)",group:"climate"},
 { id:33,label:"Ecological & Environmental Risk Index",group:"climate"},
 { id:34,label:"Urban Resilience Modeling",group:"climate"},
 { id:35,label:"Climate-Resilient Urban Planning",group:"climate"},
 
+// Spatial Analytics
 { id:40,label:"Geographically Weighted Regression (GWR)",group:"stats"},
 { id:41,label:"Principal Component Analysis (PCA)",group:"stats"},
 { id:42,label:"Spatial Statistics & Modeling",group:"stats"},
 
+// Data
 { id:50,label:"Machine Learning (SVM & RF)",group:"data"},
 { id:51,label:"Google Earth Engine",group:"data"},
 { id:52,label:"Cloud-Based Geospatial Processing",group:"data"},
 { id:53,label:"Landsat & Sentinel",group:"data"},
 { id:54,label:"VIIRS Nighttime Light",group:"data"}
+
 ]);
+
+// ================= EDGES =================
 
 const edges = new vis.DataSet([
 
-// Core
+// Core links
 {from:1,to:2},{from:1,to:20},{from:1,to:30},{from:1,to:34},{from:1,to:40},{from:1,to:50},
 
-// Morph
+// Urban growth
 {from:2,to:3},{from:3,to:4},{from:4,to:5},{from:5,to:6},
 {from:2,to:32},{from:5,to:34},
 
-// Entropy
+// Land use
 {from:20,to:21},{from:21,to:22},{from:22,to:23},{from:23,to:24},
 {from:20,to:34},{from:22,to:32},
 
 // Climate
 {from:30,to:31},{from:31,to:32},{from:32,to:33},{from:33,to:34},{from:34,to:35},
 
-// Stats
+// Spatial analytics
 {from:40,to:42},{from:41,to:42},{from:42,to:23},{from:40,to:2},{from:41,to:31},
 
-// Data
+// Data internal
 {from:50,to:51},{from:51,to:52},{from:52,to:53},{from:53,to:54},
 {from:52,to:50},
 
-// Cross
-{from:30,to:20},{from:34,to:2}
+// Landsat connections
+{from:53,to:22},{from:53,to:31},{from:53,to:30},{from:53,to:20},
+
+// VIIRS connections
+{from:54,to:32},{from:54,to:2},{from:54,to:5},
+
+// Machine Learning
+{from:50,to:22},{from:50,to:21},{from:50,to:32},{from:50,to:30},
+
+// Cloud
+{from:52,to:22},{from:52,to:30}
 ]);
+
+// ================= OPTIONS =================
 
 const options={
 nodes:{shape:"dot",scaling:{min:18,max:70},font:{size:18,color:"#000"}},
@@ -132,12 +160,86 @@ const network=new vis.Network(document.getElementById("research-network"),{nodes
 
 network.once("stabilizationIterationsDone",function(){network.fit({animation:{duration:800}});});
 
-function resetView(){network.fit({animation:{duration:600}});}
-function zoomToCore(){network.focus(1,{scale:1.6,animation:{duration:600}});}
+// ================= SEARCH =================
+
+document.getElementById("searchInput").addEventListener("keyup", function() {
+const value=this.value.toLowerCase();
+nodes.forEach(function(node){
+if(node.label.toLowerCase().includes(value)){
+nodes.update({id:node.id,hidden:false});
+}else{
+nodes.update({id:node.id,hidden:value.length>0});
+}
+});
+});
+
+// ================= BUTTONS =================
+
+function resetView(){network.fit({animation:true});}
+function zoomToCore(){network.focus(1,{scale:1.6,animation:true});}
+
+// ================= CLUSTER =================
+
+let clustered=false;
+
+function clusterByGroup(){
+if(clustered) return;
+
+const clusterLabels={
+morph:"Urban Growth & Spatial Transformation",
+entropy:"Land-Use Dynamics & Spatial Complexity",
+climate:"Climate Risk & Urban Resilience",
+stats:"Spatial Analytics & Modeling Frameworks",
+data:"Geospatial Intelligence & Data Infrastructure"
+};
+
+Object.keys(clusterLabels).forEach(group=>{
+network.cluster({
+joinCondition:(node)=>node.group===group,
+clusterNodeProperties:{
+id:"cluster_"+group,
+label:clusterLabels[group],
+shape:"dot",
+size:36,
+font:{size:22}
+}
+});
+});
+
+network.setOptions({
+physics:{barnesHut:{gravitationalConstant:-900,springLength:340,springConstant:0.02}}
+});
+
+setTimeout(()=>network.fit({animation:true}),300);
+
+clustered=true;
+updateClusterLabelColors();
+}
+
+function openClusters(){
+if(!clustered) return;
+
+["morph","entropy","climate","stats","data"].forEach(g=>{
+try{network.openCluster("cluster_"+g);}catch(e){}
+});
+
+network.setOptions({
+physics:{barnesHut:{gravitationalConstant:-3500,springLength:180,springConstant:0.04}}
+});
+
+setTimeout(()=>network.fit({animation:true}),300);
+
+clustered=false;
+}
+
+// ================= THEME =================
 
 function updateGraphTheme(){
 const dark=document.body.classList.contains("dark-mode");
-network.setOptions({edges:{color:dark?"#555":"#999"},nodes:{font:{color:dark?"#fff":"#000"}}});
+network.setOptions({
+edges:{color:dark?"#555":"#999"},
+nodes:{font:{color:dark?"#fff":"#000"}}
+});
 }
 
 function updateClusterLabelColors(){
