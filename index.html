@@ -182,7 +182,18 @@ groups:{
 
 const network = new vis.Network(container,{nodes,edges},options);
 
-
+<script>
+// Tunggu sampai layout selesai stabil
+network.once("stabilizationIterationsDone", function () {
+    network.setOptions({ physics: false }); // hentikan physics agar tidak terus bergerak
+    network.fit({
+        animation: {
+            duration: 1000,
+            easingFunction: "easeInOutQuad"
+        }
+    });
+});
+</script>
 
 // 🌗 AUTO DARK/LIGHT ADAPTIVE
 function updateGraphTheme() {
