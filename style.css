@@ -131,3 +131,13 @@ p {
 .dark-mode .graph-controls button:hover {
     background: #333333;
 }
+.vis-navigation button {
+    background:#ffffff !important;
+    border:1px solid #ccc !important;
+    border-radius:6px !important;
+}
+
+.dark-mode .vis-navigation button {
+    background:#1a1a1a !important;
+    border:1px solid #444 !important;
+}
