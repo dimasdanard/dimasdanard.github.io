@@ -22,9 +22,7 @@
 
     <div class="name">Dr. Dimas Danar Dewa</div>
 
-    <div class="subtitle">
-        Urban Systems & Spatial Modeling
-    </div>
+    <div class="subtitle">Urban Systems & Spatial Modeling</div>
 
     <div class="headline">
         Modeling Urban–Environment Dynamics for Climate-Resilient and Sustainable Development
@@ -80,7 +78,7 @@ const nodes = new vis.DataSet([
 
 { id:1, label:"Urban–Environment Spatial Dynamics", group:"core", size:50 },
 
-// Urban Morphology & Structure
+// Urban Morphology
 { id:2, label:"Urban Spatial Dispersion", group:"morph" },
 { id:3, label:"Urban Fragmentation", group:"morph" },
 { id:4, label:"Urban Compactness", group:"morph" },
@@ -90,13 +88,13 @@ const nodes = new vis.DataSet([
 { id:8, label:"Topographic Position Index", group:"morph" },
 { id:9, label:"Geomorphological Constraints", group:"morph" },
 
-// Entropy & Land-Use Modeling
+// Entropy & LULC
 { id:20, label:"Shannon Entropy", group:"entropy" },
 { id:21, label:"Land-Cover Diversity", group:"entropy" },
 { id:22, label:"Patch-based Metrics", group:"entropy" },
 { id:23, label:"Spatial Complexity", group:"entropy" },
 
-// Climate & Ecological Resilience
+// Climate & Ecology
 { id:30, label:"Land Surface Temperature", group:"climate" },
 { id:31, label:"Urban Heat Island", group:"climate" },
 { id:32, label:"Carbon Emission Modeling", group:"climate" },
@@ -104,7 +102,7 @@ const nodes = new vis.DataSet([
 { id:34, label:"Vegetation Degradation", group:"climate" },
 { id:35, label:"Ecological Corridors", group:"climate" },
 
-// Spatial Data & Methods
+// Data & Methods
 { id:50, label:"Google Earth Engine", group:"data" },
 { id:51, label:"Landsat & Sentinel", group:"data" },
 { id:52, label:"VIIRS Nighttime Light", group:"data" },
@@ -136,7 +134,7 @@ const edges = new vis.DataSet([
 { from:50, to:51 }, { from:51, to:52 },
 { from:52, to:53 }, { from:53, to:54 },
 
-// Cross connections
+// Cross cluster links
 { from:6, to:22 },
 { from:4, to:20 },
 { from:3, to:30 },
@@ -157,16 +155,19 @@ nodes:{
   font:{ size:18, color:"#000000" }
 },
 edges:{
-  width:2,
-  smooth:true,
+  width:1.8,
+  smooth:{ type:"dynamic" },
   color:"#999999"
 },
 physics:{
   barnesHut:{
-    gravitationalConstant:-12000,
-    springLength:220
+    gravitationalConstant:-3500,
+    springLength:180,
+    springConstant:0.04
   },
-  stabilization:{ iterations:250 }
+  minVelocity:0.75,
+  stabilization:{ iterations:200 },
+  enabled:true
 },
 interaction:{
   hover:true,
@@ -190,10 +191,8 @@ const network = new vis.Network(
     options
 );
 
-// Fit once, then freeze physics
 network.once("stabilizationIterationsDone", function () {
     network.fit();
-    network.setOptions({ physics:false });
 });
 
 // ================= CONTROLS =================
@@ -205,9 +204,16 @@ function clusterByGroup(){
 
     const clusterMap = {
         morph:"Urban Morphological Structure & Spatial Expansion",
-        entropy:"Land-Use Diversity & Entropy-Based Modeling",
+        entropy:"Land-Use Diversity & Entropy Modeling",
         climate:"Urban Climate Risk & Ecological Resilience",
         data:"Geospatial Analytics & Remote Sensing Framework"
+    };
+
+    const clusterColors = {
+        morph:"#2e7d32",
+        entropy:"#1565c0",
+        climate:"#c62828",
+        data:"#ef6c00"
     };
 
     Object.keys(clusterMap).forEach(group=>{
@@ -216,8 +222,10 @@ function clusterByGroup(){
             clusterNodeProperties:{
                 id:"cluster_"+group,
                 label: clusterMap[group],
-                shape:"database",
-                font:{ size:20 }
+                shape:"dot",
+                size:30,
+                color: clusterColors[group],
+                font:{ size:22, color:"#ffffff" }
             }
         });
     });
@@ -238,7 +246,7 @@ function toggleFullscreen(){
     }
 }
 
-// Dark mode adaptive
+// Dark mode adapt
 function updateGraphTheme(){
   const dark=document.body.classList.contains("dark-mode");
   network.setOptions({
