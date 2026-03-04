@@ -1,38 +1,232 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Research Output</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+<title>Research Output — Dr. Dimas Danar Dewa</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="dark-mode">
 
 <header>
-    <h1>Research Output</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="research.html">Research Output</a>
-        <a href="field-notes.html">Field Notes</a>
-        <a href="profiles.html">Academic Profiles</a>
-    </nav>
+<nav>
+<a href="index.html">Home</a>
+<a href="research.html">Research Output</a>
+<a href="field-notes.html">Field Notes</a>
+<a href="profiles.html">Academic Profiles</a>
+<a href="models.html">Interactive Models</a>
+<button onclick="toggleMode()">☾</button>
+</nav>
 </header>
 
 <div class="container">
-    <h2>Selected Publications</h2>
 
-    <p>
-        <strong>2026</strong> – Exploratory spatial co-patterns of VIIRS nighttime radiance...
-    </p>
+<h1>Research Output</h1>
 
-    <p>
-        <strong>2025</strong> – Integrating Google Earth Engine and ecological corridor modeling...
-    </p>
+<p>
+My research explores the dynamics of urban–environment systems using spatial modeling, geospatial analytics, and remote sensing. 
+I investigate how land-use transformation, urban spatial structure, and environmental processes interact within rapidly growing metropolitan regions. 
+This work integrates spatial data science, landscape analysis, and environmental risk assessment to support climate-resilient and low-carbon urban development. 
+The interactive roadmap below illustrates the evolution of my research themes, methodological approaches, and scholarly outputs over time.
+</p>
 
-    <p>
-        <strong>2025</strong> – Impact of urbanization on carbon emissions...
-    </p>
+<h2>Research Roadmap</h2>
+
+<div id="roadmap"></div>
+
+<div id="roadmap-info"></div>
+
 </div>
+
+
+<script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+
+<script>
+
+function toggleMode(){
+document.body.classList.toggle("dark-mode");
+updateGraphTheme();
+}
+
+const nodes = new vis.DataSet([
+
+{ id:1,
+label:"Urban–Environment Systems Research",
+shape:"star",
+size:40,
+group:"core"
+},
+
+// THEMES
+
+{ id:2,label:"Urban Spatial Structure & Dispersion",group:"theme" },
+{ id:3,label:"Land Use Change & Spatial Entropy",group:"theme" },
+{ id:4,label:"Urban Ecological Dynamics",group:"theme" },
+{ id:5,label:"Environmental Quality Assessment (RSEI)",group:"theme" },
+{ id:6,label:"Urban Climate Risk & Carbon Modeling",group:"theme" },
+
+// YEARS
+
+{ id:10,label:"2021",group:"year" },
+{ id:11,label:"2022",group:"year" },
+{ id:12,label:"2023",group:"year" },
+{ id:13,label:"2024–2025",group:"year" },
+
+// PAPERS
+
+{
+id:20,
+label:"Urban Spatial Dispersion Analysis Using Shannon Entropy in the Semarang Metropolitan Region, Indonesia",
+group:"paper",
+link:"https://doi.org/"
+},
+
+{
+id:21,
+label:"Assessing Land Use Land Cover Change Diversity and Its Relation with Urban Dispersion Using Shannon Entropy in the Semarang Metropolitan Region, Indonesia",
+group:"paper",
+link:"https://doi.org/"
+},
+
+{
+id:22,
+label:"Spatiotemporal Variations of Urban Spatial Dispersion and Its Vegetation Degradation in Joglosemar Urban Growth Corridors, Indonesia",
+group:"paper",
+link:"https://doi.org/"
+},
+
+{
+id:23,
+label:"Remote Sensing Ecological Index (RSEI) for Environmental Quality Assessment in Rapidly Urbanizing Regions",
+group:"paper",
+link:"https://doi.org/"
+},
+
+{
+id:24,
+label:"Urban Climate Risk and Carbon Emission Estimation Based on Nighttime Light Data",
+group:"paper",
+link:"https://doi.org/"
+}
+
+]);
+
+const edges = new vis.DataSet([
+
+// Core to themes
+
+{ from:1,to:2 },
+{ from:1,to:3 },
+{ from:1,to:4 },
+{ from:1,to:5 },
+{ from:1,to:6 },
+
+// Theme to year
+
+{ from:2,to:10 },
+{ from:3,to:11 },
+{ from:4,to:12 },
+{ from:5,to:12 },
+{ from:6,to:13 },
+
+// Year to papers
+
+{ from:10,to:20 },
+{ from:11,to:21 },
+{ from:12,to:22 },
+{ from:12,to:23 },
+{ from:13,to:24 }
+
+]);
+
+const options = {
+
+nodes:{
+shape:"dot",
+scaling:{min:12,max:35},
+font:{
+size:16,
+multi:true
+}
+},
+
+edges:{
+width:1.5,
+smooth:true
+},
+
+physics:{
+barnesHut:{
+gravitationalConstant:-6000,
+springLength:200,
+springConstant:0.04
+},
+stabilization:{
+iterations:200
+}
+},
+
+interaction:{
+hover:true,
+dragNodes:true,
+dragView:true,
+zoomView:true
+},
+
+groups:{
+core:{color:"#455a64"},
+theme:{color:"#2e7d32"},
+year:{color:"#1565c0"},
+paper:{color:"#ef6c00"}
+}
+
+};
+
+const container = document.getElementById("roadmap");
+
+const network = new vis.Network(container,{nodes,edges},options);
+
+
+// AUTO FIT
+
+network.once("stabilizationIterationsDone",function(){
+network.fit({animation:true});
+});
+
+
+// OPEN DOI WHEN CLICK PAPER
+
+network.on("click",function(params){
+
+if(params.nodes.length>0){
+
+const node = nodes.get(params.nodes[0]);
+
+if(node.link){
+window.open(node.link,"_blank");
+}
+
+}
+
+});
+
+
+// DARK MODE GRAPH
+
+function updateGraphTheme(){
+
+const isDark=document.body.classList.contains("dark-mode");
+
+network.setOptions({
+edges:{color:isDark ? "#555" : "#999"},
+nodes:{font:{color:isDark ? "#ffffff" : "#000000"}}
+});
+
+}
+
+updateGraphTheme();
+
+</script>
 
 </body>
 </html>
