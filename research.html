@@ -9,112 +9,135 @@
 <style>
 
 .roadmap{
-
 position:relative;
 margin-top:60px;
-
 }
 
 .timeline{
-
 position:absolute;
 left:50%;
-width:4px;
-background:#777;
 top:0;
 bottom:0;
+width:4px;
+background:#666;
 transform:translateX(-50%);
-
 }
 
-.year-block{
-
+.year-row{
 display:flex;
 align-items:center;
-margin:70px 0;
-
+margin:90px 0;
+position:relative;
 }
 
 .year{
-
 width:10%;
 text-align:center;
 font-weight:700;
 font-size:22px;
-
+z-index:3;
 }
 
 .year span{
-
 background:#111;
 color:white;
 padding:6px 12px;
 border-radius:6px;
-
 }
 
 .dark-mode .year span{
-
-background:#eaeaea;
+background:#eee;
 color:#111;
-
 }
 
 .left{
-
 width:45%;
-padding-right:30px;
-
+padding-right:40px;
+position:relative;
 }
 
 .right{
-
 width:45%;
-padding-left:30px;
-
+padding-left:40px;
+position:relative;
 }
 
 .box{
-
-border:1px solid #ccc;
-border-radius:10px;
-padding:18px;
 background:#f8f8f8;
+border:1px solid #ccc;
+padding:18px;
+border-radius:10px;
 margin-bottom:10px;
-
 }
 
 .dark-mode .box{
-
 background:#1e1e1e;
 border:1px solid #444;
-
 }
 
 .title{
-
 font-weight:600;
 margin-bottom:6px;
-
 }
 
 .paper{
-
 font-size:14px;
 line-height:1.6;
+cursor:pointer;
+}
 
+.paper:hover{
+text-decoration:underline;
+}
+
+/* connectors */
+
+.connector-left{
+position:absolute;
+right:-40px;
+top:50%;
+width:40px;
+height:2px;
+background:#999;
+}
+
+.connector-right{
+position:absolute;
+left:-40px;
+top:50%;
+width:40px;
+height:2px;
+background:#999;
+}
+
+.curve{
+position:absolute;
+width:60px;
+height:60px;
+border-top:2px solid #999;
+border-right:2px solid #999;
+border-radius:0 60px 0 0;
+right:-60px;
+top:50%;
 }
 
 .future{
-
 border:2px dashed #888;
+}
 
+.dashed-up{
+position:absolute;
+left:50%;
+top:-60px;
+width:4px;
+height:60px;
+border-left:2px dashed #999;
+transform:translateX(-50%);
 }
 
 </style>
 
 </head>
-
 
 <body class="dark-mode">
 
@@ -128,7 +151,6 @@ border:2px dashed #888;
 <button onclick="toggleMode()">☾</button>
 </nav>
 </header>
-
 
 <div class="container">
 
@@ -144,14 +166,13 @@ The roadmap below illustrates how my research evolved from early work on urban s
 
 </p>
 
-
 <div class="roadmap">
 
 <div class="timeline"></div>
 
-<!-- 2030 FUTURE -->
+<!-- 2030 -->
 
-<div class="year-block">
+<div class="year-row">
 
 <div class="left"></div>
 
@@ -165,50 +186,38 @@ The roadmap below illustrates how my research evolved from early work on urban s
 
 <div class="title">
 
-Sustainable Mega Urban Spatial Patterns for Climate Resilience
+Sustainable Mega-Urban Spatial Patterns for Climate Resilience
 
 </div>
 
-Targeted outputs:
+Target outputs:
 
-High-impact indexed international publications  
-Registered Intellectual Property (IPR)
-
-</div>
+• High-impact international publications  
+• Registered Intellectual Property  
 
 </div>
 
 </div>
 
-
-<!-- 2026 -->
-
-<div class="year-block">
-
-<div class="left"></div>
-
-<div class="year">
-<span>2026</span>
 </div>
 
-<div class="right"></div>
-
-</div>
-
+<div class="dashed-up"></div>
 
 <!-- 2025 -->
 
-<div class="year-block">
+<div class="year-row">
 
 <div class="left">
 
 <div class="box">
 
+<div class="connector-left"></div>
+
 <div class="title">
 WCRU 2024
 </div>
 
-Exploring environmental disaster and regional economic growth using open-source geospatial technologies on tropical islands.
+Exploring environmental disaster and regional economic growth using open-source geospatial technologies.
 
 </div>
 
@@ -222,7 +231,10 @@ Exploring environmental disaster and regional economic growth using open-source 
 
 <div class="box">
 
-<div class="paper">
+<div class="connector-right"></div>
+
+<div class="paper"
+onclick="window.open('https://doi.org/')">
 
 Remote sensing-based investigation of outlying urban expansion and landscape diversity in peri-urban areas of Semarang City.
 
@@ -234,14 +246,15 @@ Remote sensing-based investigation of outlying urban expansion and landscape div
 
 </div>
 
-
 <!-- 2024 -->
 
-<div class="year-block">
+<div class="year-row">
 
 <div class="left">
 
 <div class="box">
+
+<div class="connector-left"></div>
 
 <div class="title">
 
@@ -249,7 +262,7 @@ International Publication Research 2023-2024
 
 </div>
 
-Resilience of coastal communities to climate-change disasters in Timor Island and Central Java.
+Resilience of coastal communities to climate-change disasters.
 
 </div>
 
@@ -263,28 +276,30 @@ Resilience of coastal communities to climate-change disasters in Timor Island an
 
 <div class="box">
 
-<div class="paper">
+<div class="connector-right"></div>
 
-Dewa, D.D. et al. (2024)
+<div class="paper"
+onclick="window.open('https://doi.org/')">
 
-Spatiotemporal variations of urban spatial dispersion and its vegetation degradation in Joglosemar's urban growth corridors, Indonesia.
-
-</div>
-
-</div>
+Spatiotemporal variations of urban spatial dispersion and its vegetation degradation in Joglosemar’s urban growth corridors.
 
 </div>
 
 </div>
 
+</div>
+
+</div>
 
 <!-- 2023 -->
 
-<div class="year-block">
+<div class="year-row">
 
 <div class="left">
 
 <div class="box">
+
+<div class="connector-left"></div>
 
 <div class="title">
 
@@ -292,7 +307,7 @@ Applied Research 2022-2024
 
 </div>
 
-Implementation of Smart City for development optimization in Temanggung Regency.
+Smart city implementation for regional development optimization.
 
 </div>
 
@@ -306,9 +321,10 @@ Implementation of Smart City for development optimization in Temanggung Regency.
 
 <div class="box">
 
-<div class="paper">
+<div class="connector-right"></div>
 
-Dewa, D.D. et al. (2023)
+<div class="paper"
+onclick="window.open('https://doi.org/')">
 
 Impacts of rapid urbanization on spatial dynamics of land-based carbon emission and surface temperature changes in the Semarang Metropolitan Region.
 
@@ -320,14 +336,15 @@ Impacts of rapid urbanization on spatial dynamics of land-based carbon emission 
 
 </div>
 
-
 <!-- 2022 -->
 
-<div class="year-block">
+<div class="year-row">
 
 <div class="left">
 
 <div class="box">
+
+<div class="connector-left"></div>
 
 <div class="title">
 
@@ -335,7 +352,7 @@ WCRU 2021-2023
 
 </div>
 
-Adaptation patterns and sustainability of aquaculture communities affected by tidal flooding in northern coastal Java.
+Adaptation patterns of aquaculture communities affected by tidal flooding in northern coastal Java.
 
 </div>
 
@@ -349,9 +366,14 @@ Adaptation patterns and sustainability of aquaculture communities affected by ti
 
 <div class="box">
 
-<div class="paper">
+<div class="connector-right"></div>
 
-Shannon entropy-based urban spatial fragmentation to ensure sustainable development of the urban coastal city: a case study of Semarang.
+<div class="paper"
+onclick="window.open('https://doi.org/')">
+
+Shannon entropy-based urban spatial fragmentation to ensure sustainable development of coastal cities.
+
+</div>
 
 </div>
 
@@ -359,16 +381,15 @@ Shannon entropy-based urban spatial fragmentation to ensure sustainable developm
 
 </div>
 
-</div>
+<!-- 2021 -->
 
-
-<!-- 2020 -->
-
-<div class="year-block">
+<div class="year-row">
 
 <div class="left">
 
 <div class="box">
+
+<div class="connector-left"></div>
 
 <div class="title">
 
@@ -376,23 +397,30 @@ PMDSU-UNDIP 2020-2023
 
 </div>
 
-Development of an Eco-Urban Mobility Model Based on Carbon Reserves and Urban Land-Use Patterns.
+Eco-Urban Mobility Model Based on Carbon Reserves and Urban Land-Use Patterns.
 
 </div>
 
 </div>
 
 <div class="year">
-<span>2020</span>
+<span>2021</span>
 </div>
 
 <div class="right">
 
 <div class="box">
 
-<div class="paper">
+<div class="connector-right"></div>
 
-Assessment of rapid urban development impact for a small-sized transit city using remote sensing: A case study of Salatiga, Indonesia.
+<div class="paper"
+onclick="window.open('https://doi.org/')">
+
+Assessment of rapid urban development impact for a small-sized transit city using remote sensing: Salatiga, Indonesia.
+
+</div>
+
+</div>
 
 </div>
 
@@ -401,19 +429,11 @@ Assessment of rapid urban development impact for a small-sized transit city usin
 </div>
 
 </div>
-
-
-</div>
-
-</div>
-
 
 <script>
 
 function toggleMode(){
-
 document.body.classList.toggle("dark-mode");
-
 }
 
 </script>
