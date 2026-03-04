@@ -158,3 +158,34 @@ body:not(.dark-mode) .vis-navigation button {
   background: #ffffff !important;
   border: 1px solid #ccc !important;
 }
+
+.model-list {
+margin-top:40px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+}
+
+.model-card {
+padding:20px;
+border-radius:10px;
+border:1px solid #333;
+background:#1a1a1a;
+transition:all 0.25s ease;
+}
+
+body:not(.dark-mode) .model-card{
+background:#ffffff;
+border:1px solid #ddd;
+}
+
+.model-card:hover{
+transform:translateY(-3px);
+}
+
+.model-card a{
+text-decoration:none;
+font-weight:500;
+display:inline-block;
+margin-top:10px;
+}
