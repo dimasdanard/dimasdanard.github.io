@@ -8,77 +8,113 @@
 
 <style>
 
-.timeline-wrapper{
-margin-top:50px;
+.roadmap{
+
 position:relative;
+margin-top:60px;
+
 }
 
-.timeline-line{
+.timeline{
+
 position:absolute;
 left:50%;
 width:4px;
-background:#888;
+background:#777;
 top:0;
 bottom:0;
 transform:translateX(-50%);
+
 }
 
-.timeline-item{
+.year-block{
+
 display:flex;
-margin:70px 0;
 align-items:center;
+margin:70px 0;
+
 }
 
-.timeline-left,
-.timeline-right{
-width:45%;
-}
+.year{
 
-.timeline-year{
 width:10%;
 text-align:center;
 font-weight:700;
 font-size:22px;
+
 }
 
-.timeline-box{
-padding:18px;
-border-radius:10px;
-border:1px solid #ccc;
-background:#f8f8f8;
-}
+.year span{
 
-.dark-mode .timeline-box{
-background:#1e1e1e;
-border:1px solid #444;
-}
-
-.timeline-year span{
 background:#111;
 color:white;
 padding:6px 12px;
 border-radius:6px;
+
 }
 
-.dark-mode .timeline-year span{
+.dark-mode .year span{
+
 background:#eaeaea;
 color:#111;
+
 }
 
-.timeline-title{
+.left{
+
+width:45%;
+padding-right:30px;
+
+}
+
+.right{
+
+width:45%;
+padding-left:30px;
+
+}
+
+.box{
+
+border:1px solid #ccc;
+border-radius:10px;
+padding:18px;
+background:#f8f8f8;
+margin-bottom:10px;
+
+}
+
+.dark-mode .box{
+
+background:#1e1e1e;
+border:1px solid #444;
+
+}
+
+.title{
+
 font-weight:600;
-margin-bottom:8px;
+margin-bottom:6px;
+
 }
 
-.timeline-paper{
-margin-top:10px;
+.paper{
+
 font-size:14px;
 line-height:1.6;
+
+}
+
+.future{
+
+border:2px dashed #888;
+
 }
 
 </style>
 
 </head>
+
 
 <body class="dark-mode">
 
@@ -93,13 +129,14 @@ line-height:1.6;
 </nav>
 </header>
 
+
 <div class="container">
 
 <h1>Research Output</h1>
 
 <p>
 
-Welcome to my research trajectory overview.  
+Welcome to my research trajectory overview.
 
 My research focuses on urban–environment systems, integrating spatial modeling, geospatial analytics, and remote sensing to understand land-use transformation, environmental dynamics, and climate risks in rapidly urbanizing regions.
 
@@ -107,42 +144,35 @@ The roadmap below illustrates how my research evolved from early work on urban s
 
 </p>
 
-<div class="timeline-wrapper">
 
-<div class="timeline-line"></div>
+<div class="roadmap">
 
-<!-- 2020 -->
+<div class="timeline"></div>
 
-<div class="timeline-item">
+<!-- 2030 FUTURE -->
 
-<div class="timeline-left">
+<div class="year-block">
 
-<div class="timeline-box">
+<div class="left"></div>
 
-<div class="timeline-title">
-PMDSU-UNDIP 2020-2023
+<div class="year">
+<span>2030</span>
 </div>
 
-Development of an Eco-Urban Mobility Model Based on Carbon Reserves and Urban Land-Use Patterns.
+<div class="right">
+
+<div class="box future">
+
+<div class="title">
+
+Sustainable Mega Urban Spatial Patterns for Climate Resilience
 
 </div>
 
-</div>
+Targeted outputs:
 
-<div class="timeline-year">
-<span>2020</span>
-</div>
-
-<div class="timeline-right">
-
-<div class="timeline-box">
-
-<div class="timeline-paper">
-
-Dewa, D. D., & Buchori, I. (2021).  
-Assessment of rapid urban development impact for a small-sized transit city using remote sensing:  
-A case study of Salatiga, Indonesia.  
-IOP Conference Series: Earth and Environmental Science.
+High-impact indexed international publications  
+Registered Intellectual Property (IPR)
 
 </div>
 
@@ -150,80 +180,51 @@ IOP Conference Series: Earth and Environmental Science.
 
 </div>
 
+
+<!-- 2026 -->
+
+<div class="year-block">
+
+<div class="left"></div>
+
+<div class="year">
+<span>2026</span>
 </div>
 
-<!-- 2022 -->
-
-<div class="timeline-item">
-
-<div class="timeline-left">
-
-<div class="timeline-box">
-
-<div class="timeline-title">
-WCRU 2021-2023
-</div>
-
-Adaptation patterns and sustainability of aquaculture communities affected by tidal flooding in northern coastal Java.
+<div class="right"></div>
 
 </div>
 
+
+<!-- 2025 -->
+
+<div class="year-block">
+
+<div class="left">
+
+<div class="box">
+
+<div class="title">
+WCRU 2024
 </div>
 
-<div class="timeline-year">
-<span>2022</span>
-</div>
-
-<div class="timeline-right">
-
-<div class="timeline-box">
-
-<div class="timeline-paper">
-
-Dewa, D. D., Buchori, I., Sejati, A. W., & Liu, Y. (2022).  
-Shannon entropy-based urban spatial fragmentation to ensure sustainable development of the urban coastal city:  
-A case study of Semarang, Indonesia.  
-Remote Sensing Applications: Society and Environment.
+Exploring environmental disaster and regional economic growth using open-source geospatial technologies on tropical islands.
 
 </div>
 
 </div>
 
+<div class="year">
+<span>2025</span>
 </div>
 
-</div>
+<div class="right">
 
-<!-- 2023 -->
+<div class="box">
 
-<div class="timeline-item">
+<div class="paper">
 
-<div class="timeline-left">
-
-<div class="timeline-box">
-
-<div class="timeline-title">
-Applied Research 2022-2024
-</div>
-
-Implementation of Smart City in optimizing development programs in Temanggung Regency.
-
-</div>
-
-</div>
-
-<div class="timeline-year">
-<span>2023</span>
-</div>
-
-<div class="timeline-right">
-
-<div class="timeline-box">
-
-<div class="timeline-paper">
-
-Dewa, D. D., Buchori, I., Rudiarto, I. (2023).  
-Impacts of rapid urbanization on spatial dynamics of land-based carbon emission and surface temperature changes in the Semarang Metropolitan Region.  
-Environmental Monitoring and Assessment.
+Remote sensing-based investigation of outlying urban expansion and landscape diversity in peri-urban areas of Semarang City.
 
 </div>
 
@@ -232,17 +233,20 @@ Environmental Monitoring and Assessment.
 </div>
 
 </div>
+
 
 <!-- 2024 -->
 
-<div class="timeline-item">
+<div class="year-block">
 
-<div class="timeline-left">
+<div class="left">
 
-<div class="timeline-box">
+<div class="box">
 
-<div class="timeline-title">
+<div class="title">
+
 International Publication Research 2023-2024
+
 </div>
 
 Resilience of coastal communities to climate-change disasters in Timor Island and Central Java.
@@ -251,57 +255,19 @@ Resilience of coastal communities to climate-change disasters in Timor Island an
 
 </div>
 
-<div class="timeline-year">
+<div class="year">
 <span>2024</span>
 </div>
 
-<div class="timeline-right">
+<div class="right">
 
-<div class="timeline-box">
+<div class="box">
 
-<div class="timeline-paper">
+<div class="paper">
 
-Dewa, D. D., Buchori, I., Rudiarto, I., et al. (2024).  
-Spatiotemporal variations of urban spatial dispersion and its vegetation degradation in Joglosemar's urban growth corridors, Indonesia.  
-The Geographer.
+Dewa, D.D. et al. (2024)
 
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- 2025 -->
-
-<div class="timeline-item">
-
-<div class="timeline-left">
-
-<div class="timeline-box">
-
-<div class="timeline-title">
-WCRU 2024
-</div>
-
-Exploring environmental disaster and regional economic growth using open-source data technologies in tropical islands.
-
-</div>
-
-</div>
-
-<div class="timeline-year">
-<span>2025</span>
-</div>
-
-<div class="timeline-right">
-
-<div class="timeline-box">
-
-<div class="timeline-paper">
-
-Remote sensing-based investigation of outlying urban expansion and landscape diversity in Semarang.
+Spatiotemporal variations of urban spatial dispersion and its vegetation degradation in Joglosemar's urban growth corridors, Indonesia.
 
 </div>
 
@@ -311,53 +277,143 @@ Remote sensing-based investigation of outlying urban expansion and landscape div
 
 </div>
 
-<!-- 2030 -->
 
-<div class="timeline-item">
+<!-- 2023 -->
 
-<div class="timeline-left">
+<div class="year-block">
 
-<div class="timeline-box">
+<div class="left">
 
-<div class="timeline-title">
-RIIM Kompetisi 2025
-</div>
+<div class="box">
 
-Decarbonizing mega urban corridors: spatial modeling and mitigation strategies for carbon emission dynamics.
+<div class="title">
 
-</div>
+Applied Research 2022-2024
 
 </div>
 
-<div class="timeline-year">
-<span>2030</span>
-</div>
-
-<div class="timeline-right">
-
-<div class="timeline-box">
-
-<div class="timeline-paper">
-
-Targeted outputs:  
-High-impact international publications and registered intellectual property.
+Implementation of Smart City for development optimization in Temanggung Regency.
 
 </div>
 
 </div>
 
+<div class="year">
+<span>2023</span>
 </div>
+
+<div class="right">
+
+<div class="box">
+
+<div class="paper">
+
+Dewa, D.D. et al. (2023)
+
+Impacts of rapid urbanization on spatial dynamics of land-based carbon emission and surface temperature changes in the Semarang Metropolitan Region.
 
 </div>
 
 </div>
 
 </div>
+
+</div>
+
+
+<!-- 2022 -->
+
+<div class="year-block">
+
+<div class="left">
+
+<div class="box">
+
+<div class="title">
+
+WCRU 2021-2023
+
+</div>
+
+Adaptation patterns and sustainability of aquaculture communities affected by tidal flooding in northern coastal Java.
+
+</div>
+
+</div>
+
+<div class="year">
+<span>2022</span>
+</div>
+
+<div class="right">
+
+<div class="box">
+
+<div class="paper">
+
+Shannon entropy-based urban spatial fragmentation to ensure sustainable development of the urban coastal city: a case study of Semarang.
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- 2020 -->
+
+<div class="year-block">
+
+<div class="left">
+
+<div class="box">
+
+<div class="title">
+
+PMDSU-UNDIP 2020-2023
+
+</div>
+
+Development of an Eco-Urban Mobility Model Based on Carbon Reserves and Urban Land-Use Patterns.
+
+</div>
+
+</div>
+
+<div class="year">
+<span>2020</span>
+</div>
+
+<div class="right">
+
+<div class="box">
+
+<div class="paper">
+
+Assessment of rapid urban development impact for a small-sized transit city using remote sensing: A case study of Salatiga, Indonesia.
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
 
 <script>
 
 function toggleMode(){
+
 document.body.classList.toggle("dark-mode");
+
 }
 
 </script>
