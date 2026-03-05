@@ -8,131 +8,81 @@
 
 <style>
 
+/* ROADMAP */
+
 .roadmap{
-position:relative;
 margin-top:60px;
-}
-
-.timeline{
-position:absolute;
-left:50%;
-top:0;
-bottom:0;
-width:4px;
-background:#666;
-transform:translateX(-50%);
-}
-
-.year-row{
 display:flex;
-align-items:center;
-margin:90px 0;
-position:relative;
+flex-direction:column-reverse;
+gap:50px;
+}
+
+/* YEAR BLOCK */
+
+.year-block{
+display:grid;
+grid-template-columns:120px 1fr;
+gap:20px;
+align-items:start;
 }
 
 .year{
-width:10%;
-text-align:center;
 font-weight:700;
 font-size:22px;
-z-index:3;
+text-align:right;
 }
 
-.year span{
-background:#111;
-color:white;
-padding:6px 12px;
-border-radius:6px;
+/* PHASE */
+
+.phase{
+border-left:4px solid #666;
+padding-left:20px;
 }
 
-.dark-mode .year span{
-background:#eee;
-color:#111;
-}
-
-.left{
-width:45%;
-padding-right:40px;
-position:relative;
-}
-
-.right{
-width:45%;
-padding-left:40px;
-position:relative;
-}
-
-.box{
-background:#f8f8f8;
-border:1px solid #ccc;
-padding:18px;
-border-radius:10px;
+.phase-title{
+font-weight:600;
 margin-bottom:10px;
 }
 
-.dark-mode .box{
-background:#1e1e1e;
-border:1px solid #444;
-}
-
-.title{
-font-weight:600;
-margin-bottom:6px;
-}
+/* PAPER */
 
 .paper{
+margin:6px 0;
+cursor:pointer;
 font-size:14px;
 line-height:1.6;
-cursor:pointer;
+transition:0.2s;
 }
 
 .paper:hover{
-text-decoration:underline;
+color:#3f51b5;
 }
 
-/* connectors */
-
-.connector-left{
-position:absolute;
-right:-40px;
-top:50%;
-width:40px;
-height:2px;
-background:#999;
-}
-
-.connector-right{
-position:absolute;
-left:-40px;
-top:50%;
-width:40px;
-height:2px;
-background:#999;
-}
-
-.curve{
-position:absolute;
-width:60px;
-height:60px;
-border-top:2px solid #999;
-border-right:2px solid #999;
-border-radius:0 60px 0 0;
-right:-60px;
-top:50%;
-}
+/* FUTURE */
 
 .future{
-border:2px dashed #888;
+border-left:4px dashed #888;
+padding-left:20px;
 }
 
-.dashed-up{
-position:absolute;
-left:50%;
-top:-60px;
-width:4px;
-height:60px;
-border-left:2px dashed #999;
-transform:translateX(-50%);
+/* DARK MODE */
+
+.dark-mode .paper:hover{
+color:#90caf9;
+}
+
+/* MOBILE */
+
+@media (max-width:700px){
+
+.year-block{
+grid-template-columns:80px 1fr;
+}
+
+.year{
+font-size:18px;
+}
+
 }
 
 </style>
@@ -158,85 +108,106 @@ transform:translateX(-50%);
 
 <p>
 
-Welcome to my research trajectory overview.
-
-My research focuses on urban–environment systems, integrating spatial modeling, geospatial analytics, and remote sensing to understand land-use transformation, environmental dynamics, and climate risks in rapidly urbanizing regions.
-
-The roadmap below illustrates how my research evolved from early work on urban spatial structure and land-use dynamics toward broader themes of environmental risk assessment, climate resilience, and sustainable urban systems.
+My research investigates urban–environment systems using spatial modeling,
+remote sensing, and geospatial analytics.  
+The roadmap below illustrates the evolution of my research themes and
+scholarly outputs from early work on urban spatial structure and land-use
+dynamics toward broader topics in environmental risk assessment,
+climate resilience, and spatial data science.
 
 </p>
 
 <div class="roadmap">
 
-<div class="timeline"></div>
+<!-- FUTURE 2030 -->
 
-<!-- 2030 -->
+<div class="year-block">
 
-<div class="year-row">
+<div class="year">2030</div>
 
-<div class="left"></div>
+<div class="phase future">
 
-<div class="year">
-<span>2030</span>
+<div class="phase-title">
+Future Vision — Climate-Resilient Urban Systems
 </div>
 
-<div class="right">
-
-<div class="box future">
-
-<div class="title">
-
-Sustainable Mega-Urban Spatial Patterns for Climate Resilience
-
-</div>
-
-Target outputs:
-
-• High-impact international publications  
-• Registered Intellectual Property  
+Urban systems modeling for climate-resilient and low-carbon development,
+integrating ecological corridor networks, spatial big data,
+and urban climate risk analytics.
 
 </div>
 
 </div>
 
+
+<!-- 2026 -->
+
+<div class="year-block">
+
+<div class="year">2026</div>
+
+<div class="phase">
+
+<div class="phase-title">
+Geospatial Data Science & Spatial Analytics
 </div>
 
-<div class="dashed-up"></div>
+<div class="paper"
+onclick="window.open('https://doi.org/')">
+
+(J1) Exploratory spatial co-patterns of VIIRS nighttime radiance and land cover compositional evenness at 10-km resolution in Java, Indonesia.
+
+</div>
+
+</div>
+
+</div>
+
 
 <!-- 2025 -->
 
-<div class="year-row">
+<div class="year-block">
 
-<div class="left">
+<div class="year">2025</div>
 
-<div class="box">
+<div class="phase">
 
-<div class="connector-left"></div>
-
-<div class="title">
-WCRU 2024
+<div class="phase-title">
+Urban Environmental Systems & Climate Mitigation
 </div>
-
-Exploring environmental disaster and regional economic growth using open-source geospatial technologies.
-
-</div>
-
-</div>
-
-<div class="year">
-<span>2025</span>
-</div>
-
-<div class="right">
-
-<div class="box">
-
-<div class="connector-right"></div>
 
 <div class="paper"
 onclick="window.open('https://doi.org/')">
 
-Remote sensing-based investigation of outlying urban expansion and landscape diversity in peri-urban areas of Semarang City.
+(J2) A Framework for Optimizing Open Spatial Data in Urban Planning and Policy Applications.
+
+</div>
+
+<div class="paper"
+onclick="window.open('https://doi.org/')">
+
+(J3) Remote sensing-based investigation of outlying urban expansion and its impact on landscape diversity in the peri-urban area of Semarang City.
+
+</div>
+
+<div class="paper"
+onclick="window.open('https://doi.org/')">
+
+(J4) Impact of urbanization on carbon emissions and ecological quality in the Semarang Metropolitan Region.
+
+</div>
+
+<div class="paper"
+onclick="window.open('https://doi.org/')">
+
+(J5) Integrating Google Earth Engine and ecological corridor modeling for urban heat island mitigation.
+
+</div>
+
+<div class="paper"
+onclick="window.open('https://doi.org/')">
+
+(J6) Spatiotemporal variations of urban expansion and its relation with geomorphological complexity.
 
 </div>
 
@@ -244,44 +215,23 @@ Remote sensing-based investigation of outlying urban expansion and landscape div
 
 </div>
 
-</div>
 
 <!-- 2024 -->
 
-<div class="year-row">
+<div class="year-block">
 
-<div class="left">
+<div class="year">2024</div>
 
-<div class="box">
+<div class="phase">
 
-<div class="connector-left"></div>
-
-<div class="title">
-
-International Publication Research 2023-2024
-
+<div class="phase-title">
+Urban Ecological Dynamics
 </div>
-
-Resilience of coastal communities to climate-change disasters.
-
-</div>
-
-</div>
-
-<div class="year">
-<span>2024</span>
-</div>
-
-<div class="right">
-
-<div class="box">
-
-<div class="connector-right"></div>
 
 <div class="paper"
 onclick="window.open('https://doi.org/')">
 
-Spatiotemporal variations of urban spatial dispersion and its vegetation degradation in Joglosemar’s urban growth corridors.
+(J7) Spatiotemporal variations of urban spatial dispersion and its vegetation degradation in Joglosemar’s urban growth corridors.
 
 </div>
 
@@ -289,44 +239,30 @@ Spatiotemporal variations of urban spatial dispersion and its vegetation degrada
 
 </div>
 
-</div>
 
 <!-- 2023 -->
 
-<div class="year-row">
+<div class="year-block">
 
-<div class="left">
+<div class="year">2023</div>
 
-<div class="box">
+<div class="phase">
 
-<div class="connector-left"></div>
-
-<div class="title">
-
-Applied Research 2022-2024
-
+<div class="phase-title">
+Urban Environmental Impacts
 </div>
-
-Smart city implementation for regional development optimization.
-
-</div>
-
-</div>
-
-<div class="year">
-<span>2023</span>
-</div>
-
-<div class="right">
-
-<div class="box">
-
-<div class="connector-right"></div>
 
 <div class="paper"
 onclick="window.open('https://doi.org/')">
 
-Impacts of rapid urbanization on spatial dynamics of land-based carbon emission and surface temperature changes in the Semarang Metropolitan Region.
+(J8) Modifying the contact perimeter approach for measuring urban compactness gradients.
+
+</div>
+
+<div class="paper"
+onclick="window.open('https://doi.org/')">
+
+(J9) Impacts of rapid urbanization on spatial dynamics of land-use-based carbon emission and surface temperature changes.
 
 </div>
 
@@ -334,44 +270,30 @@ Impacts of rapid urbanization on spatial dynamics of land-based carbon emission 
 
 </div>
 
-</div>
 
 <!-- 2022 -->
 
-<div class="year-row">
+<div class="year-block">
 
-<div class="left">
+<div class="year">2022</div>
 
-<div class="box">
+<div class="phase">
 
-<div class="connector-left"></div>
-
-<div class="title">
-
-WCRU 2021-2023
-
+<div class="phase-title">
+Urban Spatial Structure & Land-Use Dynamics
 </div>
-
-Adaptation patterns of aquaculture communities affected by tidal flooding in northern coastal Java.
-
-</div>
-
-</div>
-
-<div class="year">
-<span>2022</span>
-</div>
-
-<div class="right">
-
-<div class="box">
-
-<div class="connector-right"></div>
 
 <div class="paper"
 onclick="window.open('https://doi.org/')">
 
-Shannon entropy-based urban spatial fragmentation to ensure sustainable development of coastal cities.
+(J10) Assessing land use/land cover change diversity and its relation with urban dispersion using Shannon Entropy.
+
+</div>
+
+<div class="paper"
+onclick="window.open('https://doi.org/')">
+
+(J11) Shannon Entropy-based urban spatial fragmentation to ensure sustainable development of coastal cities.
 
 </div>
 
@@ -379,44 +301,23 @@ Shannon entropy-based urban spatial fragmentation to ensure sustainable developm
 
 </div>
 
-</div>
 
 <!-- 2021 -->
 
-<div class="year-row">
+<div class="year-block">
 
-<div class="left">
+<div class="year">2021</div>
 
-<div class="box">
+<div class="phase">
 
-<div class="connector-left"></div>
-
-<div class="title">
-
-PMDSU-UNDIP 2020-2023
-
+<div class="phase-title">
+Urban Spatial Analysis Foundations
 </div>
-
-Eco-Urban Mobility Model Based on Carbon Reserves and Urban Land-Use Patterns.
-
-</div>
-
-</div>
-
-<div class="year">
-<span>2021</span>
-</div>
-
-<div class="right">
-
-<div class="box">
-
-<div class="connector-right"></div>
 
 <div class="paper"
 onclick="window.open('https://doi.org/')">
 
-Assessment of rapid urban development impact for a small-sized transit city using remote sensing: Salatiga, Indonesia.
+(C1) Assessment of rapid urban development impact for a small-sized transit city using remote sensing: A case study of Salatiga.
 
 </div>
 
@@ -428,7 +329,6 @@ Assessment of rapid urban development impact for a small-sized transit city usin
 
 </div>
 
-</div>
 
 <script>
 
