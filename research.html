@@ -8,6 +8,29 @@
 
 <style>
 
+/* SEARCH BOX */
+
+.search-box{
+margin-top:30px;
+margin-bottom:40px;
+}
+
+.search-box input{
+width:100%;
+padding:10px 14px;
+border-radius:6px;
+border:1px solid #ccc;
+box-sizing:border-box;
+background:#ffffff;
+color:#222;
+}
+
+.dark-mode .search-box input{
+background:#1a1a1a;
+border:1px solid #444;
+color:#fff;
+}
+
 /* ROADMAP */
 
 .roadmap{
@@ -61,54 +84,6 @@ color:#3f51b5;
 .dark-mode .paper:hover{
 color:#90caf9;
 }
-
-
-/* PUBLICATION EXPLORER */
-
-.pub-filters{
-margin-top:80px;
-margin-bottom:20px;
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-}
-
-.pub-filters button{
-padding:6px 14px;
-border-radius:6px;
-border:1px solid #ccc;
-background:#f5f5f5;
-cursor:pointer;
-font-size:13px;
-}
-
-.dark-mode .pub-filters button{
-background:#1a1a1a;
-border:1px solid #444;
-color:#fff;
-}
-
-.pub-year{
-font-weight:600;
-margin-top:30px;
-margin-bottom:10px;
-}
-
-.pub-item{
-margin-bottom:14px;
-line-height:1.7;
-cursor:pointer;
-transition:0.2s;
-}
-
-.pub-item:hover{
-color:#3f51b5;
-}
-
-.dark-mode .pub-item:hover{
-color:#90caf9;
-}
-
 
 /* MOBILE */
 
@@ -171,8 +146,13 @@ This trajectory ultimately supports my long-term research vision toward
 </p>
 
 
+<!-- SEARCH -->
 
-<!-- ROADMAP -->
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Search publications...">
+</div>
+
+
 
 <div class="roadmap">
 
@@ -218,7 +198,7 @@ Urban Climate & Environmental Systems Modeling
 
 <div class="year">2026</div>
 
-<div class="paper" onclick="window.open('https://link.springer.com/article/10.1007/s41324-026-00671-2')">
+<div class="paper">
 
 <strong>Dewa, D. D.</strong>, Buchori, I., Sejati, A. W., & Liu, Y. (2026).
 <strong>Exploratory spatial co-patterns of VIIRS nighttime radiance and land cover compositional evenness at 10-km resolution in Java, Indonesia.</strong>
@@ -233,7 +213,7 @@ Urban Climate & Environmental Systems Modeling
 
 <div class="year">2025</div>
 
-<div class="paper" onclick="window.open('https://link.springer.com/article/10.1007/s12061-025-09746-3')">
+<div class="paper">
 
 <strong>Dewa, D. D.</strong>, & Buchori, I. (2025).
 <strong>A Framework for Optimizing Open Spatial Data in Urban Planning and Policy Applications.</strong>
@@ -241,8 +221,7 @@ Urban Climate & Environmental Systems Modeling
 
 </div>
 
-<div class="paper morphology"
-onclick="window.open('https://link.springer.com/article/10.1007/s41324-025-00617-0')">
+<div class="paper">
 
 <strong>Dewa, D. D.</strong>, Buchori, I., Rudiarto, I., & Sejati, A. W. (2025).
 <strong>Remote sensing-based investigation of outlying urban expansion and its impact on landscape diversity in the peri-urban area of Semarang City, Indonesia.</strong>
@@ -250,8 +229,7 @@ onclick="window.open('https://link.springer.com/article/10.1007/s41324-025-00617
 
 </div>
 
-<div class="paper climate"
-onclick="window.open('https://link.springer.com/article/10.1007/s10661-025-14057-8')">
+<div class="paper">
 
 Nusa, P. D., Buchori, I., <strong>Dewa, D. D.</strong>, Putri, S. N. A. K., & Pangi, P. (2025).
 <strong>Impact of urbanization on carbon emissions and ecological quality in the Semarang Metropolitan Region, Indonesia.</strong>
@@ -259,18 +237,10 @@ Nusa, P. D., Buchori, I., <strong>Dewa, D. D.</strong>, Putri, S. N. A. K., & Pa
 
 </div>
 
-<div class="paper climate"
-onclick="window.open('https://doi.org/10.1016/j.rsase.2025.101573')">
-
-<strong>Dewa, D. D.</strong>, Buchori, I., Sejati, A. W., & Liu, Y. (2025).
-<strong>Integrating Google Earth Engine and regional ecological corridor modeling for remote sensing-based urban heat island mitigation in Java, Indonesia.</strong>
-<i>Remote Sensing Applications: Society and Environment</i>, 38, 101573.
-
 </div>
 
 </div>
 
-</div>
 
 
 <div class="theme">
@@ -292,8 +262,7 @@ Urban Spatial Metrics & Morphology
 
 <div class="year">2024</div>
 
-<div class="paper morphology"
-onclick="window.open('https://doi.org/10.1080/00049182.2024.2331102')">
+<div class="paper">
 
 <strong>Dewa, D. D.</strong>, Buchori, I., Rudiarto, I., Sejati, A. W., & Liu, Y. (2024).
 <strong>Spatiotemporal variations of urban spatial dispersion and its vegetation degradation in Joglosemar’s urban growth corridors, Indonesia.</strong>
@@ -308,8 +277,7 @@ onclick="window.open('https://doi.org/10.1080/00049182.2024.2331102')">
 
 <div class="year">2023</div>
 
-<div class="paper morphology"
-onclick="window.open('https://link.springer.com/article/10.1007/s41651-023-00135-3')">
+<div class="paper">
 
 <strong>Dewa, D. D.</strong>, Buchori, I., Rudiarto, I., & Sejati, A. W. (2023).
 <strong>Modifying the contact perimeter approach for measuring urban compactness gradients in the Joglosemar Urban Region, Indonesia.</strong>
@@ -317,8 +285,7 @@ onclick="window.open('https://link.springer.com/article/10.1007/s41651-023-00135
 
 </div>
 
-<div class="paper climate"
-onclick="window.open('https://link.springer.com/article/10.1007/s10661-022-10839-6')">
+<div class="paper">
 
 <strong>Dewa, D. D.</strong>, & Buchori, I. (2023).
 <strong>Impacts of rapid urbanization on spatial dynamics of land use–based carbon emission and surface temperature changes in the Semarang Metropolitan Region, Indonesia.</strong>
@@ -333,21 +300,11 @@ onclick="window.open('https://link.springer.com/article/10.1007/s10661-022-10839
 
 <div class="year">2022</div>
 
-<div class="paper morphology"
-onclick="window.open('https://doi.org/10.1080/10106049.2022.2046871')">
+<div class="paper">
 
 <strong>Dewa, D. D.</strong>, Buchori, I., & Sejati, A. W. (2022).
 <strong>Assessing land use/land cover change diversity and its relation with urban dispersion using Shannon Entropy in the Semarang Metropolitan Region, Indonesia.</strong>
 <i>Geocarto International</i>, 37(26), 11151–11172.
-
-</div>
-
-<div class="paper morphology"
-onclick="window.open('https://doi.org/10.1016/j.rsase.2022.100839')">
-
-<strong>Dewa, D. D.</strong>, Buchori, I., Sejati, A. W., & Liu, Y. (2022).
-<strong>Shannon Entropy-based urban spatial fragmentation to ensure sustainable development of the urban coastal city.</strong>
-<i>Remote Sensing Applications: Society and Environment</i>, 28, 100839.
 
 </div>
 
@@ -358,8 +315,7 @@ onclick="window.open('https://doi.org/10.1016/j.rsase.2022.100839')">
 
 <div class="year">2021</div>
 
-<div class="paper morphology"
-onclick="window.open('https://iopscience.iop.org/article/10.1088/1755-1315/887/1/012009')">
+<div class="paper">
 
 <strong>Dewa, D. D.</strong>, & Buchori, I. (2021).
 <strong>Assessment of rapid urban development impact for a small-sized transit city using remote sensing: A case study of Salatiga, Indonesia.</strong>
@@ -374,49 +330,35 @@ onclick="window.open('https://iopscience.iop.org/article/10.1088/1755-1315/887/1
 
 </div>
 
-
-
-<!-- PUBLICATION FILTER -->
-
-<h2 style="margin-top:80px;">Publication Explorer</h2>
-
-<div class="pub-filters">
-
-<button onclick="filterPub('all')">All</button>
-<button onclick="filterPub('climate')">Climate</button>
-<button onclick="filterPub('morphology')">Urban Morphology</button>
-
 </div>
 
 
 
 <script>
 
+/* DARK MODE */
+
 function toggleMode(){
 document.body.classList.toggle("dark-mode");
 }
 
 
-function filterPub(topic){
+/* SEARCH */
 
-const items = document.querySelectorAll(".paper");
+document.getElementById("searchInput").addEventListener("keyup", function(){
 
-items.forEach(item=>{
+let filter = this.value.toLowerCase();
+let papers = document.querySelectorAll(".paper");
 
-if(topic==="all"){
-item.style.display="block";
-return;
-}
+papers.forEach(function(p){
 
-if(item.classList.contains(topic)){
-item.style.display="block";
-}else{
-item.style.display="none";
-}
+let text = p.textContent.toLowerCase();
+
+p.style.display = text.includes(filter) ? "" : "none";
 
 });
 
-}
+});
 
 </script>
 
