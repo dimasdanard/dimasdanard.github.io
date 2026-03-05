@@ -8,38 +8,48 @@
 
 <style>
 
+/* ROADMAP LAYOUT */
+
 .roadmap{
 margin-top:60px;
-display:flex;
-flex-direction:column;
-gap:50px;
+display:grid;
+grid-template-columns:320px 1fr;
+gap:40px;
 }
 
-.year-block{
-display:grid;
-grid-template-columns:120px 1fr;
-gap:20px;
-align-items:start;
+/* THEMATIC BLOCK */
+
+.theme{
+border-right:4px solid #777;
+padding-right:25px;
+}
+
+.theme-title{
+font-weight:600;
+font-size:18px;
+margin-bottom:8px;
+}
+
+.theme-years{
+font-size:14px;
+opacity:0.8;
+}
+
+/* YEAR GROUP */
+
+.year-group{
+margin-bottom:30px;
 }
 
 .year{
-font-weight:700;
-font-size:22px;
-text-align:right;
-}
-
-.phase{
-border-left:4px solid #666;
-padding-left:20px;
-}
-
-.phase-title{
 font-weight:600;
-margin-bottom:12px;
+margin-bottom:10px;
 }
+
+/* PAPER STYLE */
 
 .paper{
-margin:8px 0;
+margin:7px 0;
 cursor:pointer;
 font-size:14px;
 line-height:1.6;
@@ -54,19 +64,24 @@ color:#3f51b5;
 color:#90caf9;
 }
 
+/* FUTURE */
+
 .future{
-border-left:4px dashed #888;
+border-right:4px dashed #888;
+}
+
+/* MOBILE */
+
+@media (max-width:900px){
+
+.roadmap{
+grid-template-columns:1fr;
+}
+
+.theme{
+border-right:none;
+border-left:4px solid #777;
 padding-left:20px;
-}
-
-@media (max-width:700px){
-
-.year-block{
-grid-template-columns:80px 1fr;
-}
-
-.year{
-font-size:18px;
 }
 
 }
@@ -88,6 +103,7 @@ font-size:18px;
 </nav>
 </header>
 
+
 <div class="container">
 
 <h1>Research Output</h1>
@@ -99,174 +115,91 @@ The roadmap below illustrates the evolution of my research themes and scholarly 
 
 </p>
 
+
 <div class="roadmap">
 
 
-<!-- 2030 -->
+<!-- THEME 1 -->
 
-<div class="year-block">
+<div class="theme">
 
-<div class="year">2030</div>
-
-<div class="phase future">
-
-<div class="phase-title">
-Future Vision — Climate-Resilient Urban Systems
+<div class="theme-title">
+Urban Spatial Metrics & Morphology
 </div>
 
-Urban systems modeling for climate-resilient and low-carbon development integrating spatial big data, ecological corridors, and urban climate analytics.
-
+<div class="theme-years">
+2021–2024
 </div>
 
 </div>
 
 
-<!-- 2026 -->
+<div>
 
-<div class="year-block">
-
-<div class="year">2026</div>
-
-<div class="phase">
-
-<div class="phase-title">
-Geospatial Data Science
-</div>
-
-<div class="paper" onclick="window.open('https://link.springer.com/article/10.1007/s41324-026-00671-2')">
-
-Dewa, D. D., Buchori, I., Sejati, A. W., & Liu, Y. (2026). Exploratory spatial co-patterns of VIIRS nighttime radiance and land cover compositional evenness at 10-km resolution in Java, Indonesia. Spatial Information Research, 34(2), 13.
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- 2025 -->
-
-<div class="year-block">
-
-<div class="year">2025</div>
-
-<div class="phase">
-
-<div class="phase-title">
-Urban Environmental Systems & Climate Mitigation
-</div>
-
-<div class="paper" onclick="window.open('https://link.springer.com/article/10.1007/s12061-025-09746-3')">
-Dewa, D. D., & Buchori, I. (2025). A Framework for Optimizing Open Spatial Data in Urban Planning and Policy Applications.
-</div>
-
-<div class="paper" onclick="window.open('https://link.springer.com/article/10.1007/s41324-025-00617-0')">
-Dewa, D. D., Buchori, I., Rudiarto, I., & Sejati, A. W. (2025). Remote sensing-based investigation of outlying urban expansion and its impact on landscape diversity.
-</div>
-
-<div class="paper" onclick="window.open('https://link.springer.com/article/10.1007/s10661-025-14057-8')">
-Nusa, P. D., Buchori, I., Dewa, D. D., Putri, S. N. A. K., & Pangi, P. (2025). Impact of urbanization on carbon emissions and ecological quality.
-</div>
-
-<div class="paper" onclick="window.open('https://doi.org/10.1016/j.rsase.2025.101573')">
-Dewa, D. D., Buchori, I., Sejati, A. W., & Liu, Y. (2025). Integrating Google Earth Engine and regional ecological corridor modeling for remote sensing-based urban heat island mitigation.
-</div>
-
-<div class="paper" onclick="window.open('https://link.springer.com/article/10.1007/s12061-024-09629-z')">
-Dewa, D. D., Buchori, I., Rudiarto, I., & Sejati, A. W. (2025). Spatiotemporal variations of urban expansion and its relation with geomorphological complexity.
-</div>
-
-</div>
-
-</div>
-
-
-<!-- 2024 -->
-
-<div class="year-block">
+<div class="year-group">
 
 <div class="year">2024</div>
 
-<div class="phase">
-
-<div class="phase-title">
-Urban Ecological Dynamics
-</div>
-
 <div class="paper" onclick="window.open('https://doi.org/10.1080/00049182.2024.2331102')">
-Dewa, D. D., Buchori, I., Rudiarto, I., Sejati, A. W., & Liu, Y. (2024). Spatiotemporal variations of urban spatial dispersion and its vegetation degradation in Joglosemar’s urban growth corridors.
-</div>
+
+Dewa, D. D., Buchori, I., Rudiarto, I., Sejati, A. W., & Liu, Y. (2024).  
+Spatiotemporal variations of urban spatial dispersion and its vegetation degradation in Joglosemar’s urban growth corridors, Indonesia.
 
 </div>
 
 </div>
 
 
-<!-- 2023 -->
-
-<div class="year-block">
+<div class="year-group">
 
 <div class="year">2023</div>
 
-<div class="phase">
-
-<div class="phase-title">
-Urban Environmental Impacts
-</div>
-
 <div class="paper" onclick="window.open('https://link.springer.com/article/10.1007/s41651-023-00135-3')">
-Dewa, D. D., Buchori, I., Rudiarto, I., & Sejati, A. W. (2023). Modifying the contact perimeter approach for measuring urban compactness gradients.
+
+Dewa, D. D., Buchori, I., Rudiarto, I., & Sejati, A. W. (2023).  
+Modifying the contact perimeter approach for measuring urban compactness gradients in the Joglosemar Urban Region, Indonesia.
+
 </div>
 
 <div class="paper" onclick="window.open('https://link.springer.com/article/10.1007/s10661-022-10839-6')">
-Dewa, D. D., & Buchori, I. (2023). Impacts of rapid urbanization on spatial dynamics of land-use-based carbon emission and surface temperature changes.
-</div>
+
+Dewa, D. D., & Buchori, I. (2023).  
+Impacts of rapid urbanization on spatial dynamics of land use–based carbon emission and surface temperature changes in the Semarang Metropolitan Region, Indonesia.
 
 </div>
 
 </div>
 
 
-<!-- 2022 -->
-
-<div class="year-block">
+<div class="year-group">
 
 <div class="year">2022</div>
 
-<div class="phase">
-
-<div class="phase-title">
-Urban Spatial Structure & Land-Use Dynamics
-</div>
-
 <div class="paper" onclick="window.open('https://doi.org/10.1080/10106049.2022.2046871')">
-Dewa, D. D., Buchori, I., & Sejati, A. W. (2022). Assessing land use/land cover change diversity and its relation with urban dispersion using Shannon Entropy.
+
+Dewa, D. D., Buchori, I., & Sejati, A. W. (2022).  
+Assessing land use/land cover change diversity and its relation with urban dispersion using Shannon Entropy in the Semarang Metropolitan Region, Indonesia.
+
 </div>
 
 <div class="paper" onclick="window.open('https://doi.org/10.1016/j.rsase.2022.100839')">
-Dewa, D. D., Buchori, I., Sejati, A. W., & Liu, Y. (2022). Shannon Entropy-based urban spatial fragmentation to ensure sustainable development of coastal cities.
-</div>
+
+Dewa, D. D., Buchori, I., Sejati, A. W., & Liu, Y. (2022).  
+Shannon Entropy-based urban spatial fragmentation to ensure sustainable development of the urban coastal city: A case study of Semarang, Indonesia.
 
 </div>
 
 </div>
 
 
-<!-- 2021 -->
-
-<div class="year-block">
+<div class="year-group">
 
 <div class="year">2021</div>
 
-<div class="phase">
-
-<div class="phase-title">
-Urban Spatial Analysis Foundations
-</div>
-
 <div class="paper" onclick="window.open('https://iopscience.iop.org/article/10.1088/1755-1315/887/1/012009')">
-Dewa, D. D., & Buchori, I. (2021). Assessment of rapid urban development impact for a small-sized transit city using remote sensing: A case study of Salatiga.
-</div>
+
+Dewa, D. D., & Buchori, I. (2021).  
+Assessment of rapid urban development impact for a small-sized transit city using remote sensing: A case study of Salatiga, Indonesia.
 
 </div>
 
@@ -274,12 +207,115 @@ Dewa, D. D., & Buchori, I. (2021). Assessment of rapid urban development impact 
 
 </div>
 
+
+<!-- THEME 2 -->
+
+<div class="theme">
+
+<div class="theme-title">
+Urban Climate & Environmental Systems Modeling
 </div>
+
+<div class="theme-years">
+2025–2026
+</div>
+
+</div>
+
+
+<div>
+
+<div class="year-group">
+
+<div class="year">2026</div>
+
+<div class="paper" onclick="window.open('https://link.springer.com/article/10.1007/s41324-026-00671-2')">
+
+Dewa, D. D., Buchori, I., Sejati, A. W., & Liu, Y. (2026).  
+Exploratory spatial co-patterns of VIIRS nighttime radiance and land cover compositional evenness at 10-km resolution in Java, Indonesia.
+
+</div>
+
+</div>
+
+
+<div class="year-group">
+
+<div class="year">2025</div>
+
+<div class="paper" onclick="window.open('https://link.springer.com/article/10.1007/s12061-025-09746-3')">
+
+Dewa, D. D., & Buchori, I. (2025).  
+A Framework for Optimizing Open Spatial Data in Urban Planning and Policy Applications.
+
+</div>
+
+<div class="paper" onclick="window.open('https://link.springer.com/article/10.1007/s41324-025-00617-0')">
+
+Dewa, D. D., Buchori, I., Rudiarto, I., & Sejati, A. W. (2025).  
+Remote sensing-based investigation of outlying urban expansion and its impact on landscape diversity in the peri-urban area of Semarang City, Indonesia.
+
+</div>
+
+<div class="paper" onclick="window.open('https://link.springer.com/article/10.1007/s10661-025-14057-8')">
+
+Nusa, P. D., Buchori, I., Dewa, D. D., Putri, S. N. A. K., & Pangi, P. (2025).  
+Impact of urbanization on carbon emissions and ecological quality in the Semarang Metropolitan Region, Indonesia.
+
+</div>
+
+<div class="paper" onclick="window.open('https://doi.org/10.1016/j.rsase.2025.101573')">
+
+Dewa, D. D., Buchori, I., Sejati, A. W., & Liu, Y. (2025).  
+Integrating Google Earth Engine and regional ecological corridor modeling for remote sensing-based urban heat island mitigation in Java, Indonesia.
+
+</div>
+
+<div class="paper" onclick="window.open('https://link.springer.com/article/10.1007/s12061-024-09629-z')">
+
+Dewa, D. D., Buchori, I., Rudiarto, I., & Sejati, A. W. (2025).  
+Spatiotemporal variations of urban expansion and its relation with geomorphological complexity.
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- FUTURE -->
+
+<div class="theme future">
+
+<div class="theme-title">
+Future Research Vision
+</div>
+
+<div class="theme-years">
+2030
+</div>
+
+</div>
+
+
+<div>
+
+Urban systems modeling for climate-resilient and low-carbon development integrating ecological networks, spatial big data, and climate risk analytics.
+
+</div>
+
+
+</div>
+
+</div>
+
 
 <script>
+
 function toggleMode(){
 document.body.classList.toggle("dark-mode");
 }
+
 </script>
 
 </body>
