@@ -1,26 +1,171 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Field Notes</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+
+<title>Field Notes — Dr. Dimas Danar Dewa</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* FIELD NOTES */
+
+.note-container{
+margin-top:40px;
+}
+
+.note-title{
+font-size:28px;
+font-weight:600;
+margin-bottom:5px;
+}
+
+.note-meta{
+opacity:0.7;
+margin-bottom:25px;
+}
+
+/* HERO IMAGE */
+
+.note-hero img{
+width:100%;
+border-radius:10px;
+margin-bottom:30px;
+}
+
+/* TEXT */
+
+.note-text{
+line-height:1.8;
+max-width:800px;
+}
+
+/* GALLERY */
+
+.gallery{
+margin-top:40px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+.gallery img{
+width:100%;
+border-radius:10px;
+transition:0.25s;
+}
+
+.gallery img:hover{
+transform:scale(1.02);
+}
+
+/* MOBILE */
+
+@media (max-width:800px){
+
+.gallery{
+grid-template-columns:1fr;
+}
+
+}
+
+</style>
+
 </head>
 
-<body>
+
+
+<body class="dark-mode">
 
 <header>
-    <h1>Field Notes</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="research.html">Research Output</a>
-        <a href="field-notes.html">Field Notes</a>
-        <a href="profiles.html">Academic Profiles</a>
-    </nav>
+<nav>
+<a href="index.html">Home</a>
+<a href="research.html">Research Output</a>
+<a href="field-notes.html">Field Notes</a>
+<a href="profiles.html">Academic Profiles</a>
+<a href="models.html">Interactive Models</a>
+<button onclick="toggleMode()">☾</button>
+</nav>
 </header>
 
+
+
 <div class="container">
-    <p>Fieldwork documentation, urban observations, site visits, and academic moments.</p>
+
+<h1>Field Notes</h1>
+
+<div class="note-container">
+
+<div class="note-title">
+ASEAN-NEXUS Early Career Researchers Conclave
 </div>
+
+<div class="note-meta">
+Singapore • 7–11 December 2025
+</div>
+
+
+<div class="note-hero">
+
+<img src="images/asean-nexus-group.jpg">
+
+</div>
+
+
+<div class="note-text">
+
+<p>
+
+The ASEAN-NEXUS Early Career Researchers Conclave was held from 
+<strong>7–11 December 2025 in Singapore</strong>, alongside the Singapore Scientific Conference. 
+This event brought together early-career researchers from across ASEAN and leading global research institutions.
+
+</p>
+
+<p>
+
+The conclave was an inspiring opportunity to engage with outstanding scholars and young researchers who share a strong commitment to collaboration and scientific excellence. Throughout the program, participants exchanged ideas, discussed emerging research challenges, and explored opportunities for interdisciplinary and international collaboration.
+
+</p>
+
+<p>
+
+One of the most valuable aspects of this event was the opportunity to interact with leading global researchers and highly motivated early-career scientists from diverse fields. These discussions highlighted the importance of building strong regional research networks to address complex sustainability challenges facing Southeast Asia.
+
+</p>
+
+<p>
+
+The event emphasized the collective vision of strengthening research collaboration across ASEAN in order to advance sustainable development and regional resilience. The program was jointly organized through a collaboration between <strong>A*STAR (Agency for Science, Technology and Research, Singapore)</strong> and the <strong>Japan Science and Technology Agency (JST)</strong>.
+
+</p>
+
+</div>
+
+
+<div class="gallery">
+
+<img src="images/asean-nexus-group.jpg">
+
+<img src="images/asean-nexus-team.jpg">
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+function toggleMode(){
+document.body.classList.toggle("dark-mode");
+}
+
+</script>
+
 
 </body>
 </html>
