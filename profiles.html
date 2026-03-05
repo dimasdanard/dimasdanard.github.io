@@ -1,33 +1,408 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Academic Profiles</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+
+<title>Academic Profile — Dr. Dimas Danar Dewa</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* METRICS */
+
+.metrics{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+gap:15px;
+margin-top:25px;
+}
+
+.metric-card{
+padding:18px;
+border-radius:8px;
+border:1px solid #ddd;
+text-align:center;
+}
+
+.metric-number{
+font-size:28px;
+font-weight:700;
+}
+
+.metric-label{
+font-size:13px;
+opacity:0.7;
+}
+
+.dark-mode .metric-card{
+border:1px solid #444;
+background:#1a1a1a;
+}
+
+/* SECTION */
+
+.section{
+margin-top:45px;
+}
+
+.section h2{
+font-size:22px;
+margin-bottom:12px;
+}
+
+.section ul{
+line-height:1.8;
+padding-left:20px;
+}
+
+/* PROFILE LINKS */
+
+.profile-links{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+margin-top:10px;
+}
+
+.profile-links a{
+text-decoration:none;
+padding:6px 10px;
+border-radius:6px;
+border:1px solid #ccc;
+font-size:13px;
+color:inherit;
+}
+
+.dark-mode .profile-links a{
+border:1px solid #444;
+}
+
+/* PUBLICATIONS */
+
+.paper{
+margin-bottom:14px;
+padding:12px 14px;
+border-radius:8px;
+border:1px solid #ddd;
+line-height:1.7;
+display:block;
+text-decoration:none;
+color:inherit;
+}
+
+.paper:hover{
+transform:translateY(-2px);
+}
+
+.dark-mode .paper{
+border:1px solid #444;
+background:#1a1a1a;
+}
+
+</style>
+
 </head>
 
-<body>
+
+
+<body class="dark-mode">
 
 <header>
-    <h1>Academic Profiles</h1>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="research.html">Research Output</a>
-        <a href="field-notes.html">Field Notes</a>
-        <a href="profiles.html">Academic Profiles</a>
-    </nav>
+<nav>
+
+<a href="index.html">Home</a>
+<a href="research.html">Research Output</a>
+<a href="field-notes.html">Field Notes</a>
+<a href="profiles.html">Academic Profiles</a>
+<a href="models.html">Interactive Models</a>
+
+<button onclick="toggleMode()">☾</button>
+
+</nav>
 </header>
 
+
+
 <div class="container">
-    <ul>
-        <li><a href="https://scholar.google.com/citations?user=WhCg6fIAAAAJ" target="_blank">Google Scholar</a></li>
-        <li><a href="https://orcid.org/0000-0002-2770-3713" target="_blank">ORCID</a></li>
-        <li><a href="#">Scopus</a></li>
-        <li><a href="#">ResearchGate</a></li>
-        <li><a href="#">LinkedIn</a></li>
-        <li><a href="#">Web of Science</a></li>
-    </ul>
+
+<h1>Academic Profile</h1>
+
+<p>
+
+<strong>Dr. Dimas Danar Dewa</strong> is a researcher specializing in urban spatial modeling, 
+GIScience, and remote sensing for understanding urban–environment dynamics and climate-resilient 
+urban development. His research integrates spatial analytics, geospatial big data, and 
+environmental modeling to investigate how land-use dynamics, urban form, and socio-environmental 
+processes shape rapidly transforming metropolitan regions.
+
+</p>
+
+
+
+<!-- CAREER HIGHLIGHTS (METRICS) -->
+
+<div class="section">
+
+<h2>Career Highlights</h2>
+
+<div class="metrics">
+
+<div class="metric-card">
+<div class="metric-number">12</div>
+<div class="metric-label">Publications</div>
 </div>
+
+<div class="metric-card">
+<div class="metric-number">134</div>
+<div class="metric-label">Citations</div>
+</div>
+
+<div class="metric-card">
+<div class="metric-number">5</div>
+<div class="metric-label">H-index</div>
+</div>
+
+<div class="metric-card">
+<div class="metric-number">8</div>
+<div class="metric-label">Research Grants</div>
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- CONTACT -->
+
+<div class="section">
+
+<h2>Contact Information</h2>
+
+<ul>
+
+<li>National Research and Innovation Agency (BRIN), Indonesia</li>
+
+<li>B.J. Habibie Science and Technology Park, South Tangerang, Indonesia</li>
+
+<li>Email: dimasdanardewa@gmail.com</li>
+
+<li>Homepage: https://dimasdanard.github.io</li>
+
+</ul>
+
+
+<div class="profile-links">
+
+<a href="#">Google Scholar</a>
+<a href="#">Scopus</a>
+<a href="#">ResearchGate</a>
+<a href="#">Web of Science</a>
+<a href="#">LinkedIn</a>
+
+</div>
+
+</div>
+
+
+
+<div class="section">
+
+<h2>Research Interests</h2>
+
+<ul>
+
+<li>Urban Spatial Modeling and Urban–Environment Dynamics</li>
+
+<li>Remote Sensing and Geospatial Big Data for Urban Studies</li>
+
+<li>Climate-Resilient and Low-Carbon Urban Development</li>
+
+<li>Urban Ecological Systems and Environmental Risk Assessment</li>
+
+<li>Spatial Analytics for Disaster Risk Reduction and Urban Resilience</li>
+
+</ul>
+
+</div>
+
+
+
+<div class="section">
+
+<h2>Education</h2>
+
+<ul>
+
+<li><strong>Doctor of Architecture and Urbanism</strong>, Diponegoro University (2024)</li>
+
+<li><strong>Master of Urban and Regional Planning</strong>, Diponegoro University (2021)</li>
+
+<li><strong>Bachelor of Urban and Regional Planning</strong>, Diponegoro University (2019)</li>
+
+</ul>
+
+</div>
+
+
+
+<div class="section">
+
+<h2>Working Experiences</h2>
+
+<ul>
+
+<li>Postdoctoral Fellow — National Research and Innovation Agency (2025–Present)</li>
+
+<li>Part-time Lecturer — Pradita University (2025–Present)</li>
+
+<li>Researcher — GRIDDED Research Group (2024–Present)</li>
+
+<li>Research Associate — Universitas Diponegoro (2022–2025)</li>
+
+<li>Urban Planning Expert — Semarang City Government (2020)</li>
+
+<li>Technical Staff — Semarang City Housing Department (2019–2020)</li>
+
+<li>Assistant Lecturer — Universitas Diponegoro (2017–2020)</li>
+
+</ul>
+
+</div>
+
+
+
+<div class="section">
+
+<h2>Awards and Honors</h2>
+
+<ul>
+
+<li>Selected Delegate — ASEAN-NEXUS Early Career Researchers Conclave (A*STAR Singapore)</li>
+
+<li>1st Place Innovation Award — SIMONGAN Environmental Monitoring System</li>
+
+</ul>
+
+</div>
+
+
+
+<div class="section">
+
+<h2>Editorship</h2>
+
+<ul>
+
+<li>Associate Editor (Managing Editor Regional Asia) — <i>Geoplanning</i> Journal</li>
+
+</ul>
+
+</div>
+
+
+
+<div class="section">
+
+<h2>Research Grants</h2>
+
+<ul>
+
+<li>BRIN–LPDP Research Grant (2025–2027)</li>
+
+<li>World Class Research University Program (2024)</li>
+
+<li>International Publication Research Program (2023–2024)</li>
+
+<li>Applied Research Grant — Smart City Implementation (2022–2024)</li>
+
+<li>PMDSU Research Program (2020–2023)</li>
+
+</ul>
+
+</div>
+
+
+
+<div class="section">
+
+<h2>Keynote and Invited Talks</h2>
+
+<ul>
+
+<li>WGC Talk Series — The Role of Geospatial Analysis in Research and Development (2025)</li>
+
+<li>FutureGen for Change — Innovative Tech for Sustainability (2025)</li>
+
+<li>East Java Provincial Meeting — Digital Innovation in Spatial Planning (2024)</li>
+
+<li>Urban Planning Seminar — Satellite Imagery Data Processing (2024)</li>
+
+</ul>
+
+</div>
+
+
+
+<div class="section">
+
+<h2>Conference Organization</h2>
+
+<ul>
+
+<li>Organizing Committee Member — Geoplanning International Conference (2021–2024)</li>
+
+<li>Organizing Committee Member — WPSC–APSA Congress (2022)</li>
+
+</ul>
+
+</div>
+
+
+
+<!-- PUBLICATIONS -->
+
+<div class="section">
+
+<h2>Selected Publications</h2>
+
+<a class="paper" href="https://link.springer.com/article/10.1007/s41324-026-00671-2" target="_blank">
+
+<strong>Dewa, D. D.</strong>, Buchori, I., Sejati, A. W., & Liu, Y. (2026).
+<strong>Exploratory spatial co-patterns of VIIRS nighttime radiance and land cover compositional evenness at 10-km resolution in Java, Indonesia.</strong>
+<i>Spatial Information Research</i>.
+
+</a>
+
+<a class="paper" href="https://link.springer.com/article/10.1007/s12061-025-09746-3" target="_blank">
+
+<strong>Dewa, D. D.</strong>, & Buchori, I. (2025).
+<strong>A Framework for Optimizing Open Spatial Data in Urban Planning and Policy Applications.</strong>
+<i>Applied Spatial Analysis and Policy</i>.
+
+</a>
+
+<p style="margin-top:10px;">
+For the complete list of publications, please see the 
+<a href="research.html">Research Output</a> page.
+</p>
+
+</div>
+
+
+
+</div>
+
+
+
+<script>
+
+function toggleMode(){
+document.body.classList.toggle("dark-mode");
+}
+
+</script>
 
 </body>
 </html>
