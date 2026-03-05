@@ -249,3 +249,42 @@ color:#3f51b5;
 .dark-mode .pub-item:hover{
 color:#90caf9;
 }
+/* PUBLICATION CARD */
+
+.paper{
+margin:12px 0;
+padding:14px 18px;
+border-radius:8px;
+border:1px solid #e0e0e0;
+background:#fafafa;
+cursor:pointer;
+line-height:1.7;
+transition:all 0.25s ease;
+}
+
+.paper:hover{
+transform:translateY(-2px);
+border-color:#3f51b5;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* DARK MODE */
+
+.dark-mode .paper{
+background:#1a1a1a;
+border:1px solid #333;
+}
+
+.dark-mode .paper:hover{
+border-color:#90caf9;
+box-shadow:0 4px 12px rgba(0,0,0,0.5);
+}
+
+/* YEAR TITLE */
+
+.year{
+font-weight:600;
+margin-top:25px;
+margin-bottom:12px;
+font-size:17px;
+}
