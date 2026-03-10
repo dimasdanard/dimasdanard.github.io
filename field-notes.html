@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 
 <title>Field Notes — Dr. Dimas Danar Dewa</title>
@@ -8,64 +9,69 @@
 
 <style>
 
-/* FIELD NOTES */
+/* ENTRY */
 
-.note-container{
-margin-top:40px;
+.note-entry{
+margin-top:60px;
 }
 
 .note-title{
-font-size:28px;
+font-size:22px;
 font-weight:600;
-margin-bottom:5px;
 }
 
 .note-meta{
+font-size:14px;
 opacity:0.7;
-margin-bottom:25px;
+margin-top:6px;
 }
 
-/* HERO IMAGE */
+/* IMAGE GRID */
 
-.note-hero img{
-width:100%;
-border-radius:10px;
-margin-bottom:30px;
-}
-
-/* TEXT */
-
-.note-text{
-line-height:1.8;
-}
-
-/* GALLERY */
-
-.gallery{
-margin-top:40px;
+.photo-grid{
 display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:15px;
+margin-top:20px;
 }
 
-.gallery img{
+.photo-grid img{
 width:100%;
-border-radius:10px;
-transition:0.25s;
+border-radius:8px;
+cursor:pointer;
+transition:0.3s;
 }
 
-.gallery img:hover{
+.photo-grid img:hover{
 transform:scale(1.02);
 }
 
-/* MOBILE */
+/* CAPTION */
 
-@media (max-width:800px){
-
-.gallery{
-grid-template-columns:1fr;
+.note-caption{
+margin-top:18px;
+line-height:1.8;
 }
 
+/* LIGHTBOX */
+
+.lightbox{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.85);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:1000;
+}
+
+.lightbox img{
+max-width:90%;
+max-height:85%;
+border-radius:6px;
 }
 
 </style>
@@ -78,12 +84,15 @@ grid-template-columns:1fr;
 
 <header>
 <nav>
+
 <a href="index.html">Home</a>
 <a href="research.html">Research Output</a>
 <a href="field-notes.html">Field Notes</a>
 <a href="profiles.html">Academic Profiles</a>
 <a href="models.html">Interactive Models</a>
+
 <button onclick="toggleMode()">☾</button>
+
 </nav>
 </header>
 
@@ -93,66 +102,94 @@ grid-template-columns:1fr;
 
 <h1>Field Notes</h1>
 
-<div class="note-container">
+<p>
+
+This page documents selected academic activities, conferences, research events, and professional engagements that contribute to my research journey, international collaboration, and academic development.
+
+</p>
+
+
+
+<!-- ASEAN NEXUS -->
+
+<div class="note-entry">
 
 <div class="note-title">
 ASEAN-NEXUS Early Career Researchers Conclave
 </div>
 
 <div class="note-meta">
-Singapore • 7–11 December 2025
+Singapore — 7–11 December 2025
 </div>
 
 
-<div class="note-hero">
+<div class="photo-grid">
 
-<img src="images/asean-nexus-group.jpg">
-
-</div>
-
-
-<div class="note-text">
-
-<p>
-
-The ASEAN-NEXUS Early Career Researchers Conclave was held from 
-<strong>7–11 December 2025 in Singapore</strong>, alongside the Singapore Scientific Conference. 
-This event brought together early-career researchers from across ASEAN and leading global research institutions.
-
-</p>
-
-<p>
-
-The conclave was an inspiring opportunity to engage with outstanding scholars and young researchers who share a strong commitment to collaboration and scientific excellence. Throughout the program, participants exchanged ideas, discussed emerging research challenges, and explored opportunities for interdisciplinary and international collaboration.
-
-</p>
-
-<p>
-
-One of the most valuable aspects of this event was the opportunity to interact with leading global researchers and highly motivated early-career scientists from diverse fields. These discussions highlighted the importance of building strong regional research networks to address complex sustainability challenges facing Southeast Asia.
-
-</p>
-
-<p>
-
-The event emphasized the collective vision of strengthening research collaboration across ASEAN in order to advance sustainable development and regional resilience. The program was jointly organized through a collaboration between <strong>A*STAR (Agency for Science, Technology and Research, Singapore)</strong> and the <strong>Japan Science and Technology Agency (JST)</strong>.
-
-</p>
+<img src="images/asean1.jpg" onclick="openLightbox(this)">
+<img src="images/asean2.jpg" onclick="openLightbox(this)">
 
 </div>
 
 
-<div class="gallery">
+<div class="note-caption">
 
-<img src="images/asean-nexus-team2.jpg">
+Participated in the <strong>ASEAN-NEXUS Early Career Researchers Conclave</strong> held in Singapore from <strong>7–11 December 2025</strong>, organized through a collaboration between <strong>A*STAR (Agency for Science, Technology and Research)</strong> and the <strong>Japan Science and Technology Agency (JST)</strong>.
 
-<img src="images/asean-nexus-team.jpg">
+The event was conducted alongside a major scientific conference in Singapore and brought together early-career researchers from across ASEAN and international institutions.
+
+This conclave provided an inspiring platform to exchange ideas, build international research networks, and discuss collaborative pathways for addressing regional sustainability challenges. Meeting leading global researchers and highly motivated young scholars reinforced the importance of interdisciplinary collaboration in advancing a more sustainable and resilient ASEAN region.
+
+</div>
 
 </div>
 
 
+
+<!-- HANTARU AWARD -->
+
+<div class="note-entry">
+
+<div class="note-title">
+Best Innovation Award — Spatial Planning Innovation Competition (HANTARU 2024)
 </div>
 
+<div class="note-meta">
+Semarang, Indonesia — 1 October 2024
+</div>
+
+
+<div class="photo-grid">
+
+<img src="images/hantaru1.jpg" onclick="openLightbox(this)">
+<img src="images/hantaru2.jpg" onclick="openLightbox(this)">
+
+</div>
+
+
+<div class="note-caption">
+
+Received the <strong>Best Innovation Award</strong> during the <strong>National Agrarian and Spatial Planning Day (HANTARU) 2024</strong>, held on 1 October 2024 in Semarang, Indonesia.
+
+The award recognized innovative contributions in the field of <strong>spatial planning and territorial development</strong>. It highlights the importance of research-driven ideas and creative approaches in addressing contemporary urban and regional planning challenges.
+
+The award was presented directly by the <strong>Head of the Spatial Planning Agency of Semarang City</strong> as part of a competition encouraging innovative thinking and practical solutions for more sustainable spatial planning practices.
+
+This recognition represents an important milestone and reinforces the role of research, innovation, and collaboration in contributing to the development of more sustainable and resilient cities.
+
+</div>
+
+</div>
+
+
+
+</div>
+
+
+
+<!-- LIGHTBOX -->
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+<img id="lightbox-img">
 </div>
 
 
@@ -163,7 +200,17 @@ function toggleMode(){
 document.body.classList.toggle("dark-mode");
 }
 
+function openLightbox(img){
+document.getElementById("lightbox").style.display="flex";
+document.getElementById("lightbox-img").src=img.src;
+}
+
+function closeLightbox(){
+document.getElementById("lightbox").style.display="none";
+}
+
 </script>
+
 
 
 </body>
