@@ -743,3 +743,216 @@ body:not(.dark-mode) .hero-visual-accent {
     transform: none;
   }
 }
+
+
+/* ==========================================
+   RESEARCH NETWORK GUIDE
+   ========================================== */
+
+#research-network {
+  width: 100%;
+  height: 680px;
+  margin-top: 18px;
+  overflow: hidden;
+  border: 1px solid #88888830;
+  border-radius: 12px;
+  background: transparent;
+}
+
+.network-guide {
+  margin-top: 28px;
+}
+
+.network-guide-heading {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.network-guide-heading h3,
+.node-details h3 {
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.network-guide-heading > p {
+  max-width: 390px;
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.75;
+  opacity: 0.7;
+}
+
+.network-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 20px;
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 11px;
+  border: 1px solid #88888840;
+  border-radius: 7px;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.legend-item:hover,
+.legend-item:focus-visible {
+  border-color: #65c9a5;
+  outline: none;
+}
+
+.legend-dot {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 9px;
+  border-radius: 50%;
+}
+
+.legend-core { background: #607d8b; }
+.legend-morph { background: #2e7d32; }
+.legend-entropy { background: #1565c0; }
+.legend-climate { background: #c62828; }
+.legend-stats { background: #8e24aa; }
+.legend-data { background: #ef6c00; }
+
+/* Graph controls */
+
+.graph-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  margin-top: 22px;
+}
+
+.graph-controls button {
+  min-height: 38px;
+  padding: 9px 14px;
+  border: 1px solid #88888850;
+  border-radius: 7px;
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.graph-controls button:hover,
+.graph-controls button:focus-visible {
+  border-color: #65c9a5;
+  outline: none;
+}
+
+/* Selected-node information */
+
+.node-details {
+  display: grid;
+  grid-template-columns: 4px minmax(0, 1fr);
+  gap: 18px;
+  margin: 18px 0 48px;
+  padding: 22px;
+  border: 1px solid #88888830;
+  border-radius: 10px;
+}
+
+.node-details-marker {
+  min-height: 100%;
+  border-radius: 4px;
+  background: #65c9a5;
+}
+
+.node-details .section-kicker {
+  margin: 0 0 8px;
+  font-size: 9px;
+}
+
+.node-details h3 {
+  overflow-wrap: anywhere;
+}
+
+.node-details-content > p:not(.section-kicker) {
+  margin: 10px 0 0;
+  font-size: 13px;
+  line-height: 1.8;
+  opacity: 0.8;
+}
+
+#nodeDetailsMeta {
+  font-size: 11px !important;
+  opacity: 0.6 !important;
+}
+
+/* Light mode adjustments */
+
+body:not(.dark-mode) .legend-item,
+body:not(.dark-mode) .graph-controls button {
+  border-color: #00000025;
+}
+
+body:not(.dark-mode) .legend-item:hover,
+body:not(.dark-mode) .graph-controls button:hover {
+  border-color: #19765b;
+}
+
+/* Responsive network */
+
+@media (max-width: 600px) {
+  .network-guide-heading {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .network-guide-heading > p {
+    margin-top: 0;
+  }
+
+  .network-legend {
+    gap: 7px;
+  }
+
+  .legend-item {
+    font-size: 11px;
+    padding: 8px 9px;
+  }
+
+  .graph-controls {
+    gap: 7px;
+  }
+
+  .graph-controls button {
+    flex: 1 1 auto;
+    padding: 9px 10px;
+  }
+
+  #research-network {
+    height: 540px;
+    margin-top: 14px;
+  }
+
+  .node-details {
+    padding: 16px;
+    gap: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .legend-item,
+  .graph-controls button {
+    transition: none;
+  }
+}
+
