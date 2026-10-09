@@ -122,15 +122,69 @@
 
 
 <div class="graph-controls">
-  <button onclick="resetView()">Reset</button>
-  <button onclick="zoomToCore()">Core</button>
-  <button onclick="clusterByGroup()">Cluster</button>
-  <button onclick="openClusters()">Uncluster</button>
+ 
+<!-- RESEARCH NETWORK LEGEND -->
+<section class="network-guide" aria-label="Research network guide">
+  <div class="network-guide-heading">
+    <div>
+      <p class="section-kicker">HOW TO EXPLORE</p>
+      <h3>Explore the connections</h3>
+    </div>
+    <p>Select a node to discover its role in the research network. Use search to locate a specific theme.</p>
+  </div>
+
+  <div class="network-legend">
+    <button class="legend-item" type="button" data-group="core">
+      <span class="legend-dot legend-core"></span>
+      Core research
+    </button>
+    <button class="legend-item" type="button" data-group="morph">
+      <span class="legend-dot legend-morph"></span>
+      Urban growth
+    </button>
+    <button class="legend-item" type="button" data-group="entropy">
+      <span class="legend-dot legend-entropy"></span>
+      Land-use dynamics
+    </button>
+    <button class="legend-item" type="button" data-group="climate">
+      <span class="legend-dot legend-climate"></span>
+      Climate &amp; ecology
+    </button>
+    <button class="legend-item" type="button" data-group="stats">
+      <span class="legend-dot legend-stats"></span>
+      Spatial analytics
+    </button>
+    <button class="legend-item" type="button" data-group="data">
+      <span class="legend-dot legend-data"></span>
+      Geospatial data
+    </button>
+  </div>
+</section>
+
+<div class="graph-controls" aria-label="Research network controls">
+  <button onclick="resetView()" type="button">Reset view</button>
+  <button onclick="zoomToCore()" type="button">Core</button>
+  <button onclick="clusterByGroup()" type="button">Cluster</button>
+  <button onclick="openClusters()" type="button">Uncluster</button>
+  <button onclick="clearResearchSearch()" type="button">Clear search</button>
 </div>
 
-<div id="research-network" style="height:720px;margin-top:20px;"></div>
+<div id="research-network" role="img" aria-label="Interactive network of interconnected urban systems and geospatial research themes"></div>
 
-</div>
+<section class="node-details" id="nodeDetails" aria-live="polite">
+  <div class="node-details-marker"></div>
+  <div class="node-details-content">
+    <p class="section-kicker">SELECTED RESEARCH THEME</p>
+    <h3 id="nodeDetailsTitle">Urban–Environment Spatial Dynamics</h3>
+    <p id="nodeDetailsText">
+      The central research theme connecting urban transformation,
+      spatial complexity, ecological conditions, climate risks,
+      analytical methods, and geospatial data.
+    </p>
+    <p id="nodeDetailsMeta">Select any node in the network to explore its connections.</p>
+  </div>
+</section>
+
 
 <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 
