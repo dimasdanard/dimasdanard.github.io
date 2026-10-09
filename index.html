@@ -299,23 +299,208 @@ const network=new vis.Network(document.getElementById("research-network"),{nodes
 
 network.once("stabilizationIterationsDone",function(){network.fit({animation:{duration:800}});});
 
-// ================= SEARCH =================
 
-document.getElementById("searchInput").addEventListener("keyup", function() {
-const value=this.value.toLowerCase();
-nodes.forEach(function(node){
-if(node.label.toLowerCase().includes(value)){
-nodes.update({id:node.id,hidden:false});
-}else{
-nodes.update({id:node.id,hidden:value.length>0});
+/* ==========================================
+   SEARCH AND NODE DETAILS
+   ========================================== */
+
+const searchInput = document.getElementById("searchInput");
+const detailTitle = document.getElementById("nodeDetailsTitle");
+const detailText = document.getElementById("nodeDetailsText");
+const detailMeta = document.getElementById("nodeDetailsMeta");
+
+const groupNames = {
+  core: "Core research",
+  morph: "Urban growth and spatial transformation",
+  entropy: "Land-use dynamics and spatial complexity",
+  climate: "Climate, ecology and urban resilience",
+  stats: "Spatial analytics and modeling",
+  data: "Geospatial intelligence and data infrastructure"
+};
+
+const nodeDescriptions = {
+  1: "The central research theme linking urban transformation, spatial complexity, ecological conditions, climate risks, spatial methods, and geospatial data.",
+  2: "Examines the spatial dispersion of urban development and its relationship with metropolitan expansion.",
+  3: "Explores urban fragmentation, compactness, and the spatial configuration of built-up areas.",
+  4: "Uses the Landscape Expansion Index to characterize patterns of landscape and built-up expansion.",
+  5: "Classifies different patterns and trajectories of urban growth.",
+  6: "Considers how topography and geomorphology influence urban development patterns.",
+  20: "Uses entropy-based approaches to investigate the complexity and distribution of urban spatial patterns.",
+  21: "Applies landscape metrics to quantify spatial composition, configuration, and fragmentation.",
+  22: "Investigates land-use and land-cover changes across space and time.",
+  23: "Examines spatial dependence and relationships between observations across geographic space.",
+  24: "Identifies statistically significant spatial concentrations and clusters.",
+  30: "Studies land surface temperature and the urban heat island phenomenon using geospatial observations.",
+  31: "Assesses surface ecological quality through remote-sensing indicators and composite indices.",
+  32: "Estimates spatial patterns of carbon emissions and their relationship with urban development.",
+  33: "Develops spatial approaches to characterize ecological and environmental risks.",
+  34: "Investigates urban resilience and the capacity of urban systems to respond to change and disturbance.",
+  35: "Connects spatial evidence with planning approaches for climate-resilient urban development.",
+  40: "Uses geographically weighted regression to investigate spatially varying relationships.",
+  41: "Applies principal component analysis to extract dominant patterns from multivariate data.",
+  42: "Integrates spatial statistics and modeling to analyze urban and environmental processes.",
+  50: "Uses machine-learning approaches to identify patterns, classify observations, or estimate spatial variables.",
+  51: "Uses Google Earth Engine for cloud-based geospatial analysis and remote-sensing workflows.",
+  52: "Supports scalable geospatial analysis through cloud-based processing infrastructure.",
+  53: "Uses Landsat and Sentinel satellite observations for land-cover, surface-temperature, and ecological analyses.",
+  54: "Uses VIIRS nighttime-light observations to investigate patterns of human activity and urban development."
+};
+
+let selectedNodeId = 1;
+let activeSearch = "";
+
+function showNodeDetails(nodeId) {
+  const node = nodes.get(nodeId);
+  if (!node) return;
+
+  selectedNodeId = nodeId;
+
+  const connectedIds = new Set();
+  edges.get().forEach(edge => {
+    if (edge.from === nodeId) connectedIds.add(edge.to);
+    if (edge.to === nodeId) connectedIds.add(edge.from);
+  });
+
+  detailTitle.textContent = node.label;
+  detailText.textContent =
+    nodeDescriptions[nodeId] ||
+    "This theme contributes to the wider research network.";
+
+  detailMeta.textContent =
+    (groupNames[node.group] || "Research theme") +
+    " · " + connectedIds.size + " directly connected theme(s)";
 }
-});
+
+function applyResearchSearch(query) {
+  activeSearch = query.trim().toLowerCase();
+
+  // Search only original research nodes, not generated clusters.
+  const allNodes = nodes.get();
+  const matching = allNodes.filter(node =>
+    node.label.toLowerCase().includes(activeSearch)
+  );
+
+  const matchingIds = new Set(matching.map(node => node.id));
+
+  // Keep matching nodes and their immediate connections visible.
+  const visibleIds = new Set(matchingIds);
+
+  if (activeSearch) {
+    edges.get().forEach(edge => {
+      if (matchingIds.has(edge.from)) visibleIds.add(edge.to);
+      if (matchingIds.has(edge.to)) visibleIds.add(edge.from);
+    });
+  }
+
+  nodes.update(allNodes.map(node => ({
+    id: node.id,
+    hidden: Boolean(activeSearch) && !visibleIds.has(node.id)
+  })));
+
+  if (!activeSearch) {
+    detailMeta.textContent =
+      "Search cleared. Select any node to explore its connections.";
+    return;
+  }
+
+  if (matching.length > 0) {
+    showNodeDetails(matching[0].id);
+    detailMeta.textContent =
+      matching.length + " matching theme(s); related nodes remain visible.";
+    network.fit({
+      nodes: Array.from(visibleIds),
+      animation: { duration: 450, easingFunction: "easeInOutQuad" }
+    });
+  } else {
+    detailTitle.textContent = "No matching research theme";
+    detailText.textContent =
+      "Try a broader keyword, such as urban, climate, entropy, carbon, or remote sensing.";
+    detailMeta.textContent = "No exact label matches your search.";
+  }
+}
+
+searchInput.addEventListener("input", function () {
+  // Avoid searching inside an active cluster.
+  if (clustered) openClusters();
+  applyResearchSearch(this.value);
 });
 
-// ================= BUTTONS =================
+function clearResearchSearch() {
+  searchInput.value = "";
+  applyResearchSearch("");
+  resetView();
+}
 
-function resetView(){network.fit({animation:true});}
-function zoomToCore(){network.focus(1,{scale:1.6,animation:true});}
+network.on("click", function (params) {
+  if (params.nodes.length === 0) return;
+
+  const clickedId = params.nodes[0];
+
+  // Cluster nodes have generated IDs and are handled separately.
+  if (String(clickedId).startsWith("cluster_")) {
+    detailTitle.textContent = "Research cluster";
+    detailText.textContent =
+      "This cluster groups related research themes. Use Uncluster to inspect individual nodes.";
+    detailMeta.textContent = "Grouped research themes";
+    return;
+  }
+
+  showNodeDetails(clickedId);
+});
+
+network.on("doubleClick", function (params) {
+  if (params.nodes.length !== 1) return;
+
+  const clickedId = params.nodes[0];
+  if (String(clickedId).startsWith("cluster_")) return;
+
+  const connected = network.getConnectedNodes(clickedId);
+  network.selectNodes([clickedId]);
+
+  if (connected.length) {
+    network.focus(clickedId, {
+      scale: 1.15,
+      animation: { duration: 450, easingFunction: "easeInOutQuad" }
+    });
+  }
+});
+
+// Click a legend category to focus on that research group.
+document.querySelectorAll(".legend-item").forEach(button => {
+  button.addEventListener("click", function () {
+    if (clustered) openClusters();
+
+    searchInput.value = "";
+    activeSearch = "";
+
+    const group = this.dataset.group;
+    const groupNodes = nodes.get({
+      filter: node => node.group === group
+    });
+
+    if (!groupNodes.length) return;
+
+    const groupIds = new Set(groupNodes.map(node => node.id));
+
+    // Reveal all nodes first, then focus on the chosen category.
+    nodes.update(nodes.get().map(node => ({
+      id: node.id,
+      hidden: false
+    })));
+
+    network.fit({
+      nodes: Array.from(groupIds),
+      animation: { duration: 500, easingFunction: "easeInOutQuad" }
+    });
+
+    showNodeDetails(groupNodes[0].id);
+    detailMeta.textContent =
+      groupNodes.length + " themes in " + (groupNames[group] || group) + ".";
+  });
+});
+
+// Initial details panel
+showNodeDetails(1);
 
 // ================= CLUSTER =================
 
