@@ -502,6 +502,48 @@ document.querySelectorAll(".legend-item").forEach(button => {
 // Initial details panel
 showNodeDetails(1);
 
+// ================= BUTTONS =================
+
+
+function resetView() {
+  if (clustered) openClusters();
+
+  searchInput.value = "";
+  activeSearch = "";
+
+  nodes.update(nodes.get().map(node => ({
+    id: node.id,
+    hidden: false
+  })));
+
+  network.fit({
+    animation: { duration: 500, easingFunction: "easeInOutQuad" }
+  });
+
+  showNodeDetails(1);
+  detailMeta.textContent = "Full research network restored.";
+}
+
+function zoomToCore() {
+  if (clustered) openClusters();
+
+  searchInput.value = "";
+  activeSearch = "";
+
+  nodes.update(nodes.get().map(node => ({
+    id: node.id,
+    hidden: false
+  })));
+
+  network.focus(1, {
+    scale: 1.35,
+    animation: { duration: 500, easingFunction: "easeInOutQuad" }
+  });
+
+  showNodeDetails(1);
+}
+
+  
 // ================= CLUSTER =================
 
 let clustered=false;
@@ -558,21 +600,44 @@ clustered=false;
 
 // ================= THEME =================
 
-function updateGraphTheme(){
-const dark=document.body.classList.contains("dark-mode");
-network.setOptions({
-edges:{color:dark?"#555":"#999"},
-nodes:{font:{color:dark?"#fff":"#000"}}
-});
+
+/* ==========================================
+   THEME
+   ========================================== */
+
+function updateGraphTheme() {
+  const dark = document.body.classList.contains("dark-mode");
+
+  network.setOptions({
+    edges: {
+      color: { color: dark ? "#69747c" : "#a0a8ae" }
+    },
+    nodes: {
+      font: {
+        color: dark ? "#f3f4f6" : "#20252a"
+      }
+    }
+  });
+
+  updateClusterLabelColors();
 }
 
-function updateClusterLabelColors(){
-const dark=document.body.classList.contains("dark-mode");
-network.body.data.nodes.forEach(n=>{
-if(n.id.toString().startsWith("cluster_")){
-network.body.data.nodes.update({id:n.id,font:{color:dark?"#fff":"#000"}});
-}
-});
+function updateClusterLabelColors() {
+  const dark = document.body.classList.contains("dark-mode");
+
+  const clusterNodes = network.body.data.nodes.get().filter(node =>
+    String(node.id).startsWith("cluster_")
+  );
+
+  clusterNodes.forEach(node => {
+    network.body.data.nodes.update({
+      id: node.id,
+      font: {
+        ...(node.font || {}),
+        color: dark ? "#f3f4f6" : "#20252a"
+      }
+    });
+  });
 }
 
 updateGraphTheme();
