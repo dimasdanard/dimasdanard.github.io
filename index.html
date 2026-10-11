@@ -569,16 +569,20 @@ function restoreResearchNetwork() {
     };
   }));
 
-  edges.update(edges.get().map(edge => {
-    const original = originalEdgeStyles.get(edge.id);
-    if (!original) return { id: edge.id };
 
-    return {
-      id: edge.id,
-      color: original.color,
-      width: original.width
-    };
-  }));
+
+edges.update(edges.get().map(edge => {
+  const original = originalEdgeStyles.get(edge.id);
+
+  return {
+    id: edge.id,
+    color: original?.color ?? {
+      color: "#69747c",
+      opacity: 0.75
+    },
+    width: original?.width ?? 1.5
+  };
+}));
 }
 
 function highlightConnections(nodeId) {
@@ -596,10 +600,21 @@ function highlightConnections(nodeId) {
   // Node aktif + node yang terhubung langsung
   const connectedIds = new Set([nodeId]);
 
-  edges.get().forEach(edge => {
-    if (edge.from === nodeId) connectedIds.add(edge.to);
-    if (edge.to === nodeId) connectedIds.add(edge.from);
-  });
+edges.update(edges.get().map(edge => {
+  const direct =
+    edge.from === nodeId || edge.to === nodeId;
+
+  return {
+    id: edge.id,
+    color: {
+      color: direct ? "#8cdec0" : "#69747c",
+      opacity: direct ? 1 : 0.4,
+      highlight: "#8cdec0",
+      hover: "#8cdec0"
+    },
+    width: direct ? 3 : 1
+  };
+}));
 
   nodes.update(nodes.get().map(node => {
     const active = connectedIds.has(node.id);
