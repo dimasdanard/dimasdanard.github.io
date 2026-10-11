@@ -312,20 +312,74 @@ const edges = new vis.DataSet([
 
 // ================= OPTIONS =================
 
-const options={
-nodes:{shape:"dot",scaling:{min:18,max:70},font:{size:18,color:"#000"}},
-edges:{width:1.8,smooth:{type:"dynamic"},color:"#999"},
-physics:{barnesHut:{gravitationalConstant:-3500,springLength:180,springConstant:0.04},stabilization:{iterations:200}},
-interaction:{hover:true,navigationButtons:true,keyboard:true,dragNodes:true,dragView:false},
-groups:{
-core:{color:"#37474f"},
-morph:{color:"#2e7d32"},
-entropy:{color:"#1565c0"},
-climate:{color:"#c62828"},
-stats:{color:"#8e24aa"},
-data:{color:"#ef6c00"}
-}
+
+const options = {
+  nodes: {
+    shape: "dot",
+    scaling: {
+      min: 16,
+      max: 58
+    },
+    margin: 12,
+    font: {
+      size: 15,
+      face: "Inter",
+      color: "#f3f4f6",
+      strokeWidth: 2,
+      strokeColor: "#121212"
+    },
+    widthConstraint: {
+      maximum: 180
+    }
+  },
+
+  edges: {
+    width: 1.5,
+    smooth: {
+      type: "dynamic"
+    },
+    color: {
+      color: "#69747c",
+      opacity: 0.75
+    }
+  },
+
+  physics: {
+    enabled: true,
+    barnesHut: {
+      gravitationalConstant: -5000,
+      centralGravity: 0.15,
+      springLength: 220,
+      springConstant: 0.035,
+      damping: 0.2,
+      avoidOverlap: 0.8
+    },
+    stabilization: {
+      enabled: true,
+      iterations: 300,
+      fit: true
+    }
+  },
+
+  interaction: {
+    hover: true,
+    navigationButtons: true,
+    keyboard: true,
+    dragNodes: true,
+    dragView: true,
+    zoomView: true
+  },
+
+  groups: {
+    core: { color: "#607d8b" },
+    morph: { color: "#2e7d32" },
+    entropy: { color: "#1565c0" },
+    climate: { color: "#c62828" },
+    stats: { color: "#8e24aa" },
+    data: { color: "#ef6c00" }
+  }
 };
+
 
 const network=new vis.Network(document.getElementById("research-network"),{nodes,edges},options);
 
