@@ -23,11 +23,44 @@ body:not(.dark-mode) {
 
 /* ================= CONTAINER ================= */
 
+
 .container {
+  width: 100%;
   max-width: 1100px;
   margin: 0 auto;
   padding: 80px 40px;
 }
+
+/* Homepage: remove the old 1100px width restriction */
+.container.homepage-container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 40px 20px 60px;
+}
+
+@media (min-width: 821px) {
+  .container.homepage-container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 40px 20px 60px;
+  }
+
+  .homepage-container .research-network-layout {
+    width: 100%;
+    max-width: none;
+    grid-template-columns: minmax(0, 2.6fr) minmax(300px, 0.8fr);
+    gap: 24px;
+  }
+
+  .homepage-container .network-main,
+  .homepage-container #research-network {
+    width: 100%;
+    max-width: none;
+  }
+}
+
 
 /* ================= NAVIGATION ================= */
 
