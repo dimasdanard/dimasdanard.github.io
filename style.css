@@ -1133,3 +1133,58 @@ body:not(.dark-mode) .graph-controls button:hover {
     padding: 16px;
   }
 }
+
+
+/* ==========================================
+   FULL-WIDTH RESEARCH NETWORK — DESKTOP
+   ========================================== */
+
+@media (min-width: 821px) {
+  /* Expand the homepage content */
+  .homepage-container {
+    width: 100%;
+    max-width: none;
+    padding-left: 3vw;
+    padding-right: 3vw;
+  }
+
+  /* Give the network map more horizontal space */
+  .research-network-layout {
+    width: 100%;
+    max-width: none;
+    grid-template-columns: minmax(0, 2.3fr) minmax(300px, 0.8fr);
+    gap: 24px;
+  }
+
+  .network-main {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .network-main #research-network {
+    width: 100%;
+    height: 680px;
+  }
+
+  .network-sidebar {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+/* Extra-wide desktop screens */
+@media (min-width: 1440px) {
+  .homepage-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  .research-network-layout {
+    grid-template-columns: minmax(0, 2.5fr) minmax(320px, 0.75fr);
+    gap: 28px;
+  }
+
+  .network-main #research-network {
+    height: 720px;
+  }
+}
