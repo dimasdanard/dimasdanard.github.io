@@ -522,6 +522,7 @@ function clearResearchSearch() {
    RESEARCH NETWORK — CONNECTION HIGHLIGHT
    ========================================== */
 
+
 const researchGroupColors = {
   core: "#607d8b",
   morph: "#2e7d32",
@@ -533,13 +534,66 @@ const researchGroupColors = {
 
 let highlightedNodeId = null;
 
+// Simpan tampilan asli agar bisa dipulihkan
+const originalNodeStyles = new Map(
+  nodes.get().map(node => [
+    node.id,
+    {
+      color: node.color,
+      font: node.font
+    }
+  ])
+);
+
+const originalEdgeStyles = new Map(
+  edges.get().map(edge => [
+    edge.id,
+    {
+      color: edge.color,
+      width: edge.width
+    }
+  ])
+);
+
+function restoreResearchNetwork() {
+  highlightedNodeId = null;
+
+  nodes.update(nodes.get().map(node => {
+    const original = originalNodeStyles.get(node.id);
+    if (!original) return { id: node.id };
+
+    return {
+      id: node.id,
+      color: original.color,
+      font: original.font
+    };
+  }));
+
+  edges.update(edges.get().map(edge => {
+    const original = originalEdgeStyles.get(edge.id);
+    if (!original) return { id: edge.id };
+
+    return {
+      id: edge.id,
+      color: original.color,
+      width: original.width
+    };
+  }));
+}
+
 function highlightConnections(nodeId) {
   const selectedNode = nodes.get(nodeId);
   if (!selectedNode) return;
 
+  // Klik node yang sama lagi = pulihkan semua
+  if (highlightedNodeId === nodeId) {
+    restoreResearchNetwork();
+    return;
+  }
+
   highlightedNodeId = nodeId;
 
-  // Identify the selected node and its direct neighbours.
+  // Node aktif + node yang terhubung langsung
   const connectedIds = new Set([nodeId]);
 
   edges.get().forEach(edge => {
@@ -547,83 +601,66 @@ function highlightConnections(nodeId) {
     if (edge.to === nodeId) connectedIds.add(edge.from);
   });
 
-  // Keep the selected node and direct neighbours prominent.
-  nodes.update(
-    nodes.get().map(node => {
-      const active = connectedIds.has(node.id);
-      const baseColor =
-        researchGroupColors[node.group] || "#78909c";
+  nodes.update(nodes.get().map(node => {
+    const active = connectedIds.has(node.id);
+    const baseColor =
+      researchGroupColors[node.group] || "#78909c";
 
-      return {
-        id: node.id,
-        color: {
-          background: active ? baseColor : "#34383c",
-          border: active ? baseColor : "#45494d",
-          highlight: {
+    return {
+      id: node.id,
+      color: active
+        ? {
             background: baseColor,
-            border: baseColor
-          },
-          hover: {
-            background: baseColor,
-            border: baseColor
+            border: baseColor,
+            highlight: {
+              background: baseColor,
+              border: baseColor
+            },
+            hover: {
+              background: baseColor,
+              border: baseColor
+            }
           }
-        },
-        font: {
-          color: active ? "#f3f4f6" : "#858b91",
-          size: node.id === nodeId ? 19 : 15,
-          face: "Inter",
-          strokeWidth: active ? 2 : 0,
-          strokeColor: "#121212"
-        }
-      };
-    })
-  );
+        : {
+            background: "#34383c",
+            border: "#45494d"
+          },
+      font: {
+        color: active ? "#f3f4f6" : "#858b91",
+        size: node.id === nodeId ? 19 : 15,
+        face: "Inter",
+        strokeWidth: active ? 2 : 0,
+        strokeColor: "#121212"
+      }
+    };
+  }));
 
-  // Emphasise edges connected to the selected node.
-  edges.update(
-    edges.get().map(edge => {
-      const directConnection =
-        edge.from === nodeId || edge.to === nodeId;
+  edges.update(edges.get().map(edge => {
+    const direct = edge.from === nodeId || edge.to === nodeId;
 
-      const neighbourConnection =
-        connectedIds.has(edge.from) &&
-        connectedIds.has(edge.to);
+    return {
+      id: edge.id,
+      color: {
+        color: direct ? "#8cdec0" : "#34383c",
+        opacity: direct ? 1 : 0.12,
+        highlight: "#8cdec0",
+        hover: "#8cdec0"
+      },
+      width: direct ? 3 : 0.7
+    };
+  }));
+}  
 
-      const active = directConnection || neighbourConnection;
-
-      return {
-        id: edge.id,
-        color: {
-          color: directConnection
-            ? "#8cdec0"
-            : neighbourConnection
-              ? "#718c83"
-              : "#34383c",
-          opacity: directConnection
-            ? 1
-            : neighbourConnection
-              ? 0.65
-              : 0.12,
-          highlight: "#8cdec0",
-          hover: "#8cdec0"
-        },
-        width: directConnection ? 3 : active ? 1.8 : 0.7
-      };
-    })
-  );
-}
-  
-  
-network.on("click", function (params) {
+network.on("click", function(params) {
   if (params.nodes.length === 0) return;
 
   const clickedId = params.nodes[0];
 
-  // Cluster nodes have generated IDs and are handled separately.
+  // Pertahankan perilaku cluster yang sudah ada
   if (String(clickedId).startsWith("cluster_")) {
     detailTitle.textContent = "Research cluster";
     detailText.textContent =
-      "This cluster groups related research themes. Use Uncluster to inspect individual nodes.";
+      "Click an individual research node to explore its connections.";
     detailMeta.textContent = "Grouped research themes";
     return;
   }
@@ -631,6 +668,7 @@ network.on("click", function (params) {
   showNodeDetails(clickedId);
   highlightConnections(clickedId);
 });
+
 
 network.on("doubleClick", function (params) {
   if (params.nodes.length !== 1) return;
