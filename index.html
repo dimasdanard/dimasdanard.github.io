@@ -517,6 +517,103 @@ function clearResearchSearch() {
   resetView();
 }
 
+
+/* ==========================================
+   RESEARCH NETWORK — CONNECTION HIGHLIGHT
+   ========================================== */
+
+const researchGroupColors = {
+  core: "#607d8b",
+  morph: "#2e7d32",
+  entropy: "#1565c0",
+  climate: "#c62828",
+  stats: "#8e24aa",
+  data: "#ef6c00"
+};
+
+let highlightedNodeId = null;
+
+function highlightConnections(nodeId) {
+  const selectedNode = nodes.get(nodeId);
+  if (!selectedNode) return;
+
+  highlightedNodeId = nodeId;
+
+  // Identify the selected node and its direct neighbours.
+  const connectedIds = new Set([nodeId]);
+
+  edges.get().forEach(edge => {
+    if (edge.from === nodeId) connectedIds.add(edge.to);
+    if (edge.to === nodeId) connectedIds.add(edge.from);
+  });
+
+  // Keep the selected node and direct neighbours prominent.
+  nodes.update(
+    nodes.get().map(node => {
+      const active = connectedIds.has(node.id);
+      const baseColor =
+        researchGroupColors[node.group] || "#78909c";
+
+      return {
+        id: node.id,
+        color: {
+          background: active ? baseColor : "#34383c",
+          border: active ? baseColor : "#45494d",
+          highlight: {
+            background: baseColor,
+            border: baseColor
+          },
+          hover: {
+            background: baseColor,
+            border: baseColor
+          }
+        },
+        font: {
+          color: active ? "#f3f4f6" : "#858b91",
+          size: node.id === nodeId ? 19 : 15,
+          face: "Inter",
+          strokeWidth: active ? 2 : 0,
+          strokeColor: "#121212"
+        }
+      };
+    })
+  );
+
+  // Emphasise edges connected to the selected node.
+  edges.update(
+    edges.get().map(edge => {
+      const directConnection =
+        edge.from === nodeId || edge.to === nodeId;
+
+      const neighbourConnection =
+        connectedIds.has(edge.from) &&
+        connectedIds.has(edge.to);
+
+      const active = directConnection || neighbourConnection;
+
+      return {
+        id: edge.id,
+        color: {
+          color: directConnection
+            ? "#8cdec0"
+            : neighbourConnection
+              ? "#718c83"
+              : "#34383c",
+          opacity: directConnection
+            ? 1
+            : neighbourConnection
+              ? 0.65
+              : 0.12,
+          highlight: "#8cdec0",
+          hover: "#8cdec0"
+        },
+        width: directConnection ? 3 : active ? 1.8 : 0.7
+      };
+    })
+  );
+}
+  
+  
 network.on("click", function (params) {
   if (params.nodes.length === 0) return;
 
@@ -532,6 +629,7 @@ network.on("click", function (params) {
   }
 
   showNodeDetails(clickedId);
+  highlightConnections(clickedId);
 });
 
 network.on("doubleClick", function (params) {
@@ -585,8 +683,9 @@ document.querySelectorAll(".legend-item").forEach(button => {
   });
 });
 
-// Initial details panel
+// Initial details panel and connection highlight
 showNodeDetails(1);
+highlightConnections(1);
 
 // ================= BUTTONS =================
 
@@ -606,8 +705,9 @@ function resetView() {
     animation: { duration: 500, easingFunction: "easeInOutQuad" }
   });
 
-  showNodeDetails(1);
-  detailMeta.textContent = "Full research network restored.";
+ showNodeDetails(1);
+ highlightConnections(1);
+ detailMeta.textContent = "Full research network restored.";
 }
 
 function zoomToCore() {
