@@ -1349,3 +1349,17 @@ body:not(.dark-mode) .graph-controls button:hover {
     height: 520px;
   }
 }
+
+/* Reduce the gap between Hero and Research Network */
+.hero-section {
+  padding-bottom: 24px;
+}
+
+.research-network-container {
+  padding-top: 0;
+}
+
+.research-explorer {
+  padding-top: 12px;
+}
+
