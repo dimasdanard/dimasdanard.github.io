@@ -1363,3 +1363,13 @@ body:not(.dark-mode) .graph-controls button:hover {
   padding-top: 12px;
 }
 
+.note-caption a,
+.note-caption a:visited {
+  color: #7DB9FF;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.note-caption a:hover {
+  color: #B1D4FF;
+}
